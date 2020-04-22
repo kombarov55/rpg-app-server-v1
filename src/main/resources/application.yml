@@ -1,0 +1,16 @@
+spring:
+  codec:
+    max-in-memory-size: 10MB
+  datasource:
+    url: jdbc:postgresql://localhost:5432/rpg
+    hikari:
+      connection-timeout: 20000
+      maximum-pool-size: 10
+    username: rpg
+    password: rpg
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+
+upload-dir: /usr/share/nginx/html/images
