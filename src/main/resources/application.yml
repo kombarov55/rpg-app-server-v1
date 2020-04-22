@@ -2,15 +2,17 @@ spring:
   codec:
     max-in-memory-size: 10MB
   datasource:
-    url: jdbc:postgresql://localhost:5432/rpg
     hikari:
       connection-timeout: 20000
       maximum-pool-size: 10
+    url: jdbc:postgresql://localhost:5432/rpg
     username: rpg
     password: rpg
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 
 upload-dir: /usr/share/nginx/html/images
