@@ -7,6 +7,9 @@ import ru.novemis.rpgapp.dao.UploadCacheRepository
 import ru.novemis.rpgapp.model.announcement.Announcement
 import ru.novemis.rpgapp.model.announcement.ImageLink
 
+@CrossOrigin(value = ["http://novemis.ru:3000/"],
+        maxAge = 900
+)
 @RestController
 @RequestMapping("/announcement")
 class AnnouncementController(
