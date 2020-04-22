@@ -18,6 +18,7 @@ data class Announcement(
         val description: String? = null,
         val anonymous: Boolean? = null,
         val commentsEnabled: Boolean? = null,
-        val uploadUid: String? = null
-//        val images: MutableList<String>? = mutableListOf()
+        val uploadUid: String? = null,
+        @OneToMany(fetch = FetchType.EAGER)
+        var images: List<ImageLink>? = null
 )
