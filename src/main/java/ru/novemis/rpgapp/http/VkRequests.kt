@@ -1,7 +1,10 @@
 package ru.novemis.rpgapp.http
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
+import ru.novemis.rpgapp.model.useraccount.UserAccount
 import ru.novemis.rpgapp.util.HiddenProperties
 import java.net.URLEncoder
 import java.util.*
@@ -15,7 +18,8 @@ class VkRequests(
         private val version: String,
 
         private val hiddenProperties: HiddenProperties,
-        private val httpConnector: HttpConnector
+        private val httpConnector: HttpConnector,
+        private val objectMapper: ObjectMapper
 ) {
     private var token: String? = null
     @PostConstruct
@@ -23,13 +27,21 @@ class VkRequests(
         token = hiddenProperties!!.groupSecret
     }
 
-    fun getUserInfo(userId: String): String {
+    fun getUserInfo(userId: String): UserAccount {
         val url = buildUrl("users.get", mapOf(
                 "user_ids" to userId,
                 "fields" to "photo_50"
         ))
 
-        return httpConnector.get(url)
+        val rs = httpConnector.get(url)
+        val json = JSONObject(rs).getJSONArray("response").getJSONObject(0)
+
+        return UserAccount(
+                userId = json.getInt("id"),
+                firstName = json.getString("first_name"),
+                lastName = json.getString("last_name"),
+                photo50Url = json.getString("photo_50")
+        )
     }
 
     fun sendMsg(peerId: Int, message: String?) {

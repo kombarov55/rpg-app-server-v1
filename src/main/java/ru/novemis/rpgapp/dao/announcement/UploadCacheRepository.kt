@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.dao
+package ru.novemis.rpgapp.dao.announcement
 
 import org.springframework.stereotype.Service
 

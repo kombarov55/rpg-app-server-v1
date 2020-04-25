@@ -2,7 +2,7 @@ package ru.novemis.rpgapp.controller
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.web.bind.annotation.*
-import ru.novemis.rpgapp.dao.UploadCacheRepository
+import ru.novemis.rpgapp.dao.announcement.UploadCacheRepository
 import java.io.File
 
 @RestController
