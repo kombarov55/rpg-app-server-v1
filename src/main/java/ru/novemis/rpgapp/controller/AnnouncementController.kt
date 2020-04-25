@@ -1,9 +1,9 @@
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.novemis.rpgapp.dao.AnnouncementRepository
-import ru.novemis.rpgapp.dao.ImageLinkRepository
-import ru.novemis.rpgapp.dao.UploadCacheRepository
+import ru.novemis.rpgapp.dao.announcement.AnnouncementRepository
+import ru.novemis.rpgapp.dao.announcement.ImageLinkRepository
+import ru.novemis.rpgapp.dao.announcement.UploadCacheRepository
 import ru.novemis.rpgapp.model.announcement.Announcement
 import ru.novemis.rpgapp.model.announcement.ImageLink
 

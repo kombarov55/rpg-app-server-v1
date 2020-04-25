@@ -27,9 +27,9 @@ class VkRequests(
         token = hiddenProperties!!.groupSecret
     }
 
-    fun getUserInfo(userId: String): UserAccount {
+    fun getUserInfo(userId: Int): UserAccount {
         val url = buildUrl("users.get", mapOf(
-                "user_ids" to userId,
+                "user_ids" to "" + userId,
                 "fields" to "photo_50"
         ))
 

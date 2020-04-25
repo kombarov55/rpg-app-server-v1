@@ -16,8 +16,11 @@ class UserAccountController(
 ) {
 
     @GetMapping("{user-id}")
-    fun findById(@PathVariable("user-id") userId: String): UserAccount {
-        return vkRequests.getUserInfo(userId)
+    fun findById(@PathVariable("user-id") userId: Int): UserAccount {
+        val userAccount = userAccountRepository.findByUserId(userId)
+                ?: userAccountRepository.save(vkRequests.getUserInfo(userId))
+
+        return userAccount
     }
 
 }
