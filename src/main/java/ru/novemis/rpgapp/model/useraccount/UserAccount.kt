@@ -12,11 +12,13 @@ data class UserAccount(
         @GenericGenerator(name = "system-uuid", strategy = "uuid")
         var id: String? = null,
 
-        var userId: Int? = null,
+        var userId: Int = -1,
 
-        var firstName: String? = null,
+        var firstName: String = "",
 
-        var lastName: String? = null,
+        var lastName: String = "",
 
-        var photo50Url: String? = null
+        var photo50Url: String = "",
+
+        var role: UserAccountRole = UserAccountRole.VISITOR
 )

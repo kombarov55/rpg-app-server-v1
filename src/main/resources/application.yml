@@ -28,3 +28,6 @@ hidden-props-path: /home/nikolay/config/hidden.properties
 
 vk:
   api-version: 5.103
+
+jwt:
+  secret: Satan
