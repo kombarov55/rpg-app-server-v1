@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.model.announcement
+package ru.novemis.rpgapp.domain.announcement
 
 import org.hibernate.annotations.GenericGenerator
 import javax.persistence.Entity

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
-import ru.novemis.rpgapp.model.useraccount.UserAccount
+import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import ru.novemis.rpgapp.util.HiddenProperties
 import java.net.URLEncoder
 import java.util.*

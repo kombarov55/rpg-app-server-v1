@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.model.useraccount
+package ru.novemis.rpgapp.domain.useraccount
 
 enum class UserAccountRole {
     MAIN_ADMIN,

@@ -5,8 +5,8 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
-import ru.novemis.rpgapp.model.useraccount.UserAccount
-import ru.novemis.rpgapp.model.useraccount.UserAccountRole
+import ru.novemis.rpgapp.domain.useraccount.UserAccount
+import ru.novemis.rpgapp.domain.useraccount.UserAccountRole
 import java.io.Serializable
 import java.util.*
 

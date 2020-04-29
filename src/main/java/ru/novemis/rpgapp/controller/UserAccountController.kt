@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import ru.novemis.rpgapp.model.useraccount.UserAccount
+import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import ru.novemis.rpgapp.service.UserAccountService
 
 @RestController

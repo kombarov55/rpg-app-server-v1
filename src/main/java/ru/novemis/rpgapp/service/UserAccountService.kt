@@ -2,9 +2,9 @@ package ru.novemis.rpgapp.service
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.dao.useraccount.UserAccountRepository
+import ru.novemis.rpgapp.domain.useraccount.UserAccount
+import ru.novemis.rpgapp.domain.useraccount.UserAccountRole
 import ru.novemis.rpgapp.http.VkRequests
-import ru.novemis.rpgapp.model.useraccount.UserAccount
-import ru.novemis.rpgapp.model.useraccount.UserAccountRole
 
 @Component
 class UserAccountService(

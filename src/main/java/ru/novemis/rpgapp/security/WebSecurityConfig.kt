@@ -5,7 +5,7 @@ import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.web.server.SecurityWebFilterChain
-import ru.novemis.rpgapp.model.useraccount.UserAccountRole.VISITOR
+import ru.novemis.rpgapp.domain.useraccount.UserAccountRole.VISITOR
 
 @EnableWebFluxSecurity
 open class WebSecurityConfig(
