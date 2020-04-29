@@ -1,7 +1,6 @@
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.novemis.rpgapp.dao.announcement.CommentRepository
 import ru.novemis.rpgapp.dto.announcement.CommentRqDto
 import ru.novemis.rpgapp.dto.announcement.CommentRsDto
 import ru.novemis.rpgapp.service.CommentService
@@ -9,8 +8,7 @@ import ru.novemis.rpgapp.service.CommentService
 @RestController
 @RequestMapping("/announcement")
 class CommentController(
-        private val commentService: CommentService,
-        private val commentRepository: CommentRepository
+        private val commentService: CommentService
 ) {
 
     @PostMapping("/comment")
@@ -24,8 +22,9 @@ class CommentController(
     }
 
     @DeleteMapping("/{announcement-id}/comment/{comment-id}")
-    fun deleteComponent(@PathVariable("comment-id") commentId: String) {
-        commentRepository.deleteById(commentId)
+    fun deleteComponent(@PathVariable("announcement-id") announcementId: String,
+                        @PathVariable("comment-id") commentId: String) {
+        commentService.deleteComment(commentId)
     }
 
 }

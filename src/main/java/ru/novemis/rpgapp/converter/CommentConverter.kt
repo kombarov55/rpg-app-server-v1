@@ -31,7 +31,8 @@ class CommentConverter(
                 authorFullName = comment.author?.let { it.firstName + " " + it.lastName }!!,
                 authorImgSrc = comment.author?.photo50Url!!,
                 creationDate = comment.creationDate.time,
-                text = comment.text
+                text = comment.text,
+                deleted = comment.deleted
         )
     }
 

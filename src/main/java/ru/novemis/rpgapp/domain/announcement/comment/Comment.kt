@@ -22,5 +22,7 @@ data class Comment(
         var creationDate: Date = Date(),
 
         @Column(columnDefinition = "TEXT")
-        var text: String = ""
+        var text: String = "",
+
+        var deleted: Boolean = false
 )

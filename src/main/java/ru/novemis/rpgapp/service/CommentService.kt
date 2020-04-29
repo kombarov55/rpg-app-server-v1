@@ -25,4 +25,11 @@ class CommentService(
                 .map { commentConverter.toDto(it) }
     }
 
+
+    fun deleteComment(commentId: String) {
+        commentRepository.findById(commentId)
+                .map { it.apply { deleted = true } }
+                .map { commentRepository.save(it) }
+    }
+
 }

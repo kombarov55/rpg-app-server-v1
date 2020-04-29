@@ -6,5 +6,6 @@ data class CommentRsDto(
         var authorFullName: String = "",
         var authorImgSrc: String = "",
         var creationDate: Long = 0,
-        var text: String = ""
+        var text: String = "",
+        var deleted: Boolean = false
 )
