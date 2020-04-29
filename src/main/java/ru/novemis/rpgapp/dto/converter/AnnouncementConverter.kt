@@ -41,7 +41,9 @@ class AnnouncementConverter(
                 minAge = announcement.minAge,
                 maxAge = announcement.maxAge,
                 anonymous = announcement.anonymous!!,
-                commentsEnabled = announcement.commentsEnabled!!
+                commentsEnabled = announcement.commentsEnabled!!,
+                //TODO: реализовать
+                commentsCount = 1
         )
     }
 }

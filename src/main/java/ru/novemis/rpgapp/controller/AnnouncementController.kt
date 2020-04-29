@@ -2,33 +2,25 @@ package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.dao.announcement.AnnouncementRepository
-import ru.novemis.rpgapp.dao.announcement.ImageLinkRepository
-import ru.novemis.rpgapp.dao.announcement.UploadCacheRepository
-import ru.novemis.rpgapp.model.announcement.Announcement
-import ru.novemis.rpgapp.model.announcement.ImageLink
+import ru.novemis.rpgapp.dto.announcement.AnnouncementDto
+import ru.novemis.rpgapp.service.AnnouncementService
 
 @CrossOrigin
 @RestController
 @RequestMapping("/announcement")
 class AnnouncementController(
-        private val announcementRepository: AnnouncementRepository,
-        private val uploadCacheRepository: UploadCacheRepository,
-        private val imageLinkRepository: ImageLinkRepository
+        private val announcementService: AnnouncementService,
+        private val announcementRepository: AnnouncementRepository
 ) {
 
     @PostMapping(consumes = ["application/json"])
-    fun saveAnnouncement(@RequestBody announcement: Announcement): Announcement {
-        val links = uploadCacheRepository.findById(announcement.uploadUid!!)
-        announcement.images = links.map { ImageLink("", announcement.id, it) }
-
-        uploadCacheRepository.deleteById(announcement.uploadUid)
-
-        return announcementRepository.save(announcement)
+    fun saveAnnouncement(@RequestBody announcementDto: AnnouncementDto): AnnouncementDto {
+        return announcementService.saveAnnouncement(announcementDto)
     }
 
     @GetMapping
-    fun getAll(): Iterable<Announcement> {
-        return announcementRepository.findAll()
+    fun getAll(): Iterable<AnnouncementDto> {
+        return announcementService.findAll()
     }
 
     @DeleteMapping("/{id}")

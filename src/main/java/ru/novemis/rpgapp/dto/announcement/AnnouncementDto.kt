@@ -13,5 +13,6 @@ class AnnouncementDto(
         val minAge: Int? = null,
         val maxAge: Int? = null,
         val anonymous: Boolean = false,
-        val commentsEnabled: Boolean = true
+        val commentsEnabled: Boolean = true,
+        val commentsCount: Int = 0
 )
