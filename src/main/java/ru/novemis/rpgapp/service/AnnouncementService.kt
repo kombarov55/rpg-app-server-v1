@@ -3,8 +3,8 @@ package ru.novemis.rpgapp.service
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.AnnouncementConverter
 import ru.novemis.rpgapp.dao.announcement.AnnouncementRepository
-import ru.novemis.rpgapp.dto.announcement.AnnouncementRqDto
-import ru.novemis.rpgapp.dto.announcement.AnnouncementRsDto
+import ru.novemis.rpgapp.dto.announcement.AnnouncementDto
+import ru.novemis.rpgapp.dto.announcement.AnnouncementForm
 
 @Component
 class AnnouncementService(
@@ -12,16 +12,20 @@ class AnnouncementService(
         private val announcementConverter: AnnouncementConverter
 ) {
 
-    fun saveAnnouncement(announcementDto: AnnouncementRqDto): AnnouncementRsDto {
+    fun saveAnnouncement(form: AnnouncementForm): AnnouncementDto {
         return announcementConverter.toDto(
                 announcementRepository.save(
-                        announcementConverter.toDomain(announcementDto)))
+                        announcementConverter.toDomain(form)))
 
     }
 
-    fun findAll(): List<AnnouncementRsDto> {
+    fun findAll(): List<AnnouncementDto> {
         return announcementRepository.findAll()
                 .map { announcementConverter.toDto(it) }
+    }
+
+    fun delete(announcementId: String) {
+
     }
 
 }

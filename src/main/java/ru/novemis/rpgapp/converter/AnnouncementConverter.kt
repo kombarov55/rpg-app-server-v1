@@ -6,8 +6,8 @@ import ru.novemis.rpgapp.dao.useraccount.UserAccountRepository
 import ru.novemis.rpgapp.domain.announcement.Announcement
 import ru.novemis.rpgapp.domain.announcement.GameType
 import ru.novemis.rpgapp.domain.announcement.Sex
-import ru.novemis.rpgapp.dto.announcement.AnnouncementRqDto
-import ru.novemis.rpgapp.dto.announcement.AnnouncementRsDto
+import ru.novemis.rpgapp.dto.announcement.AnnouncementDto
+import ru.novemis.rpgapp.dto.announcement.AnnouncementForm
 import java.util.*
 
 @Component
@@ -15,23 +15,23 @@ class AnnouncementConverter(
         private val userAccountRepository: UserAccountRepository,
         private val commentRepository: CommentRepository
 ) {
-    fun toDomain(rq: AnnouncementRqDto): Announcement {
+    fun toDomain(form: AnnouncementForm): Announcement {
         return Announcement(
-                author = userAccountRepository.findByUserId(rq.authorId),
+                author = userAccountRepository.findByUserId(form.authorId),
                 creationDate = Date(),
-                title = rq.title,
-                gameType = GameType.valueOf(rq.gameType),
-                sex = rq.sex?.let { Sex.valueOf(it) },
-                minAge = rq.minAge,
-                maxAge = rq.maxAge,
-                description = rq.description,
-                anonymous = rq.anonymous,
-                commentsEnabled = rq.commentsEnabled
+                title = form.title,
+                gameType = GameType.valueOf(form.gameType),
+                sex = form.sex?.let { Sex.valueOf(it) },
+                minAge = form.minAge,
+                maxAge = form.maxAge,
+                description = form.description,
+                anonymous = form.anonymous,
+                commentsEnabled = form.commentsEnabled
         )
     }
 
-    fun toDto(announcement: Announcement): AnnouncementRsDto {
-        return AnnouncementRsDto(
+    fun toDto(announcement: Announcement): AnnouncementDto {
+        return AnnouncementDto(
                 id = announcement.id,
                 authorId = announcement.author?.userId!!,
                 imgSrc = announcement.author?.photo50Url!!,

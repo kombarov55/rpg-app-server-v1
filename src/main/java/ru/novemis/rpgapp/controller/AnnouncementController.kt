@@ -2,8 +2,8 @@ package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.dao.announcement.AnnouncementRepository
-import ru.novemis.rpgapp.dto.announcement.AnnouncementRqDto
-import ru.novemis.rpgapp.dto.announcement.AnnouncementRsDto
+import ru.novemis.rpgapp.dto.announcement.AnnouncementDto
+import ru.novemis.rpgapp.dto.announcement.AnnouncementForm
 import ru.novemis.rpgapp.service.AnnouncementService
 
 @CrossOrigin
@@ -15,12 +15,12 @@ class AnnouncementController(
 ) {
 
     @PostMapping(consumes = ["application/json"])
-    fun saveAnnouncement(@RequestBody announcementRqDto: AnnouncementRqDto): AnnouncementRsDto {
-        return announcementService.saveAnnouncement(announcementRqDto)
+    fun saveAnnouncement(@RequestBody form: AnnouncementForm): AnnouncementDto {
+        return announcementService.saveAnnouncement(form)
     }
 
     @GetMapping
-    fun getAll(): Iterable<AnnouncementRsDto> {
+    fun getAll(): Iterable<AnnouncementDto> {
         return announcementService.findAll()
     }
 

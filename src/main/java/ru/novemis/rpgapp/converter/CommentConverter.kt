@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.dao.announcement.AnnouncementRepository
 import ru.novemis.rpgapp.dao.useraccount.UserAccountRepository
 import ru.novemis.rpgapp.domain.announcement.comment.Comment
-import ru.novemis.rpgapp.dto.announcement.CommentRqDto
-import ru.novemis.rpgapp.dto.announcement.CommentRsDto
+import ru.novemis.rpgapp.dto.announcement.CommentDto
+import ru.novemis.rpgapp.dto.announcement.CommentForm
 import java.util.*
 
 @Component
@@ -14,18 +14,18 @@ class CommentConverter(
         private val announcementRepository: AnnouncementRepository
 ) {
 
-    fun toDomain(rqDto: CommentRqDto): Comment {
+    fun toDomain(form: CommentForm): Comment {
         return Comment(
-                author = userAccountRepository.findByUserId(rqDto.authorId),
-                announcement = announcementRepository.findById(rqDto.announcementId).orElseThrow {IllegalArgumentException()},
+                author = userAccountRepository.findByUserId(form.authorId),
+                announcement = announcementRepository.findById(form.announcementId).orElseThrow {IllegalArgumentException()},
                 creationDate = Date(),
-                text = rqDto.text
+                text = form.text
 
         )
     }
 
-    fun toDto(comment: Comment): CommentRsDto {
-        return CommentRsDto(
+    fun toDto(comment: Comment): CommentDto {
+        return CommentDto(
                 id = comment.id!!,
                 announcementId = comment.announcement?.id!!,
                 authorFullName = comment.author?.let { it.firstName + " " + it.lastName }!!,

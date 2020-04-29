@@ -1,6 +1,6 @@
 package ru.novemis.rpgapp.dto.announcement
 
-data class AnnouncementRqDto(
+data class AnnouncementForm(
         var authorId: Long = 1,
         var title: String = "",
         var gameType: String = "",

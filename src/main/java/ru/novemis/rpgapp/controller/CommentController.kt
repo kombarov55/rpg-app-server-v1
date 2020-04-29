@@ -1,8 +1,8 @@
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.novemis.rpgapp.dto.announcement.CommentRqDto
-import ru.novemis.rpgapp.dto.announcement.CommentRsDto
+import ru.novemis.rpgapp.dto.announcement.CommentDto
+import ru.novemis.rpgapp.dto.announcement.CommentForm
 import ru.novemis.rpgapp.service.CommentService
 
 @RestController
@@ -12,12 +12,12 @@ class CommentController(
 ) {
 
     @PostMapping("/comment")
-    fun addComment(@RequestBody rq: CommentRqDto): CommentRsDto {
-        return commentService.saveComment(rq)
+    fun addComment(@RequestBody form: CommentForm): CommentDto {
+        return commentService.saveComment(form)
     }
 
     @GetMapping("/{announcement-id}/comment")
-    fun getByAnnouncementId(@PathVariable("announcement-id") announcementId: String): List<CommentRsDto> {
+    fun getByAnnouncementId(@PathVariable("announcement-id") announcementId: String): List<CommentDto> {
         return commentService.findByAnnouncementId(announcementId)
     }
 
@@ -29,7 +29,7 @@ class CommentController(
 
     @GetMapping("/{announcement-id}/comment/{comment-id}/restore")
     fun restoreComponent(@PathVariable("announcement-id") announcementId: String,
-                         @PathVariable("comment-id") commentId: String): CommentRsDto {
+                         @PathVariable("comment-id") commentId: String): CommentDto {
         return commentService.restoreComponent(commentId)
     }
 

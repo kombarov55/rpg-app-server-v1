@@ -1,6 +1,6 @@
 package ru.novemis.rpgapp.dto.announcement
 
-data class CommentRsDto(
+data class CommentDto(
         var id: String = "",
         var announcementId: String = "",
         var authorFullName: String = "",

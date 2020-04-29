@@ -32,5 +32,7 @@ data class Announcement(
 
         val anonymous: Boolean = false,
 
-        val commentsEnabled: Boolean = false
+        val commentsEnabled: Boolean = false,
+
+        var deleted: Boolean = false
 )

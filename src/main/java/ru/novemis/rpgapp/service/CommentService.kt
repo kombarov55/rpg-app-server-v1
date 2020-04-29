@@ -4,8 +4,8 @@ import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.CommentConverter
 import ru.novemis.rpgapp.dao.announcement.CommentRepository
-import ru.novemis.rpgapp.dto.announcement.CommentRqDto
-import ru.novemis.rpgapp.dto.announcement.CommentRsDto
+import ru.novemis.rpgapp.dto.announcement.CommentDto
+import ru.novemis.rpgapp.dto.announcement.CommentForm
 
 @Component
 class CommentService(
@@ -13,14 +13,14 @@ class CommentService(
         private val commentConverter: CommentConverter
 ) {
 
-    fun saveComment(rq: CommentRqDto): CommentRsDto {
+    fun saveComment(form: CommentForm): CommentDto {
         return commentConverter.toDto(
                 commentRepository.save(
-                        commentConverter.toDomain(rq))
+                        commentConverter.toDomain(form))
         )
     }
 
-    fun findByAnnouncementId(announcementId: String): List<CommentRsDto> {
+    fun findByAnnouncementId(announcementId: String): List<CommentDto> {
         return commentRepository.findByAnnouncementId(announcementId, Sort.by(Sort.Direction.ASC, "creationDate"))
                 .map { commentConverter.toDto(it) }
     }
@@ -32,7 +32,7 @@ class CommentService(
                 .map { commentRepository.save(it) }
     }
 
-    fun restoreComponent(commentId: String): CommentRsDto {
+    fun restoreComponent(commentId: String): CommentDto {
         return commentRepository.findById(commentId)
                 .map { it.apply { deleted = false } }
                 .map { commentRepository.save(it) }

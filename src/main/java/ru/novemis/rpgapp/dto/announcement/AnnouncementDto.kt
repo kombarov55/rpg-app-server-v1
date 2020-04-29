@@ -1,18 +1,19 @@
 package ru.novemis.rpgapp.dto.announcement
 
-class AnnouncementDto(
-        var id: String? = null,
-        var authorId: Int = -1,
-        val imgSrc: String? = null,
-        val authorFullName: String? = null,
-        val creationDate: Long = System.currentTimeMillis(),
-        val title: String = "",
-        val description: String = "",
-        val sex: String? = null,
-        val gameType: String = "",
-        val minAge: Int? = null,
-        val maxAge: Int? = null,
-        val anonymous: Boolean = false,
-        val commentsEnabled: Boolean = true,
-        val commentsCount: Int = 0
+data class AnnouncementDto(
+        var id: String = "",
+        var authorId: Long = 1,
+        var imgSrc: String = "",
+        var authorFullName: String = "",
+        var creationDate: Long = 0,
+        var title: String = "",
+        var description: String = "",
+        var sex: String? = null,
+        var gameType: String = "",
+        var minAge: Int? = null,
+        var maxAge: Int? = null,
+        var anonymous: Boolean = false,
+        var commentsEnabled: Boolean = true,
+        var commentsCount: Long = 0
+
 )
