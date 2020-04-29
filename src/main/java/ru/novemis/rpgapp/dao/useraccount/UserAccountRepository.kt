@@ -5,6 +5,6 @@ import ru.novemis.rpgapp.domain.useraccount.UserAccount
 
 interface UserAccountRepository : CrudRepository<UserAccount, String> {
 
-    fun findByUserId(id: Int): UserAccount?
+    fun findByUserId(id: Long): UserAccount?
 
 }

@@ -16,8 +16,7 @@ class CommentService(
     fun saveComment(rq: CommentRqDto): CommentRsDto {
         return commentConverter.toDto(
                 commentRepository.save(
-                        commentConverter.toDomain(rq)
-                )
+                        commentConverter.toDomain(rq))
         )
     }
 

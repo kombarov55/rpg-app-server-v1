@@ -12,7 +12,7 @@ class UserAccountService(
         private val userAccountRepository: UserAccountRepository
 ) {
 
-    fun getAccountByUserId(userId: Int): UserAccount {
+    fun getAccountByUserId(userId: Long): UserAccount {
         return userAccountRepository.findByUserId(userId)
                 ?: userAccountRepository.save(
                         vkRequests.getUserInfo(userId).apply {

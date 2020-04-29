@@ -14,6 +14,6 @@ class UserAccountController(
 ) {
 
     @GetMapping("{user-id}")
-    fun findById(@PathVariable("user-id") userId: Int): UserAccount = userAccountService.getAccountByUserId(userId)
+    fun findById(@PathVariable("user-id") userId: Long): UserAccount = userAccountService.getAccountByUserId(userId)
 
 }

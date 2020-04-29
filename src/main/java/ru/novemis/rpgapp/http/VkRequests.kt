@@ -27,7 +27,7 @@ class VkRequests(
         token = hiddenProperties!!.groupSecret
     }
 
-    fun getUserInfo(userId: Int): UserAccount {
+    fun getUserInfo(userId: Long): UserAccount {
         val url = buildUrl("users.get", mapOf(
                 "user_ids" to "" + userId,
                 "fields" to "photo_50"
@@ -37,7 +37,7 @@ class VkRequests(
         val json = JSONObject(rs).getJSONArray("response").getJSONObject(0)
 
         return UserAccount(
-                userId = json.getInt("id"),
+                userId = json.getLong("id"),
                 firstName = json.getString("first_name"),
                 lastName = json.getString("last_name"),
                 photo50Url = json.getString("photo_50")

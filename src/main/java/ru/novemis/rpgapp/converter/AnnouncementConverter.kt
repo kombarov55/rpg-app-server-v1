@@ -1,49 +1,51 @@
 package ru.novemis.rpgapp.converter
 
 import org.springframework.stereotype.Component
+import ru.novemis.rpgapp.dao.announcement.CommentRepository
 import ru.novemis.rpgapp.dao.useraccount.UserAccountRepository
 import ru.novemis.rpgapp.domain.announcement.Announcement
 import ru.novemis.rpgapp.domain.announcement.GameType
 import ru.novemis.rpgapp.domain.announcement.Sex
-import ru.novemis.rpgapp.dto.announcement.AnnouncementDto
+import ru.novemis.rpgapp.dto.announcement.AnnouncementRqDto
+import ru.novemis.rpgapp.dto.announcement.AnnouncementRsDto
 import java.util.*
 
 @Component
 class AnnouncementConverter(
-        private val userAccountRepository: UserAccountRepository
+        private val userAccountRepository: UserAccountRepository,
+        private val commentRepository: CommentRepository
 ) {
-    fun toDomain(announcementDto: AnnouncementDto): Announcement {
+    fun toDomain(rq: AnnouncementRqDto): Announcement {
         return Announcement(
-                author = userAccountRepository.findByUserId(announcementDto.authorId),
-                creationDate = Date(announcementDto.creationDate),
-                title = announcementDto.title,
-                gameType = GameType.valueOf(announcementDto.gameType),
-                sex = announcementDto.sex?.let { Sex.valueOf(it) },
-                minAge = announcementDto.minAge,
-                maxAge = announcementDto.maxAge,
-                description = announcementDto.description,
-                anonymous = announcementDto.anonymous,
-                commentsEnabled = announcementDto.commentsEnabled
+                author = userAccountRepository.findByUserId(rq.authorId),
+                creationDate = Date(),
+                title = rq.title,
+                gameType = GameType.valueOf(rq.gameType),
+                sex = rq.sex?.let { Sex.valueOf(it) },
+                minAge = rq.minAge,
+                maxAge = rq.maxAge,
+                description = rq.description,
+                anonymous = rq.anonymous,
+                commentsEnabled = rq.commentsEnabled
         )
     }
 
-    fun toDto(announcement: Announcement): AnnouncementDto {
-        return AnnouncementDto(
+    fun toDto(announcement: Announcement): AnnouncementRsDto {
+        return AnnouncementRsDto(
                 id = announcement.id,
-                authorId = announcement.author!!.userId,
-                imgSrc = announcement.author!!.photo50Url,
-                authorFullName = announcement.author!!.firstName + " " + announcement.author!!.lastName,
-                creationDate = announcement.creationDate!!.time,
-                title = announcement.title!!,
-                description = announcement.description!!,
-                sex = announcement.sex?.name,
-                gameType = announcement.gameType!!.name,
+                authorId = announcement.author?.userId!!,
+                imgSrc = announcement.author?.photo50Url!!,
+                authorFullName = announcement.author?.let { it.firstName + " " + it.lastName }!!,
+                creationDate = announcement.creationDate.time,
+                title = announcement.title,
+                description = announcement.description,
+                sex = announcement.sex?.description,
+                gameType = announcement.gameType?.description!!,
                 minAge = announcement.minAge,
                 maxAge = announcement.maxAge,
-                anonymous = announcement.anonymous!!,
-                commentsEnabled = announcement.commentsEnabled!!,
-                //TODO: реализовать
-                commentsCount = 1
+                anonymous = announcement.anonymous,
+                commentsEnabled = announcement.commentsEnabled,
+                commentsCount = commentRepository.countByAnnouncementId(announcement.id)
         )
     }
 }

@@ -1,11 +1,9 @@
 package ru.novemis.rpgapp.security
 
 import org.springframework.context.annotation.Bean
-import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.web.server.SecurityWebFilterChain
-import ru.novemis.rpgapp.domain.useraccount.UserAccountRole.VISITOR
 
 @EnableWebFluxSecurity
 open class WebSecurityConfig(
@@ -21,8 +19,8 @@ open class WebSecurityConfig(
                 .authenticationManager(jwtAuthManager)
                 .securityContextRepository(securityContextRepository)
                 .authorizeExchange()
-                .pathMatchers(HttpMethod.OPTIONS).permitAll()
-                .pathMatchers("/user*").hasRole(VISITOR.name)
+//                .pathMatchers(HttpMethod.OPTIONS).permitAll()
+//                .pathMatchers("/user*").hasRole(VISITOR.name)
                 .anyExchange().permitAll()
 
                 .and().build()

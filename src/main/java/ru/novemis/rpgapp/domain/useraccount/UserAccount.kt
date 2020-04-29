@@ -12,7 +12,7 @@ data class UserAccount(
         @GenericGenerator(name = "system-uuid", strategy = "uuid")
         var id: String? = null,
 
-        var userId: Int = -1,
+        var userId: Long = -1,
 
         var firstName: String = "",
 

@@ -8,4 +8,6 @@ interface CommentRepository : CrudRepository<Comment, String> {
 
     fun findByAnnouncementId(announcementId: String, sort: Sort): List<Comment>
 
+    fun countByAnnouncementId(announcementId: String): Long
+
 }

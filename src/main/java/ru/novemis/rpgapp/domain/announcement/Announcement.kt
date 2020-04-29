@@ -10,14 +10,14 @@ data class Announcement(
         @Id
         @GeneratedValue(generator = "system-uuid")
         @GenericGenerator(name = "system-uuid", strategy = "uuid")
-        var id: String? = null,
+        var id: String = "",
 
         @ManyToOne
         var author: UserAccount? = null,
 
-        var creationDate: Date? = null,
+        var creationDate: Date = Date(),
 
-        val title: String? = null,
+        val title: String = "",
 
         val gameType: GameType? = null,
 
@@ -28,14 +28,9 @@ data class Announcement(
         val maxAge: Int? = null,
 
         @Column(columnDefinition = "TEXT")
-        val description: String? = null,
+        val description: String = "",
 
-        val anonymous: Boolean? = null,
+        val anonymous: Boolean = false,
 
-        val commentsEnabled: Boolean? = null,
-
-        val uploadUid: String? = null,
-
-        @OneToMany(fetch = FetchType.EAGER)
-        var images: List<ImageLink>? = null
+        val commentsEnabled: Boolean = false
 )
