@@ -32,4 +32,12 @@ class CommentService(
                 .map { commentRepository.save(it) }
     }
 
+    fun restoreComponent(commentId: String): CommentRsDto {
+        return commentRepository.findById(commentId)
+                .map { it.apply { deleted = false } }
+                .map { commentRepository.save(it) }
+                .map { commentConverter.toDto(it) }
+                .orElseThrow { IllegalArgumentException() }
+    }
+
 }

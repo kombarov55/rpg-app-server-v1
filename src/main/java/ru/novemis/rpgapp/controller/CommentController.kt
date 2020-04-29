@@ -27,4 +27,10 @@ class CommentController(
         commentService.deleteComment(commentId)
     }
 
+    @GetMapping("/{announcement-id}/comment/{comment-id}/restore")
+    fun restoreComponent(@PathVariable("announcement-id") announcementId: String,
+                         @PathVariable("comment-id") commentId: String): CommentRsDto {
+        return commentService.restoreComponent(commentId)
+    }
+
 }
