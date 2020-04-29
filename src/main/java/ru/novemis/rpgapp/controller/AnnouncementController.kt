@@ -1,7 +1,6 @@
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.novemis.rpgapp.dao.announcement.AnnouncementRepository
 import ru.novemis.rpgapp.dto.announcement.AnnouncementDto
 import ru.novemis.rpgapp.dto.announcement.AnnouncementForm
 import ru.novemis.rpgapp.service.AnnouncementService
@@ -10,12 +9,11 @@ import ru.novemis.rpgapp.service.AnnouncementService
 @RestController
 @RequestMapping("/announcement")
 class AnnouncementController(
-        private val announcementService: AnnouncementService,
-        private val announcementRepository: AnnouncementRepository
+        private val announcementService: AnnouncementService
 ) {
 
     @PostMapping(consumes = ["application/json"])
-    fun saveAnnouncement(@RequestBody form: AnnouncementForm): AnnouncementDto {
+    fun save(@RequestBody form: AnnouncementForm): AnnouncementDto {
         return announcementService.saveAnnouncement(form)
     }
 
@@ -26,7 +24,12 @@ class AnnouncementController(
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable("id") id: String) {
-        announcementRepository.deleteById(id)
+        announcementService.delete(id)
+    }
+
+    @GetMapping("/{id}/restore")
+    fun restore(@PathVariable("id") id: String) {
+        announcementService.restore(id)
     }
 
 }

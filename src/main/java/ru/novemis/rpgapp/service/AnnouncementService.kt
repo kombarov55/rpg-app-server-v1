@@ -24,8 +24,20 @@ class AnnouncementService(
                 .map { announcementConverter.toDto(it) }
     }
 
-    fun delete(announcementId: String) {
+    fun delete(announcementId: String): AnnouncementDto {
+        return announcementRepository.findById(announcementId)
+                .map { it.apply { deleted = true } }
+                .map { announcementRepository.save(it) }
+                .map { announcementConverter.toDto(it) }
+                .orElseThrow { IllegalArgumentException() }
+    }
 
+    fun restore(announcementId: String): AnnouncementDto {
+        return announcementRepository.findById(announcementId)
+                .map { it.apply { deleted = false } }
+                .map { announcementRepository.save(it) }
+                .map { announcementConverter.toDto(it) }
+                .orElseThrow { IllegalArgumentException() }
     }
 
 }
