@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.dto.converter
+package ru.novemis.rpgapp.converter
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.dao.useraccount.UserAccountRepository
