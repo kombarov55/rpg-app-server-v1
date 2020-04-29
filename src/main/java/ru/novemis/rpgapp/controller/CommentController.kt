@@ -6,19 +6,19 @@ import ru.novemis.rpgapp.dto.announcement.CommentRsDto
 import ru.novemis.rpgapp.service.CommentService
 
 @RestController
-@RequestMapping("/announcement/comment")
+@RequestMapping("/announcement")
 class CommentController(
         private val commentService: CommentService
 ) {
 
-    @PostMapping
+    @PostMapping("/comment")
     fun addComment(@RequestBody rq: CommentRqDto): CommentRsDto {
         return commentService.saveComment(rq)
     }
 
-    @GetMapping
-    fun getAll(): List<CommentRsDto> {
-        return commentService.findAllComments()
+    @GetMapping("/{announcement-id}/comment")
+    fun getByAnnouncementId(@PathVariable("announcement-id") announcementId: String): List<CommentRsDto> {
+        return commentService.findByAnnouncementId(announcementId)
     }
 
 }

@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.service
 
+import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.CommentConverter
 import ru.novemis.rpgapp.dao.announcement.CommentRepository
@@ -20,8 +21,8 @@ class CommentService(
         )
     }
 
-    fun findAllComments(): List<CommentRsDto> {
-        return commentRepository.findAll()
+    fun findByAnnouncementId(announcementId: String): List<CommentRsDto> {
+        return commentRepository.findByAnnouncementId(announcementId, Sort.by(Sort.Direction.ASC, "creationDate"))
                 .map { commentConverter.toDto(it) }
     }
 

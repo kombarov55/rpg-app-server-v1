@@ -26,6 +26,7 @@ class CommentConverter(
 
     fun toDto(comment: Comment): CommentRsDto {
         return CommentRsDto(
+                id = comment.id!!,
                 announcementId = comment.announcement?.id!!,
                 authorFullName = comment.author?.let { it.firstName + " " + it.lastName }!!,
                 authorImgSrc = comment.author?.photo50Url!!,
