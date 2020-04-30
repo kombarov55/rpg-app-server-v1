@@ -2,10 +2,7 @@ package ru.novemis.rpgapp.domain.announcement
 
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import java.util.*
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.ManyToOne
+import javax.persistence.*
 
 @Entity
 data class Announcement(
@@ -13,14 +10,17 @@ data class Announcement(
         var id: String = UUID.randomUUID().toString(),
 
         @ManyToOne
+        @JoinColumn(name = "author_id")
         var author: UserAccount? = null,
 
         var creationDate: Date = Date(),
 
         val title: String = "",
 
+        @Enumerated(EnumType.STRING)
         val gameType: GameType? = null,
 
+        @Enumerated(EnumType.STRING)
         val sex: Sex? = null,
 
         val minAge: Int? = null,

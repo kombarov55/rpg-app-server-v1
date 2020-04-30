@@ -1,15 +1,13 @@
 package ru.novemis.rpgapp.domain.useraccount
 
+import ru.novemis.rpgapp.domain.announcement.Announcement
 import java.util.*
-import javax.persistence.CascadeType
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.OneToOne
+import javax.persistence.*
 
 @Entity
 data class UserAccount(
         @Id
-        var id: String? = UUID.randomUUID().toString(),
+        var id: String = UUID.randomUUID().toString(),
 
         var userId: Long = -1,
 
@@ -19,8 +17,12 @@ data class UserAccount(
 
         var photo50Url: String = "",
 
+        @Enumerated(EnumType.STRING)
         var role: UserAccountRole = UserAccountRole.VISITOR,
 
         @OneToOne(cascade = [CascadeType.ALL])
-        var userAccountPreferences: UserAccountPreferences = UserAccountPreferences()
+        var userAccountPreferences: UserAccountPreferences = UserAccountPreferences(),
+
+        @OneToMany(cascade = [CascadeType.ALL])
+        var announcements: List<Announcement> = emptyList()
 )

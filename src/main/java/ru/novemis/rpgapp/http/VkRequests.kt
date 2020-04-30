@@ -5,6 +5,7 @@ import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
+import ru.novemis.rpgapp.domain.useraccount.UserAccountPreferences
 import ru.novemis.rpgapp.util.HiddenProperties
 import java.net.URLEncoder
 import java.util.*
@@ -41,7 +42,9 @@ class VkRequests(
                 firstName = json.getString("first_name"),
                 lastName = json.getString("last_name"),
                 photo50Url = json.getString("photo_50")
-        )
+        ).apply {
+            userAccountPreferences = UserAccountPreferences(userAccount = this)
+        }
     }
 
     fun sendMsg(peerId: Int, message: String?) {
