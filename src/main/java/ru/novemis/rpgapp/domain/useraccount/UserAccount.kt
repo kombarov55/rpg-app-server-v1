@@ -1,16 +1,15 @@
 package ru.novemis.rpgapp.domain.useraccount
 
-import org.hibernate.annotations.GenericGenerator
+import java.util.*
+import javax.persistence.CascadeType
 import javax.persistence.Entity
-import javax.persistence.GeneratedValue
 import javax.persistence.Id
+import javax.persistence.OneToOne
 
 @Entity
 data class UserAccount(
         @Id
-        @GeneratedValue(generator = "system-uuid")
-        @GenericGenerator(name = "system-uuid", strategy = "uuid")
-        var id: String? = null,
+        var id: String? = UUID.randomUUID().toString(),
 
         var userId: Long = -1,
 
@@ -20,5 +19,8 @@ data class UserAccount(
 
         var photo50Url: String = "",
 
-        var role: UserAccountRole = UserAccountRole.VISITOR
+        var role: UserAccountRole = UserAccountRole.VISITOR,
+
+        @OneToOne(cascade = [CascadeType.ALL])
+        var userAccountPreferences: UserAccountPreferences = UserAccountPreferences()
 )

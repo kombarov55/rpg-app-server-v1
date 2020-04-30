@@ -1,16 +1,16 @@
 package ru.novemis.rpgapp.domain.announcement
 
-import org.hibernate.annotations.GenericGenerator
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import java.util.*
-import javax.persistence.*
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.ManyToOne
 
 @Entity
 data class Announcement(
         @Id
-        @GeneratedValue(generator = "system-uuid")
-        @GenericGenerator(name = "system-uuid", strategy = "uuid")
-        var id: String = "",
+        var id: String = UUID.randomUUID().toString(),
 
         @ManyToOne
         var author: UserAccount? = null,
