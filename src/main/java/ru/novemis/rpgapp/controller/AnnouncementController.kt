@@ -23,13 +23,13 @@ class AnnouncementController(
     }
 
     @DeleteMapping("/{id}")
-    fun delete(@PathVariable("id") id: String) {
-        announcementService.delete(id)
+    fun delete(@PathVariable("id") id: String): AnnouncementDto {
+        return announcementService.delete(id)
     }
 
     @GetMapping("/{id}/restore")
-    fun restore(@PathVariable("id") id: String) {
-        announcementService.restore(id)
+    fun restore(@PathVariable("id") id: String): AnnouncementDto {
+        return announcementService.restore(id)
     }
 
 }
