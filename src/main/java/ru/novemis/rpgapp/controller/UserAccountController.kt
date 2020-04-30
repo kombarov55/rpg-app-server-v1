@@ -1,10 +1,8 @@
 package ru.novemis.rpgapp.controller
 
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
-import ru.novemis.rpgapp.domain.useraccount.UserAccount
+import org.springframework.web.bind.annotation.*
+import ru.novemis.rpgapp.dto.useraccount.AddFavoriteAnnouncementForm
+import ru.novemis.rpgapp.dto.useraccount.UserAccountDto
 import ru.novemis.rpgapp.service.UserAccountService
 
 @RestController
@@ -13,7 +11,15 @@ class UserAccountController(
         private val userAccountService: UserAccountService
 ) {
 
-    @GetMapping("{user-id}")
-    fun findById(@PathVariable("user-id") userId: Long): UserAccount = userAccountService.getAccountByUserId(userId)
+    @GetMapping("/{user-id}")
+    fun findById(@PathVariable("user-id") userId: Long): UserAccountDto {
+        return userAccountService.getAccountDtoByUserId(userId)
+    }
+
+    @PatchMapping("/{user-id}")
+    fun addFavoriteAnnouncement(@PathVariable("user-id") userId: Long,
+                                @RequestBody form: AddFavoriteAnnouncementForm): UserAccountDto {
+        return userAccountService.addFavoriteAnnouncement(userId, form.announcementId)
+    }
 
 }

@@ -2,6 +2,7 @@ package ru.novemis.rpgapp.service
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.UserAccountConverter
+import ru.novemis.rpgapp.dao.announcement.AnnouncementRepository
 import ru.novemis.rpgapp.dao.useraccount.UserAccountRepository
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import ru.novemis.rpgapp.domain.useraccount.UserAccountRole
@@ -13,6 +14,7 @@ import javax.transaction.Transactional
 open class UserAccountService(
         private val vkRequests: VkRequests,
         private val userAccountRepository: UserAccountRepository,
+        private val announcementRepository: AnnouncementRepository,
         private val userAccountConverter: UserAccountConverter
 ) {
 
@@ -32,4 +34,16 @@ open class UserAccountService(
 
     }
 
+    @Transactional
+    open fun addFavoriteAnnouncement(userId: Long, announcementId: String): UserAccountDto {
+       val userAccount = userAccountRepository.findByUserId(userId) ?: throw IllegalArgumentException()
+        val announcement = announcementRepository.findById(announcementId).orElseThrow { IllegalArgumentException() }
+
+        userAccount.userAccountPreferences.favoriteAnnouncements += announcement
+
+        return userAccountConverter.toDto(
+                userAccountRepository.save(userAccount)
+        )
+
+    }
 }
