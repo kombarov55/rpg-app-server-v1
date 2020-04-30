@@ -6,5 +6,5 @@ data class UserAccountDto(
         var firstName: String = "",
         var lastName: String = "",
         var photo50Url: String = "",
-        var userAccountPreferencesDto: UserAccountPreferencesDto = UserAccountPreferencesDto()
+        var userAccountPreferences: UserAccountPreferencesDto = UserAccountPreferencesDto()
 )

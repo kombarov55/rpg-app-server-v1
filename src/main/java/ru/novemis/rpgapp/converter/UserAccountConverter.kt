@@ -16,7 +16,7 @@ class UserAccountConverter {
                     firstName = it.firstName,
                     lastName = it.lastName,
                     photo50Url = it.photo50Url,
-                    userAccountPreferencesDto = UserAccountPreferencesDto(
+                    userAccountPreferences = UserAccountPreferencesDto(
                             favAnnouncementIds = it.userAccountPreferences.favoriteAnnouncements.map { it.id }
                     )
 

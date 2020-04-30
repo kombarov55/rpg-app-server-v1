@@ -35,11 +35,16 @@ open class UserAccountService(
     }
 
     @Transactional
-    open fun addFavoriteAnnouncement(userId: Long, announcementId: String): UserAccountDto {
+    open fun toggleFavoriteAnnouncement(userId: Long, announcementId: String): UserAccountDto {
        val userAccount = userAccountRepository.findByUserId(userId) ?: throw IllegalArgumentException()
         val announcement = announcementRepository.findById(announcementId).orElseThrow { IllegalArgumentException() }
 
-        userAccount.userAccountPreferences.favoriteAnnouncements += announcement
+        val favs = userAccount.userAccountPreferences.favoriteAnnouncements
+        if (!favs.any { it.id == announcement.id }) {
+            userAccount.userAccountPreferences.favoriteAnnouncements += announcement
+        } else {
+            userAccount.userAccountPreferences.favoriteAnnouncements = favs.filter { it.id != announcement.id }
+        }
 
         return userAccountConverter.toDto(
                 userAccountRepository.save(userAccount)

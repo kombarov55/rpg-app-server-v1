@@ -16,10 +16,10 @@ class UserAccountController(
         return userAccountService.getAccountDtoByUserId(userId)
     }
 
-    @PatchMapping("/{user-id}")
-    fun addFavoriteAnnouncement(@PathVariable("user-id") userId: Long,
-                                @RequestBody form: AddFavoriteAnnouncementForm): UserAccountDto {
-        return userAccountService.addFavoriteAnnouncement(userId, form.announcementId)
+    @PatchMapping("/{user-id}/toggleFavAnnouncement")
+    fun toggleFavoriteAnnouncement(@PathVariable("user-id") userId: Long,
+                                   @RequestBody form: AddFavoriteAnnouncementForm): UserAccountDto {
+        return userAccountService.toggleFavoriteAnnouncement(userId, form.announcementId)
     }
 
 }

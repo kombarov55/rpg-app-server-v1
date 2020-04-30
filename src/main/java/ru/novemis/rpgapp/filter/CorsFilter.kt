@@ -12,7 +12,7 @@ class CorsFilter : WebFilter {
     override fun filter(serverWebExchange: ServerWebExchange, webFilterChain: WebFilterChain): Mono<Void> {
         serverWebExchange.response.headers["Access-Control-Allow-Origin"] = "*"
         serverWebExchange.response.headers["Access-Control-Allow-Credentials"] = "true"
-        serverWebExchange.response.headers["Access-Control-Allow-Methods"] = "GET,HEAD,OPTIONS,POST,PUT,DELETE"
+        serverWebExchange.response.headers["Access-Control-Allow-Methods"] = "GET,HEAD,OPTIONS,POST,PUT,DELETE,PATCH"
         serverWebExchange.response.headers["Access-Control-Allow-Headers"] = "*"
 
         return webFilterChain.filter(serverWebExchange)
