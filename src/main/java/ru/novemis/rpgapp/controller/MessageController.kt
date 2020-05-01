@@ -23,4 +23,9 @@ class MessageController(
         return messageService.saveMessage(messageForm)
     }
 
+    @GetMapping("/{conversation-id}")
+    fun longpoll(@PathVariable("conversation-id") conversationId: String): List<MessageDto> {
+        return messageService.pollMessages(conversationId)
+    }
+
 }
