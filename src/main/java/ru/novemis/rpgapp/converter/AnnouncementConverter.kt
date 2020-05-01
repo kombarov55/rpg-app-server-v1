@@ -1,13 +1,13 @@
 package ru.novemis.rpgapp.converter
 
 import org.springframework.stereotype.Component
-import ru.novemis.rpgapp.dao.announcement.CommentRepository
-import ru.novemis.rpgapp.dao.useraccount.UserAccountRepository
 import ru.novemis.rpgapp.domain.announcement.Announcement
 import ru.novemis.rpgapp.domain.announcement.GameType
 import ru.novemis.rpgapp.domain.announcement.Sex
 import ru.novemis.rpgapp.dto.announcement.AnnouncementDto
 import ru.novemis.rpgapp.dto.announcement.AnnouncementForm
+import ru.novemis.rpgapp.repository.announcement.CommentRepository
+import ru.novemis.rpgapp.repository.useraccount.UserAccountRepository
 import java.util.*
 
 @Component

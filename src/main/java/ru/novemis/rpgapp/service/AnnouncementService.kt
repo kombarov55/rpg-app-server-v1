@@ -2,9 +2,9 @@ package ru.novemis.rpgapp.service
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.AnnouncementConverter
-import ru.novemis.rpgapp.dao.announcement.AnnouncementRepository
 import ru.novemis.rpgapp.dto.announcement.AnnouncementDto
 import ru.novemis.rpgapp.dto.announcement.AnnouncementForm
+import ru.novemis.rpgapp.repository.announcement.AnnouncementRepository
 
 @Component
 class AnnouncementService(

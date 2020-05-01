@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.dao.useraccount
+package ru.novemis.rpgapp.repository.useraccount
 
 import org.springframework.data.repository.CrudRepository
 import ru.novemis.rpgapp.domain.useraccount.UserAccount

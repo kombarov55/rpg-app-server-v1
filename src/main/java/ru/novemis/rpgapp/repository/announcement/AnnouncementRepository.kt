@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.dao.announcement
+package ru.novemis.rpgapp.repository.announcement
 
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository

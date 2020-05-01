@@ -3,9 +3,9 @@ package ru.novemis.rpgapp.service
 import org.springframework.data.domain.Sort
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.CommentConverter
-import ru.novemis.rpgapp.dao.announcement.CommentRepository
 import ru.novemis.rpgapp.dto.announcement.CommentDto
 import ru.novemis.rpgapp.dto.announcement.CommentForm
+import ru.novemis.rpgapp.repository.announcement.CommentRepository
 
 @Component
 class CommentService(

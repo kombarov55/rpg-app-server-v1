@@ -2,12 +2,12 @@ package ru.novemis.rpgapp.service
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.UserAccountConverter
-import ru.novemis.rpgapp.dao.announcement.AnnouncementRepository
-import ru.novemis.rpgapp.dao.useraccount.UserAccountRepository
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import ru.novemis.rpgapp.domain.useraccount.UserAccountRole
 import ru.novemis.rpgapp.dto.useraccount.UserAccountDto
 import ru.novemis.rpgapp.http.VkRequests
+import ru.novemis.rpgapp.repository.announcement.AnnouncementRepository
+import ru.novemis.rpgapp.repository.useraccount.UserAccountRepository
 import javax.transaction.Transactional
 
 @Component
@@ -49,6 +49,11 @@ open class UserAccountService(
         return userAccountConverter.toDto(
                 userAccountRepository.save(userAccount)
         )
+    }
 
+    @Transactional
+    open fun findAll(): List<UserAccountDto> {
+        return userAccountRepository.findAll()
+                .map { userAccountConverter.toDto(it) }
     }
 }

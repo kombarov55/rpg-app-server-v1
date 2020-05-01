@@ -11,6 +11,11 @@ class UserAccountController(
         private val userAccountService: UserAccountService
 ) {
 
+    @GetMapping
+    fun findAll(): List<UserAccountDto> {
+        return userAccountService.findAll()
+    }
+
     @GetMapping("/{user-id}")
     fun findById(@PathVariable("user-id") userId: Long): UserAccountDto {
         return userAccountService.getAccountDtoByUserId(userId)
