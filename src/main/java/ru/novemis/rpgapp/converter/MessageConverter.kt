@@ -14,10 +14,10 @@ class MessageConverter(
         private val userAccountRepository: UserAccountRepository
 ) {
 
-    fun toDomain(messageForm: MessageForm): Message {
+    fun toDomain(conversationId: String, messageForm: MessageForm): Message {
         return messageForm.let {
             Message(
-                    conversation = conversationRepository.findById(it.conversationId).orElseThrow { IllegalArgumentException() },
+                    conversation = conversationRepository.findById(conversationId).orElseThrow { IllegalArgumentException() },
                     author = userAccountRepository.findByUserId(it.authorId) ?: throw IllegalArgumentException(),
                     creationDate = Date(),
                     text = it.text
@@ -29,6 +29,7 @@ class MessageConverter(
         return message.let {
             MessageDto(
                     id = it.id,
+                    authorUserId = it.author?.userId!!,
                     authorImgSrc = it.author?.photo50Url!!,
                     authorFullName = it.author?.let { it.firstName + " " + it.lastName }!!,
                     creationDate = it.creationDate.time,

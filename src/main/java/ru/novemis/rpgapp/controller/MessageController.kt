@@ -6,24 +6,25 @@ import ru.novemis.rpgapp.dto.conversation.MessageForm
 import ru.novemis.rpgapp.service.MessageService
 
 @RestController
-@RequestMapping("/message")
+@RequestMapping("/conversation")
 class MessageController(
         private val messageService: MessageService
 ) {
 
-    @GetMapping
-    fun findByConversationId(@RequestParam("conversationId") conversationId: String,
+    @GetMapping("/{conversation-id}/message")
+    fun findByConversationId(@PathVariable("conversation-id") conversationId: String,
                              @RequestParam("page") page: Int,
                              @RequestParam("pageSize") pageSize: Int): List<MessageDto> {
         return messageService.findByConversationId(conversationId, page, pageSize)
     }
 
-    @PostMapping
-    fun save(@RequestBody messageForm: MessageForm): MessageDto {
-        return messageService.saveMessage(messageForm)
+    @PostMapping("/{conversation-id}/message")
+    fun save(@PathVariable("conversation-id") conversationId: String,
+             @RequestBody messageForm: MessageForm): MessageDto {
+        return messageService.saveMessage(conversationId, messageForm)
     }
 
-    @GetMapping("/{conversation-id}")
+    @GetMapping("/{conversation-id}/message/longpoll")
     fun longpoll(@PathVariable("conversation-id") conversationId: String): List<MessageDto> {
         return messageService.pollMessages(conversationId)
     }

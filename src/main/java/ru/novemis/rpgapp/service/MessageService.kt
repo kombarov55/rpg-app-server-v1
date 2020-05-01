@@ -28,8 +28,8 @@ class MessageService(
                 .map { messageConverter.toDto(it) }
     }
 
-    fun saveMessage(messageForm: MessageForm): MessageDto {
-        val message = messageConverter.toDomain(messageForm)
+    fun saveMessage(conversationId: String, messageForm: MessageForm): MessageDto {
+        val message = messageConverter.toDomain(conversationId, messageForm)
 
         putMessageInQueue(message)
 
