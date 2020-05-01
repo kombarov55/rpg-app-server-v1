@@ -12,8 +12,8 @@ class ConversationController(
 ) {
 
     @GetMapping("{user-id}")
-    fun findAllConversations(@PathVariable("user-id") userId: Long): List<ConversationDto> {
-        return conversationService.findByUserId(userId)
+    fun findAllConversationsByUserId(@PathVariable("user-id") userId: Long): List<ConversationDto> {
+        return conversationService.findAllByUserId(userId)
     }
 
     @PostMapping

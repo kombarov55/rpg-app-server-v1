@@ -33,7 +33,7 @@ class ConversationService(
         return conversationConverter.toDto(author, conversation)
     }
 
-    fun findByUserId(userId: Long): List<ConversationDto> {
+    fun findAllByUserId(userId: Long): List<ConversationDto> {
         val author = userAccountRepository.findByUserId(userId)
         val authorId = author?.id ?: throw IllegalArgumentException()
 
