@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.ConversationConverter
 import ru.novemis.rpgapp.domain.conversation.Conversation
 import ru.novemis.rpgapp.dto.conversation.ConversationDto
+import ru.novemis.rpgapp.dto.conversation.ConversationForm
 import ru.novemis.rpgapp.repository.conversation.ConversationRepository
 import ru.novemis.rpgapp.repository.useraccount.UserAccountRepository
 
@@ -14,9 +15,9 @@ class ConversationService(
         private val conversationConverter: ConversationConverter
 ) {
 
-    fun findOrCreateConversation(userId: Long, companionUserId: Long): ConversationDto {
-        val author = userAccountRepository.findByUserId(userId) ?: throw IllegalArgumentException()
-        val companion = userAccountRepository.findByUserId(companionUserId)
+    fun findOrCreateConversation(form: ConversationForm): ConversationDto {
+        val author = userAccountRepository.findByUserId(form.userId) ?: throw IllegalArgumentException()
+        val companion = userAccountRepository.findByUserId(form.companionUserId)
 
         val authorAccountId = author.id
         val companionAccountId = companion?.id ?: throw IllegalArgumentException()
@@ -30,6 +31,14 @@ class ConversationService(
                 )
 
         return conversationConverter.toDto(author, conversation)
+    }
+
+    fun findByUserId(userId: Long): List<ConversationDto> {
+        val author = userAccountRepository.findByUserId(userId)
+        val authorId = author?.id ?: throw IllegalArgumentException()
+
+        return conversationRepository.findAllByUserId(authorId)
+                .map { conversationConverter.toDto(author, it) }
     }
 
 }
