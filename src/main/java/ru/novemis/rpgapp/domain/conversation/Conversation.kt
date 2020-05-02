@@ -1,10 +1,9 @@
 package ru.novemis.rpgapp.domain.conversation
 
+import org.hibernate.annotations.OrderBy
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.OneToOne
+import javax.persistence.*
 
 @Entity
 data class Conversation(
@@ -15,5 +14,9 @@ data class Conversation(
         var user1: UserAccount? = null,
 
         @OneToOne
-        var user2: UserAccount? = null
+        var user2: UserAccount? = null,
+
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "conversation")
+        @OrderBy(clause = "creationDate DESC")
+        var messages: List<Message> = emptyList()
 )

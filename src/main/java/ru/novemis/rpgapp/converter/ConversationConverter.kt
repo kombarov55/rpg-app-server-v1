@@ -17,7 +17,9 @@ class ConversationConverter {
             ConversationDto(
                     id = it.id,
                     companionImgSrc = companion.photo50Url,
-                    companionFullName = companion.let { it.firstName + " " + it.lastName }
+                    companionFullName = companion.let { it.firstName + " " + it.lastName },
+                    lastMsgDate = it.messages.first().creationDate.time,
+                    lastMsgText = it.messages.first().text
             )
         }
     }

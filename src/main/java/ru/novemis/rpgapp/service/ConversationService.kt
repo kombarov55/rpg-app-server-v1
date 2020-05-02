@@ -7,9 +7,10 @@ import ru.novemis.rpgapp.dto.conversation.ConversationDto
 import ru.novemis.rpgapp.dto.conversation.ConversationForm
 import ru.novemis.rpgapp.repository.conversation.ConversationRepository
 import ru.novemis.rpgapp.repository.useraccount.UserAccountRepository
+import javax.transaction.Transactional
 
 @Component
-class ConversationService(
+open class ConversationService(
         private val userAccountRepository: UserAccountRepository,
         private val conversationRepository: ConversationRepository,
         private val conversationConverter: ConversationConverter
@@ -33,7 +34,8 @@ class ConversationService(
         return conversationConverter.toDto(author, conversation)
     }
 
-    fun findAllByUserId(userId: Long): List<ConversationDto> {
+    @Transactional
+    open fun findAllByUserId(userId: Long): List<ConversationDto> {
         val author = userAccountRepository.findByUserId(userId)
         val authorId = author?.id ?: throw IllegalArgumentException()
 
