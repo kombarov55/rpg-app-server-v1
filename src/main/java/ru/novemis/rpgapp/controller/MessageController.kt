@@ -25,8 +25,10 @@ class MessageController(
     }
 
     @GetMapping("/{conversation-id}/message/longpoll")
-    fun longpoll(@PathVariable("conversation-id") conversationId: String): List<MessageDto> {
-        return messageService.pollMessages(conversationId)
+    fun longpoll(@PathVariable("conversation-id") conversationId: String,
+                 @RequestParam("lastMsgTimestamp") lastMsgTimestamp: Long,
+                 @RequestParam(value = "myUserId", required = false) myUserId: Long?): List<MessageDto> {
+        return messageService.pollMessages(conversationId, lastMsgTimestamp, myUserId)
     }
 
 }

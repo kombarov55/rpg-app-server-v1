@@ -8,16 +8,13 @@ import ru.novemis.rpgapp.domain.conversation.Message
 import ru.novemis.rpgapp.dto.conversation.MessageDto
 import ru.novemis.rpgapp.dto.conversation.MessageForm
 import ru.novemis.rpgapp.repository.conversation.MessageRepository
-import java.util.concurrent.BlockingQueue
-import java.util.concurrent.LinkedBlockingQueue
+import java.util.*
 
 @Component
 class MessageService(
         private val messageRepository: MessageRepository,
         private val messageConverter: MessageConverter
 ) {
-
-    private val conversationIdToPendingMessages: MutableMap<String, BlockingQueue<Message>> = mutableMapOf()
 
     fun findByConversationId(conversationId: String, page: Int, pageSize: Int): List<MessageDto> {
 
@@ -29,36 +26,30 @@ class MessageService(
     }
 
     fun saveMessage(conversationId: String, messageForm: MessageForm): MessageDto {
-        val message = messageConverter.toDomain(conversationId, messageForm)
-
-        putMessageInQueue(message)
-
         return messageConverter.toDto(
                 messageRepository.save(
-                        message))
+                        messageConverter.toDomain(conversationId, messageForm)))
     }
 
-    fun pollMessages(conversationId: String): List<MessageDto> {
-        val queue = conversationIdToPendingMessages[conversationId] ?: throw IllegalArgumentException()
+    fun pollMessages(conversationId: String, lastMsgTimestamp: Long, userId: Long?): List<MessageDto> {
+        return pollMessagesFromDatabase(conversationId, lastMsgTimestamp)
+//                .filter { it.author?.userId!! != userId }
+                .map { messageConverter.toDto(it) }
+    }
 
-        if (queue.size == 0) {
-            return listOf(messageConverter.toDto(queue.take()))
+    fun pollMessagesFromDatabase(conversationId: String, lastMsgTimestamp: Long): List<Message> {
+        val msgs = messageRepository
+                .findByConversationIdAndAfterDate(
+                        conversationId,
+                        Date(lastMsgTimestamp),
+                        Sort.by("creationDate").descending())
+
+        if (msgs.isEmpty()) {
+            Thread.sleep(1000)
+            return pollMessagesFromDatabase(conversationId, lastMsgTimestamp)
         } else {
-            val result = mutableListOf<Message>()
-            queue.drainTo(result)
-
-            return result.map { messageConverter.toDto(it) }
+            return msgs
         }
-
-    }
-
-    private fun putMessageInQueue(message: Message) {
-        val blockingQueue = conversationIdToPendingMessages[message.conversation?.id!!]
-                ?: LinkedBlockingQueue<Message>().apply {
-                    conversationIdToPendingMessages[message.conversation?.id!!] = this
-                }
-
-        blockingQueue.put(message)
     }
 
 }
