@@ -1,8 +1,9 @@
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.novemis.rpgapp.dto.useraccount.AddFavoriteAnnouncementForm
-import ru.novemis.rpgapp.dto.useraccount.UserAccountDto
+import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountDto
+import ru.novemis.rpgapp.dto.useraccount.form.ToggleFavoriteAnnouncementForm
+import ru.novemis.rpgapp.dto.useraccount.form.ToggleRespondAnnouncementForm
 import ru.novemis.rpgapp.service.UserAccountService
 
 @RestController
@@ -23,8 +24,14 @@ class UserAccountController(
 
     @PatchMapping("/{user-id}/toggleFavAnnouncement")
     fun toggleFavoriteAnnouncement(@PathVariable("user-id") userId: Long,
-                                   @RequestBody form: AddFavoriteAnnouncementForm): UserAccountDto {
+                                   @RequestBody form: ToggleFavoriteAnnouncementForm): UserAccountDto {
         return userAccountService.toggleFavoriteAnnouncement(userId, form.announcementId)
+    }
+
+    @PatchMapping("{user-id}/toggleRespAnnouncement")
+    fun toggleRespondAnnouncement(@PathVariable("user-id") userId: Long,
+                                   @RequestBody form: ToggleRespondAnnouncementForm): UserAccountDto {
+        return userAccountService.toggleRespondAnnouncement(userId, form.announcementId)
     }
 
 }

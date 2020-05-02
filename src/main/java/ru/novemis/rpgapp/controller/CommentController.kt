@@ -1,8 +1,8 @@
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.novemis.rpgapp.dto.announcement.CommentDto
-import ru.novemis.rpgapp.dto.announcement.CommentForm
+import ru.novemis.rpgapp.dto.announcement.dto.CommentDto
+import ru.novemis.rpgapp.dto.announcement.form.CommentForm
 import ru.novemis.rpgapp.service.CommentService
 
 @RestController

@@ -14,9 +14,17 @@ data class UserAccountPreferences(
 
         @ManyToMany
         @JoinTable(
-                name = "user_account_preferences__announcement",
+                name = "user_account_preferences__favorite__announcement",
                 joinColumns = [JoinColumn(name = "user_account_preferences_id")],
                 inverseJoinColumns = [JoinColumn(name = "announcement_id")]
         )
-        var favoriteAnnouncements: List<Announcement> = emptyList()
+        var favoriteAnnouncements: List<Announcement> = emptyList(),
+
+        @ManyToMany
+        @JoinTable(
+                name = "user_account_preferences__responded__announcements",
+                joinColumns = [JoinColumn(name = "user_account_preferences_id")],
+                inverseJoinColumns = [JoinColumn(name = "announcement_id")]
+        )
+        var respondedAnnouncements: List<Announcement> = emptyList()
 )

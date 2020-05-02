@@ -1,8 +1,8 @@
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.novemis.rpgapp.dto.announcement.AnnouncementDto
-import ru.novemis.rpgapp.dto.announcement.AnnouncementForm
+import ru.novemis.rpgapp.dto.announcement.dto.AnnouncementDto
+import ru.novemis.rpgapp.dto.announcement.form.AnnouncementForm
 import ru.novemis.rpgapp.service.AnnouncementService
 
 @CrossOrigin

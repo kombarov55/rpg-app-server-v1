@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.dto.announcement
+package ru.novemis.rpgapp.dto.announcement.dto
 
 data class CommentDto(
         var id: String = "",

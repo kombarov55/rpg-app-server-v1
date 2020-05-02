@@ -2,8 +2,8 @@ package ru.novemis.rpgapp.converter
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.announcement.comment.Comment
-import ru.novemis.rpgapp.dto.announcement.CommentDto
-import ru.novemis.rpgapp.dto.announcement.CommentForm
+import ru.novemis.rpgapp.dto.announcement.dto.CommentDto
+import ru.novemis.rpgapp.dto.announcement.form.CommentForm
 import ru.novemis.rpgapp.repository.announcement.AnnouncementRepository
 import ru.novemis.rpgapp.repository.useraccount.UserAccountRepository
 import java.util.*

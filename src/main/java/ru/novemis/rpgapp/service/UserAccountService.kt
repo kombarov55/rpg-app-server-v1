@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.UserAccountConverter
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import ru.novemis.rpgapp.domain.useraccount.UserAccountRole
-import ru.novemis.rpgapp.dto.useraccount.UserAccountDto
+import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountDto
 import ru.novemis.rpgapp.http.VkRequests
 import ru.novemis.rpgapp.repository.announcement.AnnouncementRepository
 import ru.novemis.rpgapp.repository.useraccount.UserAccountRepository
@@ -36,7 +36,7 @@ open class UserAccountService(
 
     @Transactional
     open fun toggleFavoriteAnnouncement(userId: Long, announcementId: String): UserAccountDto {
-       val userAccount = userAccountRepository.findByUserId(userId) ?: throw IllegalArgumentException()
+        val userAccount = userAccountRepository.findByUserId(userId) ?: throw IllegalArgumentException()
         val announcement = announcementRepository.findById(announcementId).orElseThrow { IllegalArgumentException() }
 
         val favs = userAccount.userAccountPreferences.favoriteAnnouncements
@@ -44,6 +44,23 @@ open class UserAccountService(
             userAccount.userAccountPreferences.favoriteAnnouncements += announcement
         } else {
             userAccount.userAccountPreferences.favoriteAnnouncements = favs.filter { it.id != announcement.id }
+        }
+
+        return userAccountConverter.toDto(
+                userAccountRepository.save(userAccount)
+        )
+    }
+
+    @Transactional
+    open fun toggleRespondAnnouncement(userId: Long, announcementId: String): UserAccountDto {
+        val userAccount = userAccountRepository.findByUserId(userId) ?: throw IllegalArgumentException()
+        val announcement = announcementRepository.findById(announcementId).orElseThrow { IllegalArgumentException() }
+
+        val respondedAnnouncements = userAccount.userAccountPreferences.respondedAnnouncements
+        if (!respondedAnnouncements.any { it.id == announcement.id }) {
+            userAccount.userAccountPreferences.respondedAnnouncements += announcement
+        } else {
+            userAccount.userAccountPreferences.respondedAnnouncements = respondedAnnouncements.filter { it.id != announcement.id }
         }
 
         return userAccountConverter.toDto(

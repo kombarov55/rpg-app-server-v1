@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.dto.announcement
+package ru.novemis.rpgapp.dto.announcement.form
 
 data class CommentForm(
         var authorId: Long = 1,

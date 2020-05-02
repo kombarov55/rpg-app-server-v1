@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.dto.useraccount
+package ru.novemis.rpgapp.dto.useraccount.dto
 
 data class UserAccountDto(
         var id: String = "",
