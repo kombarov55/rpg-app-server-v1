@@ -16,8 +16,9 @@ open class ConversationService(
         private val conversationConverter: ConversationConverter
 ) {
 
-    fun findOrCreateConversation(form: ConversationForm): ConversationDto {
-        val author = userAccountRepository.findByUserId(form.userId) ?: throw IllegalArgumentException()
+    @Transactional
+    open fun findOrCreateConversation(form: ConversationForm): ConversationDto {
+        val author = userAccountRepository.findByUserId(form.userId) ?: throw java.lang.IllegalArgumentException()
         val companion = userAccountRepository.findByUserId(form.companionUserId)
 
         val authorAccountId = author.id
