@@ -22,10 +22,12 @@ class VkRequests(
         private val httpConnector: HttpConnector,
         private val objectMapper: ObjectMapper
 ) {
+
     private var token: String? = null
+
     @PostConstruct
     fun init() {
-        token = hiddenProperties!!.groupSecret
+        token = hiddenProperties.groupSecret
     }
 
     fun getUserInfo(userId: Long): UserAccount {
