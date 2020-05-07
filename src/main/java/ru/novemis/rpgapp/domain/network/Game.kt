@@ -22,5 +22,9 @@ data class Game(
 
         @ManyToOne
         @JoinColumn(name = "subnetwork_id")
-        var subnetwork: Subnetwork? = null
+        var subnetwork: Subnetwork? = null,
+
+        var deleted: Boolean = false,
+
+        var deletionDate: Date? = null
 )

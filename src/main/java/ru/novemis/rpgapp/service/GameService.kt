@@ -5,6 +5,7 @@ import ru.novemis.rpgapp.converter.GameConverter
 import ru.novemis.rpgapp.dto.network.GameDto
 import ru.novemis.rpgapp.dto.network.GameForm
 import ru.novemis.rpgapp.repository.network.GameRepository
+import java.util.*
 
 @Component
 class GameService(
@@ -28,6 +29,14 @@ class GameService(
     fun findBySubnetworkId(id: String): List<GameDto> {
         return gameRepository.findBySubnetworkId(id)
                 .map { gameConverter.toDto(it) }
+    }
+
+    fun delete(gameId: String) {
+        val game = gameRepository.findById(gameId).orElseThrow { IllegalArgumentException() }
+        game.deleted = true
+        game.deletionDate = Date()
+
+        gameRepository.save(game)
     }
 
 

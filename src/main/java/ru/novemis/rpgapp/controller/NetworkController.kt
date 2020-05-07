@@ -21,4 +21,9 @@ class NetworkController(
         return networkService.getAll()
     }
 
+    @DeleteMapping("/{network-id}")
+    fun delete(@PathVariable("network-id") networkId: String) {
+        networkService.delete(networkId)
+    }
+
 }

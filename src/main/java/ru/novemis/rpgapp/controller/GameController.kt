@@ -34,4 +34,16 @@ class GameController(
         return gameService.findBySubnetworkId(subnetworkId)
     }
 
+    @DeleteMapping("/network/{network-id}/game/{game-id}")
+    fun deleteNetworkGame(@PathVariable("game-id") gameId: String) {
+        return gameService.delete(gameId)
+    }
+
+    @DeleteMapping("/network/{network-id}/subnetwork/{subnetwork-id}/game/{game-id}")
+    fun deleteSubnetworkGame(@PathVariable("game-id") gameId: String) {
+        return gameService.delete(gameId)
+    }
+
+
+
 }

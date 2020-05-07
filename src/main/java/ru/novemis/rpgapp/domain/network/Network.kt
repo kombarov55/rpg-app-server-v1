@@ -17,5 +17,9 @@ data class Network(
         var subnetworks: List<Subnetwork> = emptyList(),
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "network")
-        var games: List<Game> = emptyList()
+        var games: List<Game> = emptyList(),
+
+        var deleted: Boolean = false,
+
+        var deletionDate: Date? = null
 )

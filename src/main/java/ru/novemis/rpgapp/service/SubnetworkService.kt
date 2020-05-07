@@ -5,6 +5,7 @@ import ru.novemis.rpgapp.converter.SubnetworkConverter
 import ru.novemis.rpgapp.dto.network.SubnetworkDto
 import ru.novemis.rpgapp.dto.network.SubnetworkForm
 import ru.novemis.rpgapp.repository.network.SubnetworkRepository
+import java.util.*
 
 @Component
 class SubnetworkService(
@@ -23,6 +24,14 @@ class SubnetworkService(
     fun findByNetworkId(networkId: String): List<SubnetworkDto> {
         return subnetworkRepository.findAllByNetworkId(networkId)
                 .map { subnetworkConverter.toDto(it) }
+    }
+
+    fun delete(subnetworkId: String) {
+        val subnetwork = subnetworkRepository.findById(subnetworkId).orElseThrow { IllegalArgumentException() }
+        subnetwork.deleted = true
+        subnetwork.deletionDate = Date()
+
+        subnetworkRepository.save(subnetwork)
     }
 
 }

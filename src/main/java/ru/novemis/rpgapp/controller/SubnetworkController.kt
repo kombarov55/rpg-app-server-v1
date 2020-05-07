@@ -23,4 +23,9 @@ class SubnetworkController(
         return subnetworkService.findByNetworkId(networkId)
     }
 
+    @DeleteMapping("/{network-id}/subnetwork/{subnetwork-id}")
+    fun delete(@PathVariable("subnetwork-id") subnetworkId: String) {
+        subnetworkService.delete(subnetworkId)
+    }
+
 }
