@@ -10,8 +10,17 @@ class GameController(
         private val gameService: GameService
 ) {
 
-    @PostMapping("/game")
-    fun save(@RequestBody form: GameForm): GameDto {
+    @PostMapping("/network/{network-id}/game")
+    fun saveByNetwork(@PathVariable("network-id") networkId: String,
+                      @RequestBody form: GameForm): GameDto {
+        form.networkId = networkId
+        return gameService.save(form)
+    }
+
+    @PostMapping("/network/{network-id}/subnetwork/{subnetwork-id}/game")
+    fun saveBySubnetwork(@PathVariable("subnetwork-id") subnetworkId: String,
+                         @RequestBody form: GameForm): GameDto {
+        form.subnetworkId = subnetworkId
         return gameService.save(form)
     }
 
