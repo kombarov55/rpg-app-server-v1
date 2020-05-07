@@ -6,14 +6,15 @@ import ru.novemis.rpgapp.dto.network.NetworkDto
 import ru.novemis.rpgapp.dto.network.NetworkForm
 import ru.novemis.rpgapp.repository.network.NetworkRepository
 import java.util.*
+import javax.transaction.Transactional
 
 @Component
-class NetworkService(
+open class NetworkService(
         private val networkRepository: NetworkRepository,
         private val networkConverter: NetworkConverter
 ) {
 
-    fun save(form: NetworkForm): NetworkDto {
+    open fun save(form: NetworkForm): NetworkDto {
         return networkConverter.toDto(
                 networkRepository.save(
                         networkConverter.toDomain(form)
@@ -21,12 +22,13 @@ class NetworkService(
         )
     }
 
-    fun getAll(): List<NetworkDto> {
-        return networkRepository.findAll()
+    open fun getAll(): List<NetworkDto> {
+        return networkRepository.findAllExisting()
                 .map { networkConverter.toDto(it) }
     }
 
-    fun delete(networkId: String) {
+    @Transactional
+    open fun delete(networkId: String) {
         val network = networkRepository.findById(networkId).orElseThrow { throw IllegalArgumentException() }
 
         val deletionDate = Date()
