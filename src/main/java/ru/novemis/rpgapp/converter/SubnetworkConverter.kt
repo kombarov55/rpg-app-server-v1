@@ -23,7 +23,7 @@ class SubnetworkConverter(
         return SubnetworkDto(
                 id = subnetwork.id,
                 title = subnetwork.title,
-                descripton = subnetwork.description,
+                description = subnetwork.description,
                 imgSrc = "https://sun9-64.userapi.com/c858416/v858416297/1c6f50/HpIP0jOcov4.jpg"
         )
     }
