@@ -22,6 +22,15 @@ open class NetworkService(
         )
     }
 
+    open fun update(networkId: String, form: NetworkForm): NetworkDto {
+        return networkConverter.toDto(
+                networkRepository.save(
+                        networkConverter.toDomain(form)
+                                .apply { id = networkId }
+                )
+        )
+    }
+
     open fun getAll(): List<NetworkDto> {
         return networkRepository.findAllExisting()
                 .map { networkConverter.toDto(it) }

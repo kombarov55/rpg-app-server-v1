@@ -21,6 +21,12 @@ class NetworkController(
         return networkService.getAll()
     }
 
+    @PutMapping("/{network-id}")
+    fun update(@PathVariable("network-id") networkId: String,
+               @RequestBody form: NetworkForm): NetworkDto {
+        return networkService.update(networkId, form)
+    }
+
     @DeleteMapping("/{network-id}")
     fun delete(@PathVariable("network-id") networkId: String) {
         networkService.delete(networkId)
