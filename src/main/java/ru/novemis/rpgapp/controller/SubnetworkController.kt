@@ -18,6 +18,13 @@ class SubnetworkController(
 
         return subnetworkService.save(subnetworkForm)
     }
+
+    @PutMapping("/{network-id}subnetwork/{subnetwork-id}")
+    fun update(@PathVariable("subnetwork-id") subnetworkId: String,
+               @RequestBody form: SubnetworkForm): SubnetworkDto {
+        return subnetworkService.update(subnetworkId, form)
+    }
+
     @GetMapping("/{network-id}/subnetwork")
     fun findByNetworkId(@PathVariable("network-id") networkId: String): List<SubnetworkDto> {
         return subnetworkService.findByNetworkId(networkId)

@@ -22,6 +22,14 @@ open class SubnetworkService(
         )
     }
 
+    open fun update(subnetworkId: String, form: SubnetworkForm): SubnetworkDto {
+        return subnetworkConverter.toDto(
+                subnetworkRepository.save(
+                        subnetworkConverter.toDomain(form)
+                                .apply { id = subnetworkId })
+        )
+    }
+
     open fun findByNetworkId(networkId: String): List<SubnetworkDto> {
         return subnetworkRepository.findAllByNetworkId(networkId)
                 .map { subnetworkConverter.toDto(it) }
