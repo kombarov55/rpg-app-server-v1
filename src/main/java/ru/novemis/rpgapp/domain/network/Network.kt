@@ -1,9 +1,7 @@
 package ru.novemis.rpgapp.domain.network
 
 import java.util.*
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
+import javax.persistence.*
 
 @Entity
 data class Network(
@@ -13,5 +11,8 @@ data class Network(
         var title: String = "",
 
         @Column(columnDefinition = "TEXT")
-        var description: String = ""
+        var description: String = "",
+
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "network")
+        var subnetworks: List<Subnetwork> = emptyList()
 )
