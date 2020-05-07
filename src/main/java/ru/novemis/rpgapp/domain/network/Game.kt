@@ -4,19 +4,23 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-data class Subnetwork(
+data class Game(
 
         @Id
         var id: String = UUID.randomUUID().toString(),
 
         var title: String = "",
 
+        @Column(columnDefinition = "TEXT")
         var description: String = "",
+
+        var imgSrc: String = "",
 
         @ManyToOne
         @JoinColumn(name = "network_id")
         var network: Network? = null,
 
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "subnetwork")
-        var games: List<Game> = emptyList()
+        @ManyToOne
+        @JoinColumn(name = "subnetwork_id")
+        var subnetwork: Subnetwork? = null
 )
