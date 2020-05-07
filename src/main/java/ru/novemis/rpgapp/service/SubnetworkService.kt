@@ -28,8 +28,14 @@ class SubnetworkService(
 
     fun delete(subnetworkId: String) {
         val subnetwork = subnetworkRepository.findById(subnetworkId).orElseThrow { IllegalArgumentException() }
+        val deletionDate = Date()
+
         subnetwork.deleted = true
-        subnetwork.deletionDate = Date()
+        subnetwork.deletionDate = deletionDate
+        subnetwork.games.forEach {
+            it.deleted = true
+            it.deletionDate = deletionDate
+        }
 
         subnetworkRepository.save(subnetwork)
     }

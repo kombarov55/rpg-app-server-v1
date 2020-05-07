@@ -28,8 +28,19 @@ class NetworkService(
 
     fun delete(networkId: String) {
         val network = networkRepository.findById(networkId).orElseThrow { throw IllegalArgumentException() }
+
+        val deletionDate = Date()
+
         network.deleted = true
-        network.deletionDate = Date()
+        network.deletionDate = deletionDate
+        network.subnetworks.forEach {
+            it.deleted = true
+            it.deletionDate = deletionDate
+        }
+        network.games.forEach {
+            it.deleted = true
+            it.deletionDate = deletionDate
+        }
 
         networkRepository.save(network)
     }
