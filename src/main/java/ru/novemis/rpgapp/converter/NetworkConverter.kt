@@ -19,7 +19,8 @@ class NetworkConverter {
         return NetworkDto(
                 id = network.id,
                 title = network.title,
-                description = network.description
+                description = network.description,
+                imgSrc = "https://sun9-16.userapi.com/c850436/v850436625/10f403/Q7mCrq-H_AY.jpg"
         )
     }
 
