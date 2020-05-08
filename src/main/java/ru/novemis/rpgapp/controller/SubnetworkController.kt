@@ -19,10 +19,11 @@ class SubnetworkController(
         return subnetworkService.save(subnetworkForm)
     }
 
-    @PutMapping("/{network-id}subnetwork/{subnetwork-id}")
-    fun update(@PathVariable("subnetwork-id") subnetworkId: String,
+    @PutMapping("/{network-id}/subnetwork/{subnetwork-id}")
+    fun update(@PathVariable("network-id") networkId: String,
+               @PathVariable("subnetwork-id") subnetworkId: String,
                @RequestBody form: SubnetworkForm): SubnetworkDto {
-        return subnetworkService.update(subnetworkId, form)
+        return subnetworkService.update(networkId, subnetworkId, form)
     }
 
     @GetMapping("/{network-id}/subnetwork")

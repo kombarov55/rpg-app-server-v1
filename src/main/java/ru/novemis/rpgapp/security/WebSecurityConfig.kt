@@ -14,6 +14,7 @@ open class WebSecurityConfig(
     @Bean
     open fun securityWebFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
         return http.csrf().disable()
+                .cors().and()
                 .formLogin().disable()
                 .httpBasic().disable()
                 .authenticationManager(jwtAuthManager)

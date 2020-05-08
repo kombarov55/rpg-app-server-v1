@@ -22,10 +22,10 @@ open class SubnetworkService(
         )
     }
 
-    open fun update(subnetworkId: String, form: SubnetworkForm): SubnetworkDto {
+    open fun update(networkId: String, subnetworkId: String, form: SubnetworkForm): SubnetworkDto {
         return subnetworkConverter.toDto(
                 subnetworkRepository.save(
-                        subnetworkConverter.toDomain(form)
+                        subnetworkConverter.toDomain(form.apply { this.networkId = networkId })
                                 .apply { id = subnetworkId })
         )
     }
