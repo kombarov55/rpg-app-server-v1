@@ -32,6 +32,18 @@ open class GameService(
                 .map { gameConverter.toDto(it) }
     }
 
+    open fun updateByNetworkId(networkId: String, form: GameForm): GameDto {
+        form.networkId = networkId
+
+        return gameConverter.toDto(gameRepository.save(gameConverter.toDomain(form)))
+    }
+
+    open fun updateBySubnetwork(subnetworkId: String, form: GameForm): GameDto {
+        form.subnetworkId = subnetworkId
+
+        return gameConverter.toDto(gameRepository.save(gameConverter.toDomain(form)))
+    }
+
     @Transactional
     open fun delete(gameId: String) {
         val game = gameRepository.findById(gameId).orElseThrow { IllegalArgumentException() }

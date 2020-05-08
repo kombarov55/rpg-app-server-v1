@@ -24,6 +24,18 @@ class GameController(
         return gameService.save(form)
     }
 
+    @PutMapping("/network/{network-id}/game/{game-id}")
+    fun updateByNetworkId(@PathVariable("network-id") networkId: String,
+                          @RequestBody form: GameForm): GameDto {
+        return gameService.updateByNetworkId(networkId, form)
+    }
+
+    @PutMapping("/network/{network-id}/subnetwork/{subnetwork-id}/game/{game-id}")
+    fun updateBySubnetworkId(@PathVariable("subnetwork-id") subnetworkId: String,
+                             @RequestBody form: GameForm): GameDto {
+        return gameService.updateBySubnetwork(subnetworkId, form)
+    }
+
     @GetMapping("/network/{network-id}/game")
     fun findByNetworkId(@PathVariable("network-id") networkId: String): List<GameDto> {
         return gameService.findByNetworkId(networkId)
@@ -38,7 +50,6 @@ class GameController(
     fun delete(@PathVariable("game-id") gameId: String) {
         return gameService.delete(gameId)
     }
-
 
 
 }
