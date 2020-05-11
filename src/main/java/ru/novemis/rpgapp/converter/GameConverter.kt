@@ -46,7 +46,9 @@ class GameConverter(
                 id = game.id,
                 title = game.title,
                 description = game.description,
-                imgSrc = "https://sun9-27.userapi.com/c857420/v857420029/1d203f/tKLlbcriafc.jpg"
+                imgSrc = "https://sun9-27.userapi.com/c857420/v857420029/1d203f/tKLlbcriafc.jpg",
+                currencies = game.currencies.map { it.name },
+                skillTypes = game.skillTypes.map { it.name }
         )
     }
 
