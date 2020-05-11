@@ -14,10 +14,10 @@ open class GameService(
         private val gameRepository: GameRepository
 ) {
 
-    open fun save(form: GameForm): GameDto {
+    open fun save(networkId: String? = null, subnetworkId: String? = null, form: GameForm): GameDto {
         return gameConverter.toDto(
                 gameRepository.save(
-                        gameConverter.toDomain(form)
+                        gameConverter.toDomain(networkId =  networkId, subnetworkId = subnetworkId, form = form)
                 )
         )
     }
@@ -32,16 +32,12 @@ open class GameService(
                 .map { gameConverter.toDto(it) }
     }
 
-    open fun updateByNetworkId(networkId: String, form: GameForm): GameDto {
-        form.networkId = networkId
-
-        return gameConverter.toDto(gameRepository.save(gameConverter.toDomain(form)))
+    open fun updateByNetworkId(gameId: String, networkId: String, form: GameForm): GameDto {
+        return gameConverter.toDto(gameRepository.save(gameConverter.toDomain(form = form, gameId = gameId, networkId = networkId)))
     }
 
-    open fun updateBySubnetwork(subnetworkId: String, form: GameForm): GameDto {
-        form.subnetworkId = subnetworkId
-
-        return gameConverter.toDto(gameRepository.save(gameConverter.toDomain(form)))
+    open fun updateBySubnetwork(gameId: String, subnetworkId: String, form: GameForm): GameDto {
+        return gameConverter.toDto(gameRepository.save(gameConverter.toDomain(form = form, gameId = gameId, subnetworkId = subnetworkId)))
     }
 
     @Transactional

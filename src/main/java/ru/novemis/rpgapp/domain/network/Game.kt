@@ -24,6 +24,12 @@ data class Game(
         @JoinColumn(name = "subnetwork_id")
         var subnetwork: Subnetwork? = null,
 
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
+        var currencies: List<Currency> = emptyList(),
+
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
+        var skillTypes: List<SkillType> = emptyList(),
+
         var deleted: Boolean = false,
 
         var deletionDate: Date? = null
