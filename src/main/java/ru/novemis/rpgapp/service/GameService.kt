@@ -14,6 +14,7 @@ open class GameService(
         private val gameRepository: GameRepository
 ) {
 
+    @Transactional
     open fun save(networkId: String? = null, subnetworkId: String? = null, form: GameForm): GameDto {
         return gameConverter.toDto(
                 gameRepository.save(

@@ -25,10 +25,10 @@ data class Game(
         var subnetwork: Subnetwork? = null,
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
-        var currencies: List<Currency> = emptyList(),
+        var currencies: List<Currency> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
-        var skillTypes: List<SkillType> = emptyList(),
+        var skillTypes: List<SkillType> = mutableListOf(),
 
         var deleted: Boolean = false,
 
