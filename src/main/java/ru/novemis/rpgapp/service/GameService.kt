@@ -23,20 +23,24 @@ open class GameService(
         )
     }
 
+    @Transactional
     open fun findByNetworkId(id: String): List<GameDto> {
         return gameRepository.findByNetworkId(id)
                 .map { gameConverter.toDto(it) }
     }
 
+    @Transactional
     open fun findBySubnetworkId(id: String): List<GameDto> {
         return gameRepository.findBySubnetworkId(id)
                 .map { gameConverter.toDto(it) }
     }
 
+    @Transactional
     open fun updateByNetworkId(gameId: String, networkId: String, form: GameForm): GameDto {
         return gameConverter.toDto(gameRepository.save(gameConverter.toDomain(form = form, gameId = gameId, networkId = networkId)))
     }
 
+    @Transactional
     open fun updateBySubnetwork(gameId: String, subnetworkId: String, form: GameForm): GameDto {
         return gameConverter.toDto(gameRepository.save(gameConverter.toDomain(form = form, gameId = gameId, subnetworkId = subnetworkId)))
     }
