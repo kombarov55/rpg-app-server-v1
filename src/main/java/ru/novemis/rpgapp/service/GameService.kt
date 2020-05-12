@@ -4,21 +4,25 @@ import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.GameConverter
 import ru.novemis.rpgapp.dto.network.GameDto
 import ru.novemis.rpgapp.dto.network.GameForm
+import ru.novemis.rpgapp.repository.network.CurrencyRepository
 import ru.novemis.rpgapp.repository.network.GameRepository
+import ru.novemis.rpgapp.repository.network.SkillTypeRepository
 import java.util.*
 import javax.transaction.Transactional
 
 @Component
 open class GameService(
         private val gameConverter: GameConverter,
-        private val gameRepository: GameRepository
+        private val gameRepository: GameRepository,
+        private val currencyRepository: CurrencyRepository,
+        private val skillTypeRepository: SkillTypeRepository
 ) {
 
     @Transactional
     open fun save(networkId: String? = null, subnetworkId: String? = null, form: GameForm): GameDto {
         return gameConverter.toDto(
                 gameRepository.save(
-                        gameConverter.toDomain(networkId =  networkId, subnetworkId = subnetworkId, form = form)
+                        gameConverter.toDomain(networkId = networkId, subnetworkId = subnetworkId, form = form)
                 )
         )
     }
@@ -37,12 +41,32 @@ open class GameService(
 
     @Transactional
     open fun updateByNetworkId(gameId: String, networkId: String, form: GameForm): GameDto {
-        return gameConverter.toDto(gameRepository.save(gameConverter.toDomain(form = form, gameId = gameId, networkId = networkId)))
+        currencyRepository.findByGameId(gameId)
+                .filter { !form.currencies.contains(it.name) }
+                .forEach { currencyRepository.delete(it) }
+
+        skillTypeRepository.findByGameId(gameId)
+                .filter { !form.skillTypes.contains(it.name) }
+                .forEach { skillTypeRepository.delete(it) }
+
+        return gameConverter.toDto(
+                gameRepository.save(
+                        gameConverter.toDomain(form = form, gameId = gameId, networkId = networkId)))
     }
 
     @Transactional
     open fun updateBySubnetwork(gameId: String, subnetworkId: String, form: GameForm): GameDto {
-        return gameConverter.toDto(gameRepository.save(gameConverter.toDomain(form = form, gameId = gameId, subnetworkId = subnetworkId)))
+        currencyRepository.findByGameId(gameId)
+                .filter { !form.currencies.contains(it.name) }
+                .forEach { currencyRepository.delete(it) }
+
+        skillTypeRepository.findByGameId(gameId)
+                .filter { !form.skillTypes.contains(it.name) }
+                .forEach { skillTypeRepository.delete(it) }
+
+        return gameConverter.toDto(
+                gameRepository.save(
+                        gameConverter.toDomain(form = form, gameId = gameId, subnetworkId = subnetworkId)))
     }
 
     @Transactional
