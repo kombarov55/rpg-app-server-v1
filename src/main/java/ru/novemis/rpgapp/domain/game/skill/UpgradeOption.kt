@@ -26,5 +26,5 @@ class UpgradeOption(
                 joinColumns = [JoinColumn(name = "upgrade_option_id")],
                 inverseJoinColumns = [JoinColumn(name = "currency_id")]
         )
-        var currencies: List<Currency> = emptyList()
+        var currencies: List<Currency> = mutableListOf()
 )

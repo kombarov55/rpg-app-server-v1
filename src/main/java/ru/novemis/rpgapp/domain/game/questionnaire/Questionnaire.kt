@@ -16,13 +16,13 @@ data class Questionnaire(
         var description: String = "",
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaire")
-        var items: List<QuestionnaireItem> = emptyList(),
+        var items: List<QuestionnaireItem> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaire")
-        var skillPointsDistributions: List<SkillPointsDistribution> = emptyList(),
+        var skillPointsDistributions: List<SkillPointsDistribution> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaire")
-        var skills: List<Skill> = emptyList(),
+        var skills: List<Skill> = mutableListOf(),
 
         @ManyToOne
         @JoinColumn(name = "game_id")

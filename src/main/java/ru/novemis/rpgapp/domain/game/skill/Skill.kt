@@ -34,13 +34,13 @@ data class Skill(
                 joinColumns = [JoinColumn(name = "skill_id")],
                 inverseJoinColumns = [JoinColumn(name = "currency_id")]
         )
-        var currenciesForUpgrade: List<Currency> = emptyList(),
+        var currenciesForUpgrade: List<Currency> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "skill")
-        var upgradeOptions: List<UpgradeOption> = emptyList(),
+        var upgradeOptions: List<UpgradeOption> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "skill")
-        var upgradeCosts: List<UpgradeCost> = emptyList(),
+        var upgradeCosts: List<UpgradeCost> = mutableListOf(),
 
         @ManyToOne
         @JoinColumn(name = "questionnaire_id")

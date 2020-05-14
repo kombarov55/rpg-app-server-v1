@@ -21,5 +21,5 @@ data class UpgradeCost(
         var lvlNum: Int = -1,
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "upgradeCost")
-        var upgradeCostOptions: List<UpgradeCostOption> = emptyList()
+        var upgradeCostOptions: List<UpgradeCostOption> = mutableListOf()
 )

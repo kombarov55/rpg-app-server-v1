@@ -15,7 +15,7 @@ data class UpgradeCostOption(
         var id: String = UUID.randomUUID().toString(),
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "upgradeCostOption")
-        var upgradeCostOptionEntries: List<UpgradeCostOptionEntry> = emptyList(),
+        var upgradeCostOptionEntries: List<UpgradeCostOptionEntry> = mutableListOf(),
 
         @ManyToOne
         @JoinColumn(name = "upgrade_cost_id")

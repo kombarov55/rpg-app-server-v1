@@ -35,7 +35,7 @@ data class Game(
         var skillTypes: List<SkillType> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
-        var questionnaires: List<Questionnaire> = emptyList(),
+        var questionnaires: List<Questionnaire> = mutableListOf(),
 
         var deleted: Boolean = false,
 
