@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.domain.game
 
+import ru.novemis.rpgapp.domain.game.questionnaire.Questionnaire
 import ru.novemis.rpgapp.domain.game.skill.SkillType
 import ru.novemis.rpgapp.domain.network.Network
 import ru.novemis.rpgapp.domain.network.Subnetwork
@@ -32,6 +33,9 @@ data class Game(
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
         var skillTypes: List<SkillType> = mutableListOf(),
+
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
+        var questionnaires: List<Questionnaire> = emptyList(),
 
         var deleted: Boolean = false,
 

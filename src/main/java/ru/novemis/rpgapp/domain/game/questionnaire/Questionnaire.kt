@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.domain.game.questionnaire
 
+import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.skill.Skill
 import java.util.*
 import javax.persistence.*
@@ -21,5 +22,9 @@ data class Questionnaire(
         var skillPointsDistributions: List<SkillPointsDistribution> = emptyList(),
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaire")
-        var skills: List<Skill> = emptyList()
+        var skills: List<Skill> = emptyList(),
+
+        @ManyToOne
+        @JoinColumn(name = "game_id")
+        var game: Game? = null
 )

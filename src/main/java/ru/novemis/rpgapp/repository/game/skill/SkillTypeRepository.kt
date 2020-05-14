@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.repository.network
+package ru.novemis.rpgapp.repository.game.skill
 
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
