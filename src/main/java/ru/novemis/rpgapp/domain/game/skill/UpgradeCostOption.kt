@@ -14,7 +14,7 @@ data class UpgradeCostOption(
         @Id
         var id: String = UUID.randomUUID().toString(),
 
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "upgrade_cost_option")
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "upgradeCostOption")
         var upgradeCostOptionEntries: List<UpgradeCostOptionEntry> = emptyList(),
 
         @ManyToOne
