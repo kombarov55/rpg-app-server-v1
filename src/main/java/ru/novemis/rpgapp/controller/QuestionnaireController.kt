@@ -5,14 +5,17 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.novemis.rpgapp.dto.questionnaire.QuestionnaireForm
+import ru.novemis.rpgapp.service.QuestionnaireService
 
 @RestController
 @RequestMapping("/questionnaire")
-class QuestionnaireController {
+class QuestionnaireController(
+        private val questionnaireService: QuestionnaireService
+) {
 
     @PostMapping
     fun save(@RequestBody form: QuestionnaireForm) {
-        println("it parsed")
+        questionnaireService.save(form)
     }
 
 }

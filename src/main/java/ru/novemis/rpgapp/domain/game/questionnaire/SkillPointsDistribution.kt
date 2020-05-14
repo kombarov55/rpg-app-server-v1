@@ -8,15 +8,15 @@ import javax.persistence.*
 class SkillPointsDistribution(
 
         @Id
-    var id: String = UUID.randomUUID().toString(),
+        var id: String = UUID.randomUUID().toString(),
 
         @OneToOne
-    @JoinColumn(name = "skill_type_id")
-    var skillType: SkillType? = null,
+        @JoinColumn(name = "skill_type_id")
+        var skillType: SkillType? = null,
 
         var maxValue: Int = -1,
 
         @ManyToOne
-    @JoinColumn(name = "questionnaire_id")
-    var questionnaire: Questionnaire? = null
+        @JoinColumn(name = "questionnaire_id")
+        var questionnaire: Questionnaire? = null
 )
