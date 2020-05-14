@@ -24,7 +24,7 @@ spring:
 
 
 upload-dir: /usr/share/nginx/html/images
-hidden-props-path: /home/nikolay/config/hidden.properties
+hidden-props-path: /home/nikolay/.config/hidden.properties
 
 vk:
   api-version: 5.103
