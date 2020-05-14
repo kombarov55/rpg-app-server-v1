@@ -1,5 +1,6 @@
-package ru.novemis.rpgapp.domain.network
+package ru.novemis.rpgapp.domain.game.skill
 
+import ru.novemis.rpgapp.domain.game.Game
 import java.util.*
 import javax.persistence.Entity
 import javax.persistence.Id

@@ -1,5 +1,8 @@
-package ru.novemis.rpgapp.domain.network
+package ru.novemis.rpgapp.domain.game
 
+import ru.novemis.rpgapp.domain.game.skill.SkillType
+import ru.novemis.rpgapp.domain.network.Network
+import ru.novemis.rpgapp.domain.network.Subnetwork
 import java.util.*
 import javax.persistence.*
 

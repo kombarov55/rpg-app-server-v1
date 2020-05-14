@@ -2,7 +2,7 @@ package ru.novemis.rpgapp.repository.network
 
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
-import ru.novemis.rpgapp.domain.network.SkillType
+import ru.novemis.rpgapp.domain.game.skill.SkillType
 
 interface SkillTypeRepository : CrudRepository<SkillType, String> {
 
