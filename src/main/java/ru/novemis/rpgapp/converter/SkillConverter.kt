@@ -7,7 +7,7 @@ import ru.novemis.rpgapp.domain.game.skill.UpgradeCostOption
 import ru.novemis.rpgapp.domain.game.skill.UpgradeCostOptionEntry
 import ru.novemis.rpgapp.domain.game.skill.UpgradeOption
 import ru.novemis.rpgapp.dto.game.skill.SkillDto
-import ru.novemis.rpgapp.dto.game.SkillForm
+import ru.novemis.rpgapp.dto.game.skill.SkillForm
 import ru.novemis.rpgapp.dto.game.skill.UpgradeCostOptionEntryDto
 import ru.novemis.rpgapp.dto.game.skill.UpgradeCostDto
 import ru.novemis.rpgapp.dto.game.skill.UpgradeCostOptionDto

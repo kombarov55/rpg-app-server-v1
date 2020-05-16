@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.dto.game
+package ru.novemis.rpgapp.dto.game.skill
 
 import ru.novemis.rpgapp.dto.game.skill.UpgradeCostDto
 import ru.novemis.rpgapp.dto.game.skill.SkillUpgradeOptionForm

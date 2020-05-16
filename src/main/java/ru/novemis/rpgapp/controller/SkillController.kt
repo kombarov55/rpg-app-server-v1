@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import ru.novemis.rpgapp.dto.game.SkillForm
+import ru.novemis.rpgapp.dto.game.skill.SkillForm
 import ru.novemis.rpgapp.dto.game.skill.SkillDto
 import ru.novemis.rpgapp.service.SkillService
 

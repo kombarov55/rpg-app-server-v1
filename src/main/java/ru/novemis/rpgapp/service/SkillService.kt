@@ -2,7 +2,7 @@ package ru.novemis.rpgapp.service
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.SkillConverter
-import ru.novemis.rpgapp.dto.game.SkillForm
+import ru.novemis.rpgapp.dto.game.skill.SkillForm
 import ru.novemis.rpgapp.dto.game.skill.SkillDto
 import ru.novemis.rpgapp.repository.game.skill.SkillRepository
 import javax.transaction.Transactional

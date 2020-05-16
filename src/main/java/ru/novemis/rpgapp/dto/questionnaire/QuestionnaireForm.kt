@@ -1,6 +1,6 @@
 package ru.novemis.rpgapp.dto.questionnaire
 
-import ru.novemis.rpgapp.dto.game.SkillForm
+import ru.novemis.rpgapp.dto.game.skill.SkillForm
 
 data class QuestionnaireForm(
         var gameId: String = "",
