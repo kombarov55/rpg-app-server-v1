@@ -41,8 +41,6 @@ class QuestionnaireConverter(
                 )
             }
 
-            skills = form.skills.map { skillForm -> skillConverter.toDomain(form.gameId, skillForm) }
-
             game = gameRepository.findById(form.gameId).orElseThrow { IllegalArgumentException() }
         }
     }

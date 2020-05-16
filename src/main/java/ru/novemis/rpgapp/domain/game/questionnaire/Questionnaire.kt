@@ -21,8 +21,8 @@ data class Questionnaire(
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaire")
         var skillPointsDistributions: List<SkillPointsDistribution> = mutableListOf(),
 
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaire")
-        var skills: List<Skill> = mutableListOf(),
+//        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaire")
+//        var skills: List<Skill> = mutableListOf(),
 
         @ManyToOne
         @JoinColumn(name = "game_id")

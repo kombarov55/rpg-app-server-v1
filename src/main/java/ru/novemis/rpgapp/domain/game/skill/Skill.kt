@@ -1,6 +1,7 @@
 package ru.novemis.rpgapp.domain.game.skill
 
 import ru.novemis.rpgapp.domain.game.Currency
+import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.questionnaire.Questionnaire
 import java.util.UUID
 import javax.persistence.CascadeType
@@ -24,6 +25,8 @@ data class Skill(
         @Column(columnDefinition = "TEXT")
         var description: String = "",
 
+        var imgSrc: String = "",
+
         @ManyToOne
         @JoinColumn(name = "skill_type_id")
         var skillType: SkillType? = null,
@@ -43,6 +46,6 @@ data class Skill(
         var upgradeCosts: List<UpgradeCost> = mutableListOf(),
 
         @ManyToOne
-        @JoinColumn(name = "questionnaire_id")
-        var questionnaire: Questionnaire? = null
+        @JoinColumn(name = "game_id")
+        var game: Game? = null
 )

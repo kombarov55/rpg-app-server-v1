@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.Currency
 import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.skill.SkillType
-import ru.novemis.rpgapp.dto.network.GameDto
-import ru.novemis.rpgapp.dto.network.GameForm
+import ru.novemis.rpgapp.dto.game.GameDto
+import ru.novemis.rpgapp.dto.game.GameForm
 import ru.novemis.rpgapp.repository.game.CurrencyRepository
 import ru.novemis.rpgapp.repository.network.NetworkRepository
 import ru.novemis.rpgapp.repository.game.skill.SkillTypeRepository

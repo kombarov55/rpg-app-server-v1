@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.dto.network
+package ru.novemis.rpgapp.dto.game
 
 data class GameDto(
         var id: String,

@@ -1,8 +1,8 @@
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.novemis.rpgapp.dto.network.GameDto
-import ru.novemis.rpgapp.dto.network.GameForm
+import ru.novemis.rpgapp.dto.game.GameDto
+import ru.novemis.rpgapp.dto.game.GameForm
 import ru.novemis.rpgapp.service.GameService
 
 @RestController

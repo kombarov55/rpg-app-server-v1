@@ -2,8 +2,8 @@ package ru.novemis.rpgapp.service
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.GameConverter
-import ru.novemis.rpgapp.dto.network.GameDto
-import ru.novemis.rpgapp.dto.network.GameForm
+import ru.novemis.rpgapp.dto.game.GameDto
+import ru.novemis.rpgapp.dto.game.GameForm
 import ru.novemis.rpgapp.repository.game.CurrencyRepository
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.skill.SkillTypeRepository

@@ -6,7 +6,11 @@ import ru.novemis.rpgapp.domain.game.skill.UpgradeCost
 import ru.novemis.rpgapp.domain.game.skill.UpgradeCostOption
 import ru.novemis.rpgapp.domain.game.skill.UpgradeCostOptionEntry
 import ru.novemis.rpgapp.domain.game.skill.UpgradeOption
-import ru.novemis.rpgapp.dto.questionnaire.SkillForm
+import ru.novemis.rpgapp.dto.game.skill.SkillShortDto
+import ru.novemis.rpgapp.dto.game.SkillForm
+import ru.novemis.rpgapp.dto.game.skill.UpgradeCostOptionEntryDto
+import ru.novemis.rpgapp.dto.game.skill.UpgradeCostDto
+import ru.novemis.rpgapp.dto.game.skill.UpgradeCostOptionDto
 import ru.novemis.rpgapp.repository.game.CurrencyRepository
 import ru.novemis.rpgapp.repository.game.skill.SkillTypeRepository
 
@@ -16,17 +20,17 @@ class SkillConverter(
         private val currencyRepository: CurrencyRepository
 ) {
 
-    fun toDomain(gameId: String, skillForm: SkillForm): Skill {
+    fun toDomain(skillForm: SkillForm): Skill {
         return Skill().apply {
 
             val thatSkill = this
 
             name = skillForm.name
             description = skillForm.description
-            skillType = skillTypeRepository.findByGameIdAndName(gameId, skillForm.type)
+            skillType = skillTypeRepository.findByGameIdAndName(skillForm.gameId, skillForm.type)
 
             currenciesForUpgrade = skillForm.currenciesForUpgrade.map { currencyName ->
-                currencyRepository.findByGameIdAndName(gameId, currencyName)
+                currencyRepository.findByGameIdAndName(skillForm.gameId, currencyName)
                         ?: throw IllegalArgumentException()
             }
 
@@ -35,8 +39,8 @@ class SkillConverter(
                         skill = thatSkill,
 
                         currencies = upgradeOptionForm.currencies.map { currencyName ->
-                            currencyRepository.findByGameIdAndName(gameId, currencyName)
-                                    ?: throw IllegalArgumentException ()
+                            currencyRepository.findByGameIdAndName(skillForm.gameId, currencyName)
+                                    ?: throw IllegalArgumentException()
                         }
                 )
             }
@@ -57,7 +61,7 @@ class SkillConverter(
                             upgradeCostOptionEntries = skillUpgradeCostOption.costs.map { cost ->
                                 UpgradeCostOptionEntry(
                                         upgradeCostOption = thatUpgradeCostOption,
-                                        currency = currencyRepository.findByGameIdAndName(gameId, cost.currencyName),
+                                        currency = currencyRepository.findByGameIdAndName(skillForm.gameId, cost.currencyName),
                                         amount = cost.amount
                                 )
                             }
@@ -66,6 +70,30 @@ class SkillConverter(
                 }
             }
         }
+    }
+
+    fun toDto(skill: Skill): SkillShortDto {
+        return SkillShortDto(
+                id = skill.id,
+                name = skill.name,
+                description = skill.description,
+                imgSrc = skill.imgSrc,
+                upgradeCosts = skill.upgradeCosts.map { upgradeCost ->
+                    UpgradeCostDto(
+                            lvlNum = upgradeCost.lvlNum,
+                            options = upgradeCost.upgradeCostOptions.map { upgradeCostOption ->
+                                UpgradeCostOptionDto(
+                                        costs = upgradeCostOption.upgradeCostOptionEntries.map { upgradeCostOptionEntry ->
+                                            UpgradeCostOptionEntryDto(
+                                                    currencyName = upgradeCostOptionEntry.currency!!.name,
+                                                    amount = upgradeCostOptionEntry.amount
+                                            )
+                                        }
+                                )
+                            }
+                    )
+                }
+        )
     }
 
 }
