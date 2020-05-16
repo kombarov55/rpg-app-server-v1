@@ -15,6 +15,22 @@ class GameController(
         return gameService.getById(id)
     }
 
+    @GetMapping("/game")
+    fun findOpenGames(): List<GameDto> {
+        return gameService.findOpenGames()
+    }
+
+    @PostMapping("/game")
+    fun saveGame(@RequestBody form: GameForm): GameDto {
+        return gameService.save(form = form)
+    }
+
+    @PutMapping("/game/{game-id}")
+    fun updateGame(@PathVariable("game-id") gameId: String,
+                   @RequestBody form: GameForm): GameDto {
+        return gameService.save(gameId = gameId, form = form)
+    }
+
     @PostMapping("/network/{network-id}/game")
     fun saveByNetwork(@PathVariable("network-id") networkId: String,
                       @RequestBody form: GameForm): GameDto {

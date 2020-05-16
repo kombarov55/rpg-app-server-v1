@@ -14,6 +14,7 @@ open class NetworkService(
         private val networkConverter: NetworkConverter
 ) {
 
+    @Transactional
     open fun save(form: NetworkForm): NetworkDto {
         return networkConverter.toDto(
                 networkRepository.save(
@@ -22,6 +23,7 @@ open class NetworkService(
         )
     }
 
+    @Transactional
     open fun update(networkId: String, form: NetworkForm): NetworkDto {
         return networkConverter.toDto(
                 networkRepository.save(
@@ -31,6 +33,7 @@ open class NetworkService(
         )
     }
 
+    @Transactional
     open fun getAll(): List<NetworkDto> {
         return networkRepository.findAllExisting()
                 .map { networkConverter.toDto(it) }

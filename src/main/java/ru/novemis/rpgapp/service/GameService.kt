@@ -18,16 +18,22 @@ open class GameService(
         private val skillTypeRepository: SkillTypeRepository
 ) {
 
+    @Transactional
     open fun getById(id: String): GameDto {
         return gameRepository.findById(id).orElseThrow { IllegalArgumentException() }
                 .let { gameConverter.toDto(it) }
     }
 
     @Transactional
-    open fun save(networkId: String? = null, subnetworkId: String? = null, form: GameForm): GameDto {
+    open fun findOpenGames(): List<GameDto> {
+        return gameRepository.findOpenGames().map { gameConverter.toDto(it) }
+    }
+
+    @Transactional
+    open fun save(networkId: String? = null, subnetworkId: String? = null, gameId: String? = null, form: GameForm): GameDto {
         return gameConverter.toDto(
                 gameRepository.save(
-                        gameConverter.toDomain(networkId = networkId, subnetworkId = subnetworkId, form = form)
+                        gameConverter.toDomain(gameId = gameId, networkId = networkId, subnetworkId = subnetworkId, form = form)
                 )
         )
     }

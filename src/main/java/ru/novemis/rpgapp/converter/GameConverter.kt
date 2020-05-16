@@ -17,7 +17,8 @@ class GameConverter(
         private val networkRepository: NetworkRepository,
         private val subnetworkRepository: SubnetworkRepository,
         private val currencyRepository: CurrencyRepository,
-        private val skillTypeRepository: SkillTypeRepository
+        private val skillTypeRepository: SkillTypeRepository,
+        private val skillConverter: SkillConverter
 ) {
 
     fun toDomain(form: GameForm, gameId: String? = null, networkId: String? = null, subnetworkId: String? = null): Game {
@@ -48,7 +49,8 @@ class GameConverter(
                 description = game.description,
                 imgSrc = "https://sun9-27.userapi.com/c857420/v857420029/1d203f/tKLlbcriafc.jpg",
                 currencies = game.currencies.map { it.name },
-                skillTypes = game.skillTypes.map { it.name }
+                skillTypes = game.skillTypes.map { it.name },
+                skills = game.skills.map { skillConverter.toDto(it) }
         )
     }
 
