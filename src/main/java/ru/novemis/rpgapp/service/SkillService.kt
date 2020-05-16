@@ -25,4 +25,12 @@ open class SkillService(
                 .let { skillConverter.toDto(it) }
     }
 
+    @Transactional
+    open fun update(skillId: String, form: SkillForm): SkillDto {
+        return skillConverter.toDomain(form)
+                .apply { id = skillId }
+                .let { skillRepository.save(it) }
+                .let { skillConverter.toDto(it) }
+    }
+
 }

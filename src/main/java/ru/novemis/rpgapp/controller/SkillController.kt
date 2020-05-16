@@ -3,6 +3,7 @@ package ru.novemis.rpgapp.controller
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import ru.novemis.rpgapp.dto.game.SkillForm
@@ -24,4 +25,9 @@ class SkillController(
         return skillService.save(skillForm)
     }
 
+    @PutMapping("/skill/{skill-id}")
+    fun update(@PathVariable("skill-id") id: String,
+               @RequestBody form: SkillForm): SkillDto {
+        return skillService.update(id, form)
+    }
 }
