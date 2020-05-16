@@ -6,24 +6,28 @@ import ru.novemis.rpgapp.domain.game.skill.UpgradeCost
 import ru.novemis.rpgapp.domain.game.skill.UpgradeCostOption
 import ru.novemis.rpgapp.domain.game.skill.UpgradeCostOptionEntry
 import ru.novemis.rpgapp.domain.game.skill.UpgradeOption
-import ru.novemis.rpgapp.dto.game.skill.SkillShortDto
+import ru.novemis.rpgapp.dto.game.skill.SkillDto
 import ru.novemis.rpgapp.dto.game.SkillForm
 import ru.novemis.rpgapp.dto.game.skill.UpgradeCostOptionEntryDto
 import ru.novemis.rpgapp.dto.game.skill.UpgradeCostDto
 import ru.novemis.rpgapp.dto.game.skill.UpgradeCostOptionDto
 import ru.novemis.rpgapp.repository.game.CurrencyRepository
+import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.skill.SkillTypeRepository
 
 @Component
 class SkillConverter(
         private val skillTypeRepository: SkillTypeRepository,
-        private val currencyRepository: CurrencyRepository
+        private val currencyRepository: CurrencyRepository,
+        private val gameRepository: GameRepository
 ) {
 
     fun toDomain(skillForm: SkillForm): Skill {
         return Skill().apply {
 
             val thatSkill = this
+
+            game = gameRepository.findById(skillForm.gameId).orElseThrow { IllegalArgumentException() }
 
             name = skillForm.name
             description = skillForm.description
@@ -72,10 +76,11 @@ class SkillConverter(
         }
     }
 
-    fun toDto(skill: Skill): SkillShortDto {
-        return SkillShortDto(
+    fun toDto(skill: Skill): SkillDto {
+        return SkillDto(
                 id = skill.id,
                 name = skill.name,
+                type = skill.skillType!!.name,
                 description = skill.description,
                 imgSrc = skill.imgSrc,
                 upgradeCosts = skill.upgradeCosts.map { upgradeCost ->

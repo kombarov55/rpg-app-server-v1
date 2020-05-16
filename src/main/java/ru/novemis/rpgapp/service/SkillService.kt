@@ -3,7 +3,7 @@ package ru.novemis.rpgapp.service
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.SkillConverter
 import ru.novemis.rpgapp.dto.game.SkillForm
-import ru.novemis.rpgapp.dto.game.skill.SkillShortDto
+import ru.novemis.rpgapp.dto.game.skill.SkillDto
 import ru.novemis.rpgapp.repository.game.skill.SkillRepository
 import javax.transaction.Transactional
 
@@ -14,12 +14,12 @@ open class SkillService(
 ) {
 
     @Transactional
-    open fun findByGameId(gameId: String): List<SkillShortDto> {
+    open fun findByGameId(gameId: String): List<SkillDto> {
         return skillRepository.findByGameId(gameId).map { skillConverter.toDto(it) }
     }
 
     @Transactional
-    open fun save(form: SkillForm): SkillShortDto {
+    open fun save(form: SkillForm): SkillDto {
         return skillConverter.toDomain(form)
                 .let { skillRepository.save(it) }
                 .let { skillConverter.toDto(it) }
