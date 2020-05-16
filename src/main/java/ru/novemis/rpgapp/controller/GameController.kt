@@ -10,6 +10,11 @@ class GameController(
         private val gameService: GameService
 ) {
 
+    @GetMapping("/game/{id}")
+    fun getById(@PathVariable("id") id: String): GameDto {
+        return gameService.getById(id)
+    }
+
     @PostMapping("/network/{network-id}/game")
     fun saveByNetwork(@PathVariable("network-id") networkId: String,
                       @RequestBody form: GameForm): GameDto {

@@ -18,6 +18,11 @@ open class GameService(
         private val skillTypeRepository: SkillTypeRepository
 ) {
 
+    open fun getById(id: String): GameDto {
+        return gameRepository.findById(id).orElseThrow { IllegalArgumentException() }
+                .let { gameConverter.toDto(it) }
+    }
+
     @Transactional
     open fun save(networkId: String? = null, subnetworkId: String? = null, form: GameForm): GameDto {
         return gameConverter.toDto(
