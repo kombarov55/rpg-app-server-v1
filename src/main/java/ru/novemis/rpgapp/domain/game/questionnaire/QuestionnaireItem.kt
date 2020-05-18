@@ -15,6 +15,9 @@ data class QuestionnaireItem(
     @Enumerated(EnumType.STRING)
     var type: QuestionnaireItemType = QuestionnaireItemType.NONE,
 
+    @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaireItem")
+    var listValues: List<QuestionnaireItemListValue> = mutableListOf(),
+
     @ManyToOne
     @JoinColumn(name = "questionnaire_id")
     var questionnaire: Questionnaire? = null

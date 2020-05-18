@@ -3,6 +3,7 @@ package ru.novemis.rpgapp.converter
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.questionnaire.Questionnaire
 import ru.novemis.rpgapp.domain.game.questionnaire.QuestionnaireItem
+import ru.novemis.rpgapp.domain.game.questionnaire.QuestionnaireItemListValue
 import ru.novemis.rpgapp.domain.game.questionnaire.SkillPointsDistribution
 import ru.novemis.rpgapp.domain.game.questionnaire.enum.QuestionnaireItemType
 import ru.novemis.rpgapp.dto.questionnaire.QuestionnaireForm
@@ -23,15 +24,25 @@ class QuestionnaireConverter(
 
     fun toDomain(form: QuestionnaireForm): Questionnaire {
         return Questionnaire().apply {
+            val thatQuestionnaire = this
+
             name = form.name
             description = form.description
 
-            items = form.questionnaireItems.map {
-                QuestionnaireItem(
-                        name = it.name,
-                        type = QuestionnaireItemType.valueOf(it.type.toUpperCase()),
-                        questionnaire = this
-                )
+            items = form.questionnaireItems.map { questionnaireItem ->
+                QuestionnaireItem().apply {
+                    val thatQuestionnaireItem = this
+
+                    name = questionnaireItem.name
+                    type = QuestionnaireItemType.valueOf(questionnaireItem.type.toUpperCase())
+                    questionnaire = thatQuestionnaire
+                    listValues = questionnaireItem.listValues?.map { listValue ->
+                        QuestionnaireItemListValue(
+                                questionnaireItem = thatQuestionnaireItem,
+                                value = listValue
+                        )
+                    } ?: mutableListOf()
+                }
             }
 
             skillPointsDistributions = form.skillPointsDistribution.map {
@@ -63,7 +74,8 @@ class QuestionnaireConverter(
             questionnaireItems = questionnaire.items.map {
                 QuestionnaireItemForm(
                         name = it.name,
-                        type = it.type.name
+                        type = it.type.name,
+                        listValues = it.listValues.map { it.value }
                 )
             }
             skillPointsDistribution = questionnaire.skillPointsDistributions.map {
