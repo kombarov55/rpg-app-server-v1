@@ -68,6 +68,7 @@ class QuestionnaireTemplateConverter(
 
     fun toDto(questionnaireTemplate: QuestionnaireTemplate): QuestionnaireTemplateForm {
         return QuestionnaireTemplateForm().apply {
+            id = questionnaireTemplate.id
             gameId = questionnaireTemplate.game!!.id
             name = questionnaireTemplate.name
             description = questionnaireTemplate.description

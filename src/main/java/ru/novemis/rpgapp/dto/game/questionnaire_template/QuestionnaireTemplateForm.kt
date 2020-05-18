@@ -3,6 +3,7 @@ package ru.novemis.rpgapp.dto.game.questionnaire_template
 import ru.novemis.rpgapp.dto.game.skill.SkillForm
 
 data class QuestionnaireTemplateForm(
+        var id: String = "",
         var gameId: String = "",
         var name: String = "",
         var description: String = "",
