@@ -12,7 +12,7 @@ interface GameRepository : CrudRepository<Game, String> {
     @Query("select g from Game g where g.deleted = false and g.subnetwork.id = :subnetworkId")
     fun findBySubnetworkId(subnetworkId: String): List<Game>
 
-    @Query("select g from Game g where g.network = null and g.subnetwork = null")
+    @Query("select g from Game g where g.network = null and g.subnetwork = null and g.deleted = false")
     fun findOpenGames(): List<Game>
 
 }
