@@ -1,6 +1,6 @@
-package ru.novemis.rpgapp.dto.questionnaire
+package ru.novemis.rpgapp.dto.game.questionnaire_template
 
-data class QuestionnaireShortDto(
+data class QuestionnaireTemplateShortDto(
         val id: String,
         val name: String,
         val description: String,

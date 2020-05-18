@@ -19,7 +19,7 @@ class GameConverter(
         private val currencyRepository: CurrencyRepository,
         private val skillTypeRepository: SkillTypeRepository,
         private val skillConverter: SkillConverter,
-        private val questionnaireConverter: QuestionnaireConverter
+        private val questionnaireTemplateConverter: QuestionnaireTemplateConverter
 ) {
 
     fun toDomain(form: GameForm, gameId: String? = null, networkId: String? = null, subnetworkId: String? = null): Game {
@@ -52,7 +52,7 @@ class GameConverter(
                 currencies = game.currencies.map { it.name },
                 skillTypes = game.skillTypes.map { it.name },
                 skills = game.skills.map { skillConverter.toDto(it) },
-                questionnaires = game.questionnaires.filter { !it.deleted }.map { questionnaireConverter.toShortDto(it) }
+                questionnaireTemplates = game.questionnaireTemplates.filter { !it.deleted }.map { questionnaireTemplateConverter.toShortDto(it) }
         )
     }
 

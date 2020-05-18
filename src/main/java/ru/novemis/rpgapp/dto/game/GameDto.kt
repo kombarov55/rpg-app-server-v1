@@ -1,7 +1,7 @@
 package ru.novemis.rpgapp.dto.game
 
+import ru.novemis.rpgapp.dto.game.questionnaire_template.QuestionnaireTemplateShortDto
 import ru.novemis.rpgapp.dto.game.skill.SkillDto
-import ru.novemis.rpgapp.dto.questionnaire.QuestionnaireShortDto
 
 data class GameDto(
         var id: String,
@@ -11,5 +11,5 @@ data class GameDto(
         var currencies: List<String>,
         var skillTypes: List<String>,
         var skills: List<SkillDto>,
-        var questionnaires: List<QuestionnaireShortDto>
+        var questionnaireTemplates: List<QuestionnaireTemplateShortDto>
 )

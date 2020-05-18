@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.dto.questionnaire
+package ru.novemis.rpgapp.dto.game.questionnaire_template
 
 data class SkillPointsDistributionForm(
         var skillType: String = "",

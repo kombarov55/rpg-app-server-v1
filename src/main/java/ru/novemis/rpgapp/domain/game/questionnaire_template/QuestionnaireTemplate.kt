@@ -1,11 +1,11 @@
-package ru.novemis.rpgapp.domain.game.questionnaire
+package ru.novemis.rpgapp.domain.game.questionnaire_template
 
 import ru.novemis.rpgapp.domain.game.Game
 import java.util.*
 import javax.persistence.*
 
 @Entity
-data class Questionnaire(
+data class QuestionnaireTemplate(
         @Id
         var id: String = UUID.randomUUID().toString(),
 
@@ -16,10 +16,10 @@ data class Questionnaire(
 
         var imgSrc: String = "",
 
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaire")
-        var items: List<QuestionnaireItem> = mutableListOf(),
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaireTemplate")
+        var templateItems: List<QuestionnaireTemplateItem> = mutableListOf(),
 
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaire")
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaireTemplate")
         var skillPointsDistributions: List<SkillPointsDistribution> = mutableListOf(),
 
 //        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaire")

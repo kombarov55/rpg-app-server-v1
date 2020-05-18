@@ -2,17 +2,8 @@ package ru.novemis.rpgapp.domain.game.skill
 
 import ru.novemis.rpgapp.domain.game.Currency
 import ru.novemis.rpgapp.domain.game.Game
-import ru.novemis.rpgapp.domain.game.questionnaire.Questionnaire
-import java.util.UUID
-import javax.persistence.CascadeType
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.JoinTable
-import javax.persistence.ManyToMany
-import javax.persistence.ManyToOne
-import javax.persistence.OneToMany
+import java.util.*
+import javax.persistence.*
 
 @Entity
 data class Skill(

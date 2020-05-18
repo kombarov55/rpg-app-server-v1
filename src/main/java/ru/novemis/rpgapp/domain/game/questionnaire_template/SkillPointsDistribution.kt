@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.domain.game.questionnaire
+package ru.novemis.rpgapp.domain.game.questionnaire_template
 
 import ru.novemis.rpgapp.domain.game.skill.SkillType
 import java.util.*
@@ -18,5 +18,5 @@ class SkillPointsDistribution(
 
         @ManyToOne
         @JoinColumn(name = "questionnaire_id")
-        var questionnaire: Questionnaire? = null
+        var questionnaireTemplate: QuestionnaireTemplate? = null
 )
