@@ -1,6 +1,5 @@
 package ru.novemis.rpgapp.domain.game
 
-import ru.novemis.rpgapp.domain.game.Game
 import java.util.*
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -13,6 +12,8 @@ data class Currency(
         var id: String = UUID.randomUUID().toString(),
 
         var name: String = "",
+
+        var priceInActivityPoints: Int = 0,
 
         @ManyToOne
         @JoinColumn(name = "game_id")

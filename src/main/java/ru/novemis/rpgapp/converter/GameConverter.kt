@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.Currency
 import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.skill.SkillType
+import ru.novemis.rpgapp.dto.game.CurrencyDto
 import ru.novemis.rpgapp.dto.game.GameDto
 import ru.novemis.rpgapp.dto.game.GameForm
 import ru.novemis.rpgapp.repository.game.CurrencyRepository
@@ -24,21 +25,28 @@ class GameConverter(
 
     fun toDomain(form: GameForm, gameId: String? = null, networkId: String? = null, subnetworkId: String? = null): Game {
         return Game().apply {
+            val thatGame = this
+
             id = gameId ?: UUID.randomUUID().toString()
             title = form.title
             description = form.description
             imgSrc = form.imgSrc
             network = networkId?.let { networkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             subnetwork = subnetworkId?.let { subnetworkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
-            currencies = form.currencies.map { name ->
-                gameId?.let { gameId ->
-                    currencyRepository.findByGameIdAndName(gameId, name) ?: Currency(name = name, game = this)
-                } ?: Currency(name = name, game = this)
+            currencies = form.currencies.map { currencyForm ->
+                currencyForm.id
+                        ?.let { currencyRepository.findById(it).orElseThrow { java.lang.IllegalArgumentException() } }
+                        ?: Currency(
+                                name = currencyForm.name,
+                                priceInActivityPoints = currencyForm.priceInActivityPoints,
+                                game = thatGame
+                        )
+
             }
             skillTypes = form.skillTypes.map { name ->
                 gameId?.let { gameId ->
-                    skillTypeRepository.findByGameIdAndName(gameId, name) ?: SkillType(name = name, game = this)
-                } ?: SkillType(name = name, game = this)
+                    skillTypeRepository.findByGameIdAndName(gameId, name) ?: SkillType(name = name, game = thatGame)
+                } ?: SkillType(name = name, game = thatGame)
             }
         }
     }
@@ -49,7 +57,13 @@ class GameConverter(
                 title = game.title,
                 description = game.description,
                 imgSrc = "https://sun9-27.userapi.com/c857420/v857420029/1d203f/tKLlbcriafc.jpg",
-                currencies = game.currencies.map { it.name },
+                currencies = game.currencies.map { currency ->
+                    CurrencyDto(
+                            id = currency.id,
+                            name = currency.name,
+                            priceInActivityPoints = currency.priceInActivityPoints
+                    )
+                },
                 skillTypes = game.skillTypes.map { it.name },
                 skills = game.skills.map { skillConverter.toDto(it) },
                 questionnaireTemplates = game.questionnaireTemplates.filter { !it.deleted }.map { questionnaireTemplateConverter.toShortDto(it) }
