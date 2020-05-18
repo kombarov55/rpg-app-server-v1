@@ -1,7 +1,6 @@
 package ru.novemis.rpgapp.domain.game.questionnaire
 
 import ru.novemis.rpgapp.domain.game.Game
-import ru.novemis.rpgapp.domain.game.skill.Skill
 import java.util.*
 import javax.persistence.*
 
@@ -14,6 +13,8 @@ data class Questionnaire(
 
         @Column(columnDefinition = "TEXT")
         var description: String = "",
+
+        var imgSrc: String = "",
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaire")
         var items: List<QuestionnaireItem> = mutableListOf(),

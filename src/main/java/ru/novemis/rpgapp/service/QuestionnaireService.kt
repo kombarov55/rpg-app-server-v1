@@ -3,6 +3,7 @@ package ru.novemis.rpgapp.service
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.QuestionnaireConverter
 import ru.novemis.rpgapp.dto.questionnaire.QuestionnaireForm
+import ru.novemis.rpgapp.dto.questionnaire.QuestionnaireShortDto
 import ru.novemis.rpgapp.repository.game.questionnaire.QuestionnaireRepository
 import javax.transaction.Transactional
 
@@ -13,8 +14,14 @@ open class QuestionnaireService(
 ) {
 
     @Transactional
-    open fun save(form: QuestionnaireForm) {
-        questionnaireConverter.toDomain(form).let { questionnaireRepository.save(it) }
+    open fun save(form: QuestionnaireForm): QuestionnaireShortDto {
+        return questionnaireConverter.toDomain(form)
+                .let { questionnaireRepository.save(it) }
+                .let { questionnaireConverter.toShortDto(it) }
+    }
+
+    fun findShortByGameId(gameId: String): List<QuestionnaireShortDto> {
+        return questionnaireRepository.findByGameId(gameId).map { questionnaireConverter.toShortDto(it) }
     }
 
 }

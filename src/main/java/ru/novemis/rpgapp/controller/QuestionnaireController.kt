@@ -1,10 +1,8 @@
 package ru.novemis.rpgapp.controller
 
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.dto.questionnaire.QuestionnaireForm
+import ru.novemis.rpgapp.dto.questionnaire.QuestionnaireShortDto
 import ru.novemis.rpgapp.service.QuestionnaireService
 
 @RestController
@@ -14,8 +12,13 @@ class QuestionnaireController(
 ) {
 
     @PostMapping
-    fun save(@RequestBody form: QuestionnaireForm) {
-        questionnaireService.save(form)
+    fun save(@RequestBody form: QuestionnaireForm): QuestionnaireShortDto {
+        return questionnaireService.save(form)
+    }
+
+    @GetMapping("/game/{game-id}/questionnaire")
+    fun findShortByGameId(@PathVariable("game-id") gameId: String): List<QuestionnaireShortDto> {
+        return questionnaireService.findShortByGameId(gameId)
     }
 
 }

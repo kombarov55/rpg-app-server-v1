@@ -7,8 +7,8 @@ import ru.novemis.rpgapp.domain.game.skill.SkillType
 import ru.novemis.rpgapp.dto.game.GameDto
 import ru.novemis.rpgapp.dto.game.GameForm
 import ru.novemis.rpgapp.repository.game.CurrencyRepository
-import ru.novemis.rpgapp.repository.network.NetworkRepository
 import ru.novemis.rpgapp.repository.game.skill.SkillTypeRepository
+import ru.novemis.rpgapp.repository.network.NetworkRepository
 import ru.novemis.rpgapp.repository.network.SubnetworkRepository
 import java.util.*
 
@@ -18,7 +18,8 @@ class GameConverter(
         private val subnetworkRepository: SubnetworkRepository,
         private val currencyRepository: CurrencyRepository,
         private val skillTypeRepository: SkillTypeRepository,
-        private val skillConverter: SkillConverter
+        private val skillConverter: SkillConverter,
+        private val questionnaireConverter: QuestionnaireConverter
 ) {
 
     fun toDomain(form: GameForm, gameId: String? = null, networkId: String? = null, subnetworkId: String? = null): Game {
@@ -50,7 +51,8 @@ class GameConverter(
                 imgSrc = "https://sun9-27.userapi.com/c857420/v857420029/1d203f/tKLlbcriafc.jpg",
                 currencies = game.currencies.map { it.name },
                 skillTypes = game.skillTypes.map { it.name },
-                skills = game.skills.map { skillConverter.toDto(it) }
+                skills = game.skills.map { skillConverter.toDto(it) },
+                questionnaires = game.questionnaires.map { questionnaireConverter.toShortDto(it) }
         )
     }
 
