@@ -1,6 +1,7 @@
 package ru.novemis.rpgapp.domain.game.questionnaire_template
 
 import ru.novemis.rpgapp.domain.game.Game
+import ru.novemis.rpgapp.domain.game.skill.Skill
 import java.util.*
 import javax.persistence.*
 
@@ -22,8 +23,13 @@ data class QuestionnaireTemplate(
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaireTemplate")
         var skillPointsDistributions: List<SkillPointsDistribution> = mutableListOf(),
 
-//        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaire")
-//        var skills: List<Skill> = mutableListOf(),
+        @ManyToMany
+        @JoinTable(
+                name = "questionnaire_template__skill",
+                joinColumns = [JoinColumn(name = "questionnaire_template_id")],
+                inverseJoinColumns = [JoinColumn(name = "skill_id")]
+        )
+        var skills: List<Skill> = mutableListOf(),
 
         @ManyToOne
         @JoinColumn(name = "game_id")

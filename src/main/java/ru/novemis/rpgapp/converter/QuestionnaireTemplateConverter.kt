@@ -7,6 +7,7 @@ import ru.novemis.rpgapp.dto.game.questionnaire_template.QuestionnaireTemplateSh
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.questionnaire_template.QuestionnaireTemplateItemRepository
 import ru.novemis.rpgapp.repository.game.questionnaire_template.SkillPointsDistributionRepository
+import ru.novemis.rpgapp.repository.game.skill.SkillRepository
 
 @Component
 class QuestionnaireTemplateConverter(
@@ -14,7 +15,9 @@ class QuestionnaireTemplateConverter(
         private val questionnaireTemplateItemConverter: QuestionnaireTemplateItemConverter,
         private val questionnaireTemplateItemRepository: QuestionnaireTemplateItemRepository,
         private val skillPointDistributionConverter: SkillPointDistributionConverter,
-        private val skillPointsDistributionRepository: SkillPointsDistributionRepository
+        private val skillPointsDistributionRepository: SkillPointsDistributionRepository,
+        private val skillRepository: SkillRepository,
+        private val skillConverter: SkillConverter
 ) {
 
     fun toDomain(form: QuestionnaireTemplateForm): QuestionnaireTemplate {
@@ -41,6 +44,10 @@ class QuestionnaireTemplateConverter(
                                     .also { skillPointsDistributionRepository.save(it) }
                         } ?: skillPointDistributionConverter.toDomain(thatQuestionnaire, skillFormDistributionForm)
             }
+
+            skills = form.skills.map { skillForm ->
+                skillForm.id.let { skillRepository.findById(it).orElseThrow { IllegalArgumentException() } }
+            }
         }
     }
 
@@ -61,6 +68,7 @@ class QuestionnaireTemplateConverter(
             description = questionnaireTemplate.description
             questionnaireTemplateItems = questionnaireTemplate.templateItems.map { questionnaireTemplateItemConverter.toDto(it) }
             skillPointsDistribution = questionnaireTemplate.skillPointsDistributions.map { skillPointDistributionConverter.toDto(it) }
+            skills = questionnaireTemplate.skills.map { skillConverter.toForm(it) }
         }
     }
 }

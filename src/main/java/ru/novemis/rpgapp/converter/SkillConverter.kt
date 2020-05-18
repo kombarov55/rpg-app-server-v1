@@ -1,16 +1,8 @@
 package ru.novemis.rpgapp.converter
 
 import org.springframework.stereotype.Component
-import ru.novemis.rpgapp.domain.game.skill.Skill
-import ru.novemis.rpgapp.domain.game.skill.UpgradeCost
-import ru.novemis.rpgapp.domain.game.skill.UpgradeCostOption
-import ru.novemis.rpgapp.domain.game.skill.UpgradeCostOptionEntry
-import ru.novemis.rpgapp.domain.game.skill.UpgradeOption
-import ru.novemis.rpgapp.dto.game.skill.SkillDto
-import ru.novemis.rpgapp.dto.game.skill.SkillForm
-import ru.novemis.rpgapp.dto.game.skill.UpgradeCostOptionEntryDto
-import ru.novemis.rpgapp.dto.game.skill.UpgradeCostDto
-import ru.novemis.rpgapp.dto.game.skill.UpgradeCostOptionDto
+import ru.novemis.rpgapp.domain.game.skill.*
+import ru.novemis.rpgapp.dto.game.skill.*
 import ru.novemis.rpgapp.repository.game.CurrencyRepository
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.skill.SkillTypeRepository
@@ -83,6 +75,37 @@ class SkillConverter(
                 type = skill.skillType!!.name,
                 description = skill.description,
                 imgSrc = skill.imgSrc,
+                upgradeCosts = skill.upgradeCosts.map { upgradeCost ->
+                    UpgradeCostDto(
+                            lvlNum = upgradeCost.lvlNum,
+                            options = upgradeCost.upgradeCostOptions.map { upgradeCostOption ->
+                                UpgradeCostOptionDto(
+                                        costs = upgradeCostOption.upgradeCostOptionEntries.map { upgradeCostOptionEntry ->
+                                            UpgradeCostOptionEntryDto(
+                                                    currencyName = upgradeCostOptionEntry.currency!!.name,
+                                                    amount = upgradeCostOptionEntry.amount
+                                            )
+                                        }
+                                )
+                            }
+                    )
+                }
+        )
+    }
+
+    fun toForm(skill: Skill): SkillForm {
+        return SkillForm(
+                id = skill.id,
+                name = skill.name,
+                type = skill.skillType!!.name,
+                description = skill.description,
+                imgSrc = skill.imgSrc,
+                currenciesForUpgrade = skill.currenciesForUpgrade.map { currency -> currency.name },
+                upgradeOptions = skill.upgradeOptions.map { upgradeOption ->
+                    SkillUpgradeOptionForm(
+                            currencies = upgradeOption.currencies.map { currency -> currency.name }
+                    )
+                },
                 upgradeCosts = skill.upgradeCosts.map { upgradeCost ->
                     UpgradeCostDto(
                             lvlNum = upgradeCost.lvlNum,
