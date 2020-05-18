@@ -1,15 +1,10 @@
 package ru.novemis.rpgapp.converter
 
 import org.springframework.stereotype.Component
-import ru.novemis.rpgapp.domain.game.Conversion
-import ru.novemis.rpgapp.domain.game.Currency
 import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.skill.SkillType
-import ru.novemis.rpgapp.dto.game.CurrencyDto
-import ru.novemis.rpgapp.dto.game.CurrencyForm
 import ru.novemis.rpgapp.dto.game.GameDto
 import ru.novemis.rpgapp.dto.game.GameForm
-import ru.novemis.rpgapp.repository.game.ConversionRepository
 import ru.novemis.rpgapp.repository.game.CurrencyRepository
 import ru.novemis.rpgapp.repository.game.skill.SkillTypeRepository
 import ru.novemis.rpgapp.repository.network.NetworkRepository
@@ -24,7 +19,7 @@ class GameConverter(
         private val skillTypeRepository: SkillTypeRepository,
         private val skillConverter: SkillConverter,
         private val questionnaireTemplateConverter: QuestionnaireTemplateConverter,
-        private val conversionRepository: ConversionRepository
+        private val currencyConverter: CurrencyConverter
 ) {
 
     fun toDomain(form: GameForm, gameId: String? = null, networkId: String? = null, subnetworkId: String? = null): Game {
@@ -37,18 +32,7 @@ class GameConverter(
             imgSrc = form.imgSrc
             network = networkId?.let { networkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             subnetwork = subnetworkId?.let { subnetworkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
-            currencies = form.currencies.map { currencyForm -> findOrCreateCurrency(thatGame, currencyForm) }
-
-            conversions = form.conversions.map { conversionForm ->
-                conversionForm.id
-                        ?.let { conversionRepository.findById(it).orElseThrow { IllegalArgumentException() } }
-                        ?: Conversion(
-                                currency1 = findOrCreateCurrency(thatGame, conversionForm.currency1),
-                                currency2 = findOrCreateCurrency(thatGame, conversionForm.currency2),
-                                conversionPrice1to2 = conversionForm.conversionPrice1to2,
-                                conversionPrice2to1 = conversionForm.conversionPrice2to1
-                        )
-            }
+            currencies = form.currencies.map { currencyForm -> currencyConverter.toDomain(thatGame, currencyForm) }
 
             skillTypes = form.skillTypes.map { name ->
                 gameId?.let { gameId ->
@@ -64,27 +48,11 @@ class GameConverter(
                 title = game.title,
                 description = game.description,
                 imgSrc = "https://sun9-27.userapi.com/c857420/v857420029/1d203f/tKLlbcriafc.jpg",
-                currencies = game.currencies.map { currency ->
-                    CurrencyDto(
-                            id = currency.id,
-                            name = currency.name,
-                            priceInActivityPoints = currency.priceInActivityPoints
-                    )
-                },
+                currencies = game.currencies.map { currency -> currencyConverter.toDto(currency)},
                 skillTypes = game.skillTypes.map { it.name },
                 skills = game.skills.map { skillConverter.toDto(it) },
                 questionnaireTemplates = game.questionnaireTemplates.filter { !it.deleted }.map { questionnaireTemplateConverter.toShortDto(it) }
         )
-    }
-
-    fun findOrCreateCurrency(game: Game, currencyForm: CurrencyForm): Currency {
-        return currencyForm.id
-                ?.let { currencyRepository.findById(it).orElseThrow { java.lang.IllegalArgumentException() } }
-                ?: Currency(
-                        name = currencyForm.name,
-                        priceInActivityPoints = currencyForm.priceInActivityPoints,
-                        game = game
-                )
     }
 
 }
