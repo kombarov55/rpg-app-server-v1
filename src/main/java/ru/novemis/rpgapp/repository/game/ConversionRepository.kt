@@ -4,4 +4,7 @@ import org.springframework.data.repository.CrudRepository
 import ru.novemis.rpgapp.domain.game.Conversion
 
 interface ConversionRepository : CrudRepository<Conversion, String> {
+
+    fun findByGameId(gameId: String): List<Conversion>
+
 }
