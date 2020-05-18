@@ -10,33 +10,33 @@ class QuestionnaireTemplateController(
         private val questionnaireTemplateService: QuestionnaireTemplateService
 ) {
 
-    @PostMapping("/questionnaire")
+    @PostMapping("/questionnaireTemplate")
     fun save(@RequestBody form: QuestionnaireTemplateForm): QuestionnaireTemplateShortDto {
         return questionnaireTemplateService.save(form)
     }
 
-    @GetMapping("/game/{game-id}/questionnaire")
+    @GetMapping("/game/{game-id}/questionnaireTemplate")
     fun findShortByGameId(@PathVariable("game-id") gameId: String): List<QuestionnaireTemplateShortDto> {
         return questionnaireTemplateService.findShortByGameId(gameId)
     }
 
-    @PutMapping("/questionnaire/{questionnaire-id}")
-    fun update(@PathVariable("questionnaire-id") id: String,
+    @PutMapping("/questionnaireTemplate/{id}")
+    fun update(@PathVariable("id") id: String,
                @RequestBody form: QuestionnaireTemplateForm): QuestionnaireTemplateShortDto {
         return questionnaireTemplateService.update(id, form)
     }
 
-    @GetMapping("/questionnaire/{questionnaire-id}")
-    fun getById(@PathVariable("questionnaire-id") id: String): QuestionnaireTemplateForm {
+    @GetMapping("/questionnaireTemplate/{id}")
+    fun getById(@PathVariable("id") id: String): QuestionnaireTemplateForm {
         return questionnaireTemplateService.getById(id)
     }
-    @DeleteMapping("/questionnaire/{questionnaire-id}")
-    fun delete(@PathVariable("questionnaire-id") id: String): QuestionnaireTemplateShortDto {
+    @DeleteMapping("/questionnaireTemplate/{id}")
+    fun delete(@PathVariable("id") id: String): QuestionnaireTemplateShortDto {
         return questionnaireTemplateService.delete(id)
     }
 
-    @GetMapping("/questionnaire/{questionnaire-id}/restore")
-    fun restore(@PathVariable("questionnaire-id") id: String): QuestionnaireTemplateShortDto {
+    @GetMapping("/questionnaireTemplate/{id}/restore")
+    fun restore(@PathVariable("id") id: String): QuestionnaireTemplateShortDto {
         return questionnaireTemplateService.restore(id)
     }
 
