@@ -33,4 +33,10 @@ open class QuestionnaireService(
                 .let { questionnaireConverter.toShortDto(it) }
     }
 
+    @Transactional
+    open fun getById(id: String): QuestionnaireForm {
+        return questionnaireRepository.findById(id).orElseThrow { IllegalArgumentException() }
+                .let { questionnaireConverter.toDto(it) }
+    }
+
 }

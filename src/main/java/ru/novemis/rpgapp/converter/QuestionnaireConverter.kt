@@ -6,7 +6,9 @@ import ru.novemis.rpgapp.domain.game.questionnaire.QuestionnaireItem
 import ru.novemis.rpgapp.domain.game.questionnaire.SkillPointsDistribution
 import ru.novemis.rpgapp.domain.game.questionnaire.enum.QuestionnaireItemType
 import ru.novemis.rpgapp.dto.questionnaire.QuestionnaireForm
+import ru.novemis.rpgapp.dto.questionnaire.QuestionnaireItemForm
 import ru.novemis.rpgapp.dto.questionnaire.QuestionnaireShortDto
+import ru.novemis.rpgapp.dto.questionnaire.SkillPointsDistributionForm
 import ru.novemis.rpgapp.repository.game.CurrencyRepository
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.skill.SkillTypeRepository
@@ -51,5 +53,25 @@ class QuestionnaireConverter(
                 description = questionnaire.description,
                 imgSrc = questionnaire.imgSrc
         )
+    }
+
+    fun toDto(questionnaire: Questionnaire): QuestionnaireForm {
+        return QuestionnaireForm().apply {
+            gameId = questionnaire.game!!.id
+            name = questionnaire.name
+            description = questionnaire.description
+            questionnaireItems = questionnaire.items.map {
+                QuestionnaireItemForm(
+                        name = it.name,
+                        type = it.type.name
+                )
+            }
+            skillPointsDistribution = questionnaire.skillPointsDistributions.map {
+                SkillPointsDistributionForm(
+                        it.skillType!!.name,
+                        it.maxValue
+                )
+            }
+        }
     }
 }

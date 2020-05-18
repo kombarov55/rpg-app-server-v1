@@ -26,4 +26,9 @@ class QuestionnaireController(
         return questionnaireService.update(id, form)
     }
 
+    @GetMapping("/questionnaire/{questionnaire-id}")
+    fun getById(@PathVariable("questionnaire-id") id: String): QuestionnaireForm {
+        return questionnaireService.getById(id)
+    }
+
 }
