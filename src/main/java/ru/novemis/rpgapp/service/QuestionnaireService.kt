@@ -39,4 +39,11 @@ open class QuestionnaireService(
                 .let { questionnaireConverter.toDto(it) }
     }
 
+    @Transactional
+    open fun delete(id: String): QuestionnaireShortDto {
+        return questionnaireRepository.findById(id).orElseThrow { IllegalArgumentException() }
+                .also { questionnaireRepository.delete(it) }
+                .let { questionnaireConverter.toShortDto(it) }
+    }
+
 }

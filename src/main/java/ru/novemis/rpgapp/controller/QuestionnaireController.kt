@@ -30,5 +30,9 @@ class QuestionnaireController(
     fun getById(@PathVariable("questionnaire-id") id: String): QuestionnaireForm {
         return questionnaireService.getById(id)
     }
+    @DeleteMapping("/questionnaire/{questionnaire-id}")
+    fun delete(@PathVariable("questionnaire-id") id: String): QuestionnaireShortDto {
+        return questionnaireService.delete(id)
+    }
 
 }
