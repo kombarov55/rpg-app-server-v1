@@ -34,8 +34,12 @@ class QuestionnaireTemplateConverter(
 
             skillPointsDistributions = form.skillPointsDistribution.map { skillFormDistributionForm ->
                 skillFormDistributionForm.id
-                        ?.let { skillPointsDistributionRepository.findById(it).orElseThrow { IllegalArgumentException() } }
-                        ?: skillPointDistributionConverter.toDomain(thatQuestionnaire, skillFormDistributionForm)
+                        ?.let {
+                            skillPointsDistributionRepository
+                                    .findById(it).orElseThrow { IllegalArgumentException() }
+                                    .apply { maxValue = skillFormDistributionForm.maxValue }
+                                    .also { skillPointsDistributionRepository.save(it) }
+                        } ?: skillPointDistributionConverter.toDomain(thatQuestionnaire, skillFormDistributionForm)
             }
         }
     }
