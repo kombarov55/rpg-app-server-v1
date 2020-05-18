@@ -35,4 +35,9 @@ class QuestionnaireController(
         return questionnaireService.delete(id)
     }
 
+    @GetMapping("/questionnaire/{questionnaire-id}/restore")
+    fun restore(@PathVariable("questionnaire-id") id: String): QuestionnaireShortDto {
+        return questionnaireService.restore(id)
+    }
+
 }

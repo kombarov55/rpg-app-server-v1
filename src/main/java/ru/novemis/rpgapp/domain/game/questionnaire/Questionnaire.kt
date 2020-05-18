@@ -27,5 +27,7 @@ data class Questionnaire(
 
         @ManyToOne
         @JoinColumn(name = "game_id")
-        var game: Game? = null
+        var game: Game? = null,
+
+        var deleted: Boolean = false
 )

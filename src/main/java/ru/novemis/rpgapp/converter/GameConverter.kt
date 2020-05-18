@@ -52,7 +52,7 @@ class GameConverter(
                 currencies = game.currencies.map { it.name },
                 skillTypes = game.skillTypes.map { it.name },
                 skills = game.skills.map { skillConverter.toDto(it) },
-                questionnaires = game.questionnaires.map { questionnaireConverter.toShortDto(it) }
+                questionnaires = game.questionnaires.filter { !it.deleted }.map { questionnaireConverter.toShortDto(it) }
         )
     }
 

@@ -6,7 +6,7 @@ import ru.novemis.rpgapp.domain.game.questionnaire.Questionnaire
 
 interface QuestionnaireRepository : CrudRepository<Questionnaire, String> {
 
-    @Query("select q from Questionnaire q where q.game.id = :gameId")
+    @Query("select q from Questionnaire q where q.game.id = :gameId and q.deleted = false")
     fun findByGameId(gameId: String): List<Questionnaire>
 
 }

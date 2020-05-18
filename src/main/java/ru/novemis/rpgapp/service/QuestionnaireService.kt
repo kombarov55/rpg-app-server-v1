@@ -42,7 +42,16 @@ open class QuestionnaireService(
     @Transactional
     open fun delete(id: String): QuestionnaireShortDto {
         return questionnaireRepository.findById(id).orElseThrow { IllegalArgumentException() }
-                .also { questionnaireRepository.delete(it) }
+                .apply { deleted = true }
+                .let { questionnaireRepository.save(it) }
+                .let { questionnaireConverter.toShortDto(it) }
+    }
+
+    @Transactional
+    open fun restore(id: String): QuestionnaireShortDto {
+        return questionnaireRepository.findById(id).orElseThrow { IllegalArgumentException() }
+                .apply { deleted = false }
+                .let { questionnaireRepository.save(it) }
                 .let { questionnaireConverter.toShortDto(it) }
     }
 
