@@ -33,6 +33,9 @@ data class Game(
         var currencies: List<Currency> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
+        var conversions: List<Conversion> = mutableListOf(),
+
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
         var skillTypes: List<SkillType> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
