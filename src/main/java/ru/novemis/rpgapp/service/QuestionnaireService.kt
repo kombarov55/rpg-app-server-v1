@@ -20,8 +20,17 @@ open class QuestionnaireService(
                 .let { questionnaireConverter.toShortDto(it) }
     }
 
-    fun findShortByGameId(gameId: String): List<QuestionnaireShortDto> {
+    @Transactional
+    open fun findShortByGameId(gameId: String): List<QuestionnaireShortDto> {
         return questionnaireRepository.findByGameId(gameId).map { questionnaireConverter.toShortDto(it) }
+    }
+
+    @Transactional
+    open fun update(id: String, form: QuestionnaireForm): QuestionnaireShortDto {
+        return questionnaireConverter.toDomain(form)
+                .apply { this.id = id }
+                .let { questionnaireRepository.save(it) }
+                .let { questionnaireConverter.toShortDto(it) }
     }
 
 }
