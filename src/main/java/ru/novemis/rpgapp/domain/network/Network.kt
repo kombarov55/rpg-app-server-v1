@@ -14,6 +14,10 @@ data class Network(
         @Column(columnDefinition = "TEXT")
         var description: String = "",
 
+        var imgName: String = "",
+
+        var backgroundImgName: String = "",
+
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "network")
         var subnetworks: List<Subnetwork> = emptyList(),
 

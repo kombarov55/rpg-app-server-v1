@@ -22,8 +22,7 @@ spring:
       ddl-auto: update
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
-
-upload-dir: /usr/share/nginx/html/images
+imgPrefix:  "https://novemis.ru:8082"
 hidden-props-path: /home/nikolay/.config/hidden.properties
 
 vk:
