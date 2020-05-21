@@ -19,7 +19,9 @@ data class Game(
         @Column(columnDefinition = "TEXT")
         var description: String = "",
 
-        var imgSrc: String = "",
+        var imgName: String = "",
+
+        var backgroundName: String = "",
 
         @ManyToOne
         @JoinColumn(name = "network_id")

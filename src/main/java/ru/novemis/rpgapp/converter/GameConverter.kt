@@ -1,11 +1,11 @@
 package ru.novemis.rpgapp.converter
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.skill.SkillType
 import ru.novemis.rpgapp.dto.game.GameDto
 import ru.novemis.rpgapp.dto.game.GameForm
-import ru.novemis.rpgapp.repository.game.CurrencyRepository
 import ru.novemis.rpgapp.repository.game.skill.SkillTypeRepository
 import ru.novemis.rpgapp.repository.network.NetworkRepository
 import ru.novemis.rpgapp.repository.network.SubnetworkRepository
@@ -13,9 +13,11 @@ import java.util.*
 
 @Component
 class GameConverter(
+        @Value("\${imgPrefix}")
+        private val imgPrefix: String,
+
         private val networkRepository: NetworkRepository,
         private val subnetworkRepository: SubnetworkRepository,
-        private val currencyRepository: CurrencyRepository,
         private val skillTypeRepository: SkillTypeRepository,
         private val skillConverter: SkillConverter,
         private val questionnaireTemplateConverter: QuestionnaireTemplateConverter,
@@ -29,7 +31,8 @@ class GameConverter(
             id = gameId ?: UUID.randomUUID().toString()
             title = form.title
             description = form.description
-            imgSrc = form.imgSrc
+            imgName = form.img
+            backgroundName = form.background
             network = networkId?.let { networkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             subnetwork = subnetworkId?.let { subnetworkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             currencies = form.currencies.map { currencyForm -> currencyConverter.toDomain(thatGame, currencyForm) }
@@ -47,7 +50,8 @@ class GameConverter(
                 id = game.id,
                 title = game.title,
                 description = game.description,
-                imgSrc = "https://sun9-27.userapi.com/c857420/v857420029/1d203f/tKLlbcriafc.jpg",
+                imgSrc = imgPrefix + "/" + game.imgName,
+                backgroundImgSrc = imgPrefix + "/" + game.backgroundName,
                 currencies = game.currencies.map { currency -> currencyConverter.toDto(currency)},
                 skillTypes = game.skillTypes.map { it.name },
                 skills = game.skills.map { skillConverter.toDto(it) },
