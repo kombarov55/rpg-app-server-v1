@@ -20,6 +20,7 @@ class SubnetworkConverter(
                 description = form.description,
                 imgName = form.img,
                 backgroundImgName = form.background,
+                groupLink = form.groupLink,
                 network = networkRepository.findById(form.networkId).orElseThrow { IllegalArgumentException() }
         )
     }
@@ -30,7 +31,8 @@ class SubnetworkConverter(
                 title = subnetwork.title,
                 description = subnetwork.description,
                 imgSrc = imgPrefix + "/" + subnetwork.imgName,
-                backgroundSrc = imgPrefix + "/" + subnetwork.backgroundImgName
+                backgroundSrc = imgPrefix + "/" + subnetwork.backgroundImgName,
+                groupLink = subnetwork.groupLink
         )
     }
 

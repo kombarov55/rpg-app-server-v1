@@ -1,6 +1,5 @@
 package ru.novemis.rpgapp.http
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
@@ -19,8 +18,7 @@ class VkRequests(
         private val version: String,
 
         private val hiddenProperties: HiddenProperties,
-        private val httpConnector: HttpConnector,
-        private val objectMapper: ObjectMapper
+        private val httpConnector: HttpConnector
 ) {
 
     private var token: String? = null

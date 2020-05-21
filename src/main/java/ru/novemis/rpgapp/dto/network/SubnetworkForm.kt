@@ -5,5 +5,6 @@ data class SubnetworkForm (
         var description: String = "",
         var networkId: String = "",
         var img: String = "",
-        var background: String = ""
+        var background: String = "",
+        var groupLink: String = ""
 )

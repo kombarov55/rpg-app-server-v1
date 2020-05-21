@@ -18,6 +18,8 @@ data class Network(
 
         var backgroundImgName: String = "",
 
+        var groupLink: String = "",
+
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "network")
         var subnetworks: List<Subnetwork> = emptyList(),
 

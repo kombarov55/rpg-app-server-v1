@@ -9,6 +9,7 @@ data class GameDto(
         var description: String,
         var imgSrc: String,
         var backgroundImgSrc: String,
+        var groupLink: String,
         var currencies: List<CurrencyDto>,
         var skillTypes: List<String>,
         var skills: List<SkillDto>,

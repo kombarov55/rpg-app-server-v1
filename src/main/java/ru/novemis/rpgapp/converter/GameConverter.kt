@@ -33,6 +33,7 @@ class GameConverter(
             description = form.description
             imgName = form.img
             backgroundName = form.background
+            groupLink = form.groupLink
             network = networkId?.let { networkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             subnetwork = subnetworkId?.let { subnetworkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             currencies = form.currencies.map { currencyForm -> currencyConverter.toDomain(thatGame, currencyForm) }
@@ -52,6 +53,7 @@ class GameConverter(
                 description = game.description,
                 imgSrc = imgPrefix + "/" + game.imgName,
                 backgroundImgSrc = imgPrefix + "/" + game.backgroundName,
+                groupLink = game.groupLink,
                 currencies = game.currencies.map { currency -> currencyConverter.toDto(currency)},
                 skillTypes = game.skillTypes.map { it.name },
                 skills = game.skills.map { skillConverter.toDto(it) },

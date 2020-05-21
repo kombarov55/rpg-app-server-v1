@@ -5,6 +5,7 @@ data class GameForm(
         var description: String = "",
         var img: String = "",
         var background: String = "",
+        var groupLink: String = "",
         var currencies: List<CurrencyForm> = mutableListOf(),
         var skillTypes: List<String> = mutableListOf()
 )

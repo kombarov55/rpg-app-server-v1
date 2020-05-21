@@ -17,7 +17,8 @@ class NetworkConverter(
                 title = form.title,
                 description = form.description,
                 imgName = form.img,
-                backgroundImgName = form.background
+                backgroundImgName = form.background,
+                groupLink = form.groupLink
         )
     }
 
@@ -27,7 +28,8 @@ class NetworkConverter(
                 title = network.title,
                 description = network.description,
                 imgSrc = imgPrefix + "/" + network.imgName,
-                backgroundSrc = imgPrefix + "/" + network.backgroundImgName
+                backgroundSrc = imgPrefix + "/" + network.backgroundImgName,
+                groupLink = network.groupLink
         )
     }
 

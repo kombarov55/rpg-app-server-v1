@@ -23,6 +23,8 @@ data class Game(
 
         var backgroundName: String = "",
 
+        var groupLink: String = "",
+
         @ManyToOne
         @JoinColumn(name = "network_id")
         var network: Network? = null,

@@ -5,5 +5,6 @@ data class NetworkDto (
         val title: String,
         val description: String,
         val imgSrc: String,
-        val backgroundSrc: String
+        val backgroundSrc: String,
+        val groupLink: String
 )

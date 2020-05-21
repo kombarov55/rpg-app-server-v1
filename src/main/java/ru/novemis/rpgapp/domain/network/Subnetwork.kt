@@ -18,6 +18,8 @@ data class Subnetwork(
 
         var backgroundImgName: String = "",
 
+        var groupLink: String = "",
+
         @ManyToOne
         @JoinColumn(name = "network_id")
         var network: Network? = null,
