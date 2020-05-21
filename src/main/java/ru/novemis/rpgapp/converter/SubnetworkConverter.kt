@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.converter
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.network.Subnetwork
 import ru.novemis.rpgapp.dto.network.SubnetworkDto
@@ -8,6 +9,8 @@ import ru.novemis.rpgapp.repository.network.NetworkRepository
 
 @Component
 class SubnetworkConverter(
+        @Value("\${imgPrefix}")
+        private val imgPrefix: String,
         private val networkRepository: NetworkRepository
 ) {
 
@@ -15,6 +18,8 @@ class SubnetworkConverter(
         return Subnetwork(
                 title = form.title,
                 description = form.description,
+                imgName = form.img,
+                backgroundImgName = form.background,
                 network = networkRepository.findById(form.networkId).orElseThrow { IllegalArgumentException() }
         )
     }
@@ -24,7 +29,8 @@ class SubnetworkConverter(
                 id = subnetwork.id,
                 title = subnetwork.title,
                 description = subnetwork.description,
-                imgSrc = "https://sun9-64.userapi.com/c858416/v858416297/1c6f50/HpIP0jOcov4.jpg"
+                imgSrc = imgPrefix + "/" + subnetwork.imgName,
+                backgroundSrc = imgPrefix + "/" + subnetwork.backgroundImgName
         )
     }
 

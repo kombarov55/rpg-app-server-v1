@@ -14,6 +14,10 @@ data class Subnetwork(
 
         var description: String = "",
 
+        var imgName: String = "",
+
+        var backgroundImgName: String = "",
+
         @ManyToOne
         @JoinColumn(name = "network_id")
         var network: Network? = null,

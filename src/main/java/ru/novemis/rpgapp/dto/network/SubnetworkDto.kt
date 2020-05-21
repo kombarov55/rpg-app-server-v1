@@ -1,8 +1,9 @@
 package ru.novemis.rpgapp.dto.network
 
 data class SubnetworkDto(
-        var id: String = "",
-        var title: String = "",
-        var description: String = "",
-        var imgSrc: String = ""
+        val id: String,
+        val title: String,
+        val description: String,
+        val imgSrc: String,
+        val backgroundSrc: String
 )
