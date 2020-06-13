@@ -9,6 +9,7 @@ import ru.novemis.rpgapp.dto.game.GameForm
 import ru.novemis.rpgapp.repository.game.skill.SkillTypeRepository
 import ru.novemis.rpgapp.repository.network.NetworkRepository
 import ru.novemis.rpgapp.repository.network.SubnetworkRepository
+import ru.novemis.rpgapp.util.appendProtocol
 import java.util.*
 
 @Component
@@ -33,7 +34,7 @@ class GameConverter(
             description = form.description
             imgName = form.img
             backgroundName = form.background
-            groupLink = form.groupLink
+            groupLink = appendProtocol(form.groupLink)
             network = networkId?.let { networkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             subnetwork = subnetworkId?.let { subnetworkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             currencies = form.currencies.map { currencyForm -> currencyConverter.toDomain(thatGame, currencyForm) }

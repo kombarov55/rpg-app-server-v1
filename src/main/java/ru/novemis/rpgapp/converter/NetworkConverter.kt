@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.network.Network
 import ru.novemis.rpgapp.dto.network.NetworkDto
 import ru.novemis.rpgapp.dto.network.NetworkForm
+import ru.novemis.rpgapp.util.appendProtocol
 
 @Component
 class NetworkConverter(
@@ -18,7 +19,7 @@ class NetworkConverter(
                 description = form.description,
                 imgName = form.img,
                 backgroundImgName = form.background,
-                groupLink = form.groupLink
+                groupLink = appendProtocol(form.groupLink)
         )
     }
 
