@@ -28,8 +28,8 @@ class NetworkConverter(
                 id = network.id,
                 title = network.title,
                 description = network.description,
-                imgSrc = imgPrefix + "/" + network.imgName,
-                backgroundSrc = imgPrefix + "/" + network.backgroundImgName,
+                imgSrc = network.imgName,
+                backgroundSrc = network.backgroundImgName,
                 groupLink = network.groupLink
         )
     }

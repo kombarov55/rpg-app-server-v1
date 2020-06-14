@@ -4,18 +4,14 @@ import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.GameConverter
 import ru.novemis.rpgapp.dto.game.GameDto
 import ru.novemis.rpgapp.dto.game.GameForm
-import ru.novemis.rpgapp.repository.game.CurrencyRepository
 import ru.novemis.rpgapp.repository.game.GameRepository
-import ru.novemis.rpgapp.repository.game.skill.SkillTypeRepository
-import java.util.*
+import java.util.Date
 import javax.transaction.Transactional
 
 @Component
 open class GameService(
         private val gameConverter: GameConverter,
-        private val gameRepository: GameRepository,
-        private val currencyRepository: CurrencyRepository,
-        private val skillTypeRepository: SkillTypeRepository
+        private val gameRepository: GameRepository
 ) {
 
     @Transactional

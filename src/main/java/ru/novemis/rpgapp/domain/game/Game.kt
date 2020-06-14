@@ -1,12 +1,17 @@
 package ru.novemis.rpgapp.domain.game
 
 import ru.novemis.rpgapp.domain.game.questionnaire_template.QuestionnaireTemplate
-import ru.novemis.rpgapp.domain.game.skill.Skill
-import ru.novemis.rpgapp.domain.game.skill.SkillType
 import ru.novemis.rpgapp.domain.network.Network
 import ru.novemis.rpgapp.domain.network.Subnetwork
-import java.util.*
-import javax.persistence.*
+import java.util.Date
+import java.util.UUID
+import javax.persistence.CascadeType
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
+import javax.persistence.OneToMany
 
 @Entity
 data class Game(
@@ -40,13 +45,7 @@ data class Game(
         var conversions: List<Conversion> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
-        var skillTypes: List<SkillType> = mutableListOf(),
-
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
         var questionnaireTemplates: List<QuestionnaireTemplate> = mutableListOf(),
-
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
-        var skills: List<Skill> = mutableListOf(),
 
         var deleted: Boolean = false,
 

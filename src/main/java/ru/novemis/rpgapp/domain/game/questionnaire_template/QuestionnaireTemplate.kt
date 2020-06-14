@@ -1,9 +1,14 @@
 package ru.novemis.rpgapp.domain.game.questionnaire_template
 
 import ru.novemis.rpgapp.domain.game.Game
-import ru.novemis.rpgapp.domain.game.skill.Skill
-import java.util.*
-import javax.persistence.*
+import java.util.UUID
+import javax.persistence.CascadeType
+import javax.persistence.Column
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.JoinColumn
+import javax.persistence.ManyToOne
+import javax.persistence.OneToMany
 
 @Entity
 data class QuestionnaireTemplate(
@@ -22,14 +27,6 @@ data class QuestionnaireTemplate(
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaireTemplate")
         var skillPointsDistributions: List<SkillPointsDistribution> = mutableListOf(),
-
-        @ManyToMany
-        @JoinTable(
-                name = "questionnaire_template__skill",
-                joinColumns = [JoinColumn(name = "questionnaire_template_id")],
-                inverseJoinColumns = [JoinColumn(name = "skill_id")]
-        )
-        var skills: List<Skill> = mutableListOf(),
 
         @ManyToOne
         @JoinColumn(name = "game_id")

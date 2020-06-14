@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
 
 @Entity
-data class Skill(
+data class SpellSchool(
 
         @Id
         var id: String = UUID.randomUUID().toString(),
@@ -20,12 +20,15 @@ data class Skill(
 
         var description: String = "",
 
+        var maxLevel: Int = -1,
+
         var price: Int = -1,
 
-        var upgradable: Boolean = false,
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "spellSchool")
+        var spells: List<Spell> = mutableListOf(),
 
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "skill")
-        val skillUpgrades: List<SkillUpgrade> = mutableListOf(),
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "spellSchool")
+        var upgrades: List<SpellUpgrade> = mutableListOf(),
 
         @ManyToOne
         @JoinColumn(name = "skill_category_id")

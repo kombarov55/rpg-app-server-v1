@@ -31,8 +31,8 @@ class SubnetworkConverter(
                 id = subnetwork.id,
                 title = subnetwork.title,
                 description = subnetwork.description,
-                imgSrc = imgPrefix + "/" + subnetwork.imgName,
-                backgroundSrc = imgPrefix + "/" + subnetwork.backgroundImgName,
+                imgSrc = subnetwork.imgName,
+                backgroundSrc = subnetwork.backgroundImgName,
                 groupLink = subnetwork.groupLink
         )
     }

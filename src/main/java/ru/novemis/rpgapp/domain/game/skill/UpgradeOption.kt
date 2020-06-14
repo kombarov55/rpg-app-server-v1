@@ -1,30 +1,16 @@
 package ru.novemis.rpgapp.domain.game.skill
 
-import ru.novemis.rpgapp.domain.game.Currency
-import ru.novemis.rpgapp.domain.game.skill.Skill
-import java.util.*
+import java.util.UUID
 import javax.persistence.Entity
 import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.JoinTable
-import javax.persistence.ManyToMany
-import javax.persistence.ManyToOne
+import javax.persistence.OneToMany
 
 @Entity
-class UpgradeOption(
+data class UpgradeOption(
 
         @Id
         var id: String = UUID.randomUUID().toString(),
 
-        @ManyToOne
-        @JoinColumn(name = "skill_id")
-        var skill: Skill? = null,
-
-        @ManyToMany
-        @JoinTable(
-                name = "upgrade_option__currencies",
-                joinColumns = [JoinColumn(name = "upgrade_option_id")],
-                inverseJoinColumns = [JoinColumn(name = "currency_id")]
-        )
-        var currencies: List<Currency> = mutableListOf()
+        @OneToMany
+        var upgradeCosts: List<UpgradeCost> = mutableListOf()
 )
