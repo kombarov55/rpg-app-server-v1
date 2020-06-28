@@ -10,19 +10,21 @@ import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
 
 @Entity
-data class SkillUpgrade(
+data class SchoolLvl(
 
         @Id
         var id: String = UUID.randomUUID().toString(),
 
-        var lvlNum: Int = -1,
-
-        var description: String = "",
+        var lvl: Int = 0,
 
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-        var prices: List<PriceCombination> = mutableListOf(),
+        var upgradePriceCombinations: List<PriceCombination> = mutableListOf(),
+
+        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, mappedBy = "schoolLvl")
+        var spells: List<Spell> = mutableListOf(),
 
         @ManyToOne
-        @JoinColumn(name = "skill_id")
-        var skill: Skill? = null
+        @JoinColumn(name = "spell_school_id")
+        var spellSchool: SpellSchool? = null
+
 )

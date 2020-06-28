@@ -1,6 +1,5 @@
 package ru.novemis.rpgapp.domain.game
 
-import ru.novemis.rpgapp.domain.game.questionnaire_template.QuestionnaireTemplate
 import ru.novemis.rpgapp.domain.network.Network
 import ru.novemis.rpgapp.domain.network.Subnetwork
 import java.util.Date
@@ -43,9 +42,6 @@ data class Game(
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
         var conversions: List<Conversion> = mutableListOf(),
-
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
-        var questionnaireTemplates: List<QuestionnaireTemplate> = mutableListOf(),
 
         var deleted: Boolean = false,
 

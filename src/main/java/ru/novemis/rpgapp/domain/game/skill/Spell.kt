@@ -8,19 +8,16 @@ import javax.persistence.ManyToOne
 
 @Entity
 data class Spell(
-
         @Id
         var id: String = UUID.randomUUID().toString(),
 
         var name: String = "",
 
-        var img: String = "",
-
         var description: String = "",
 
-        var schoolLevel: Int = -1,
+        var img: String = "",
 
         @ManyToOne
-        @JoinColumn(name = "spell_school_id")
-        var spellSchool: SpellSchool? = null
+        @JoinColumn(name = "school_lvl_id")
+        var schoolLvl: SchoolLvl? = null
 )

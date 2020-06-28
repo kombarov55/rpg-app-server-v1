@@ -1,16 +1,13 @@
 package ru.novemis.rpgapp.domain.game.skill
 
-import ru.novemis.rpgapp.domain.game.Currency
+import ru.novemis.rpgapp.domain.game.common.PriceCombination
 import java.util.UUID
 import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.JoinColumn
-import javax.persistence.JoinTable
-import javax.persistence.ManyToMany
 import javax.persistence.ManyToOne
 import javax.persistence.OneToMany
-
 
 @Entity
 data class Skill(
@@ -20,27 +17,17 @@ data class Skill(
 
         var name: String = "",
 
-        var img: String = "",
-
         var description: String = "",
 
-        var price: Int = -1,
+        var img: String = "",
+
+        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+        var prices: List<PriceCombination> = mutableListOf(),
 
         var upgradable: Boolean = false,
 
-        @ManyToMany
-        @JoinTable(
-                name = "skill__currency_for_upgrade",
-                joinColumns = [JoinColumn(name = "skill_id")],
-                inverseJoinColumns = [JoinColumn(name = "currency_id")]
-        )
-        var currenciesForUpgrade: List<Currency> = mutableListOf(),
-
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "skill")
-        var skillUpgradeCurrencyCombinations: List<SkillUpgradeCurrencyCombination> = mutableListOf(),
-
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "skill")
-        val skillUpgrades: List<SkillUpgrade> = mutableListOf(),
+        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, mappedBy = "skill")
+        var upgrades: List<SkillUpgrade> = mutableListOf(),
 
         @ManyToOne
         @JoinColumn(name = "skill_category_id")

@@ -13,7 +13,6 @@ import java.util.UUID
 class GameConverter(
         private val networkRepository: NetworkRepository,
         private val subnetworkRepository: SubnetworkRepository,
-        private val questionnaireTemplateConverter: QuestionnaireTemplateConverter,
         private val currencyConverter: CurrencyConverter
 ) {
 
@@ -30,12 +29,6 @@ class GameConverter(
             network = networkId?.let { networkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             subnetwork = subnetworkId?.let { subnetworkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             currencies = form.currencies.map { currencyForm -> currencyConverter.toDomain(thatGame, currencyForm) }
-
-//            skillTypes = form.skillTypes.map { name ->
-//                gameId?.let { gameId ->
-//                    skillTypeRepository.findByGameIdAndName(gameId, name) ?: SkillType(name = name, game = thatGame)
-//                } ?: SkillType(name = name, game = thatGame)
-//            }
         }
     }
 
@@ -47,10 +40,7 @@ class GameConverter(
                 imgSrc = game.imgName,
                 backgroundImgSrc = game.backgroundName,
                 groupLink = game.groupLink,
-                currencies = game.currencies.map { currency -> currencyConverter.toDto(currency)},
-                skillTypes = emptyList(),
-                skills = emptyList(),
-                questionnaireTemplates = game.questionnaireTemplates.filter { !it.deleted }.map { questionnaireTemplateConverter.toShortDto(it) }
+                currencies = game.currencies.map { currency -> currencyConverter.toDto(currency)}
         )
     }
 

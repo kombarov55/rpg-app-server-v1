@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.domain.game.skill
+package ru.novemis.rpgapp.domain.game.common
 
 import ru.novemis.rpgapp.domain.game.Currency
 import java.util.UUID
@@ -7,9 +7,8 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 
-
 @Entity
-data class UpgradeCost(
+data class Price(
 
         @Id
         var id: String = UUID.randomUUID().toString(),
@@ -18,5 +17,5 @@ data class UpgradeCost(
         @JoinColumn(name = "currency_id")
         var currency: Currency? = null,
 
-        var amount: Int = -1
+        var amount: Int = 0
 )
