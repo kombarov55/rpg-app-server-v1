@@ -48,14 +48,6 @@ open class GameService(
 
     @Transactional
     open fun updateByNetworkId(gameId: String, networkId: String, form: GameForm): GameDto {
-//        currencyRepository.findByGameId(gameId)
-//                .filter { !form.currencies.contains(it.name) }
-//                .forEach { currencyRepository.delete(it) }
-//
-//        skillTypeRepository.findByGameId(gameId)
-//                .filter { !form.skillTypes.contains(it.name) }
-//                .forEach { skillTypeRepository.delete(it) }
-
         return gameConverter.toDto(
                 gameRepository.save(
                         gameConverter.toDomain(form = form, gameId = gameId, networkId = networkId)))
@@ -63,14 +55,6 @@ open class GameService(
 
     @Transactional
     open fun updateBySubnetwork(gameId: String, subnetworkId: String, form: GameForm): GameDto {
-//        currencyRepository.findByGameId(gameId)
-//                .filter { !form.currencies.contains(it.name) }
-//                .forEach { currencyRepository.delete(it) }
-//
-//        skillTypeRepository.findByGameId(gameId)
-//                .filter { !form.skillTypes.contains(it.name) }
-//                .forEach { skillTypeRepository.delete(it) }
-
         return gameConverter.toDto(
                 gameRepository.save(
                         gameConverter.toDomain(form = form, gameId = gameId, subnetworkId = subnetworkId)))
