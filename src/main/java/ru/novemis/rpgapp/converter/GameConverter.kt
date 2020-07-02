@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.dto.game.GameDto
 import ru.novemis.rpgapp.dto.game.GameForm
+import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
 import ru.novemis.rpgapp.repository.network.NetworkRepository
 import ru.novemis.rpgapp.repository.network.SubnetworkRepository
 import ru.novemis.rpgapp.util.appendProtocol
@@ -40,7 +41,14 @@ class GameConverter(
                 imgSrc = game.imgName,
                 backgroundImgSrc = game.backgroundName,
                 groupLink = game.groupLink,
-                currencies = game.currencies.map { currency -> currencyConverter.toDto(currency)}
+                currencies = game.currencies.map { currency -> currencyConverter.toDto(currency) },
+                skillCategories = game.skillCategories.map {
+                    SkillCategoryDto(
+                            img = it.img,
+                            name = it.name,
+                            description = it.description
+                    )
+                }
         )
     }
 

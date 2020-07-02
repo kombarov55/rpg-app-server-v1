@@ -3,10 +3,12 @@ package ru.novemis.rpgapp.converter
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.skill.*
 import ru.novemis.rpgapp.dto.game.skill.form.SkillCategoryForm
+import ru.novemis.rpgapp.repository.game.GameRepository
 
 @Component
 class SkillCategoryConverter(
-        private val priceCombinationConverter: PriceCombinationConverter
+        private val priceCombinationConverter: PriceCombinationConverter,
+        private val gameRepository: GameRepository
 ) {
 
     fun toDomain(skillCategoryForm: SkillCategoryForm, gameId: String): SkillCategory {
@@ -55,6 +57,8 @@ class SkillCategoryConverter(
                         }
                 )
             } ?: emptyList()
+
+            game = gameRepository.findById(gameId).orElseThrow { IllegalArgumentException("gameId is invalid") }
         }
     }
 

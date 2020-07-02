@@ -1,12 +1,8 @@
 package ru.novemis.rpgapp.domain.game.skill
 
+import ru.novemis.rpgapp.domain.game.Game
 import java.util.UUID
-import javax.persistence.CascadeType
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.Inheritance
-import javax.persistence.InheritanceType
-import javax.persistence.OneToMany
+import javax.persistence.*
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -26,5 +22,9 @@ data class SkillCategory(
         var skills: List<Skill> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, mappedBy = "skillCategory")
-        var spellSchools: List<SpellSchool> = mutableListOf()
+        var spellSchools: List<SpellSchool> = mutableListOf(),
+
+        @ManyToOne
+        @JoinColumn(name = "game_id")
+        var game: Game? = null
 )
