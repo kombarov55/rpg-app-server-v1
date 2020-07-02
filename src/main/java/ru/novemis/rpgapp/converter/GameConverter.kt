@@ -28,7 +28,7 @@ class GameConverter(
             groupLink = appendProtocol(form.groupLink)
             network = networkId?.let { networkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             subnetwork = subnetworkId?.let { subnetworkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
-            currencies = form.currencies.map { currencyForm -> currencyConverter.toDomain(thatGame, currencyForm) }
+            currencies = form.currencies.map { currencyForm -> currencyConverter.toDomainOrExisting(thatGame, currencyForm) }
         }
     }
 
