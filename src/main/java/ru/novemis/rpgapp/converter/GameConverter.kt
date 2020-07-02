@@ -14,7 +14,8 @@ import java.util.UUID
 class GameConverter(
         private val networkRepository: NetworkRepository,
         private val subnetworkRepository: SubnetworkRepository,
-        private val currencyConverter: CurrencyConverter
+        private val currencyConverter: CurrencyConverter,
+        private val skillCategoryConverter: SkillCategoryConverter
 ) {
 
     fun toDomain(form: GameForm, gameId: String? = null, networkId: String? = null, subnetworkId: String? = null): Game {
@@ -42,13 +43,7 @@ class GameConverter(
                 backgroundImgSrc = game.backgroundName,
                 groupLink = game.groupLink,
                 currencies = game.currencies.map { currency -> currencyConverter.toDto(currency) },
-                skillCategories = game.skillCategories.map {
-                    SkillCategoryDto(
-                            img = it.img,
-                            name = it.name,
-                            description = it.description
-                    )
-                }
+                skillCategories = game.skillCategories.map {skillCategoryConverter.toDto(it) }
         )
     }
 

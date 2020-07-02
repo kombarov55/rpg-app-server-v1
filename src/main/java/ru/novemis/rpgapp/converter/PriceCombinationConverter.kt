@@ -23,4 +23,8 @@ class PriceCombinationConverter(
         }
     }
 
+    fun toString(priceCombination: PriceCombination): String {
+        return priceCombination.prices.map { it.currency!!.name + ": " +  it.amount }.joinToString(" + ")
+    }
+
 }
