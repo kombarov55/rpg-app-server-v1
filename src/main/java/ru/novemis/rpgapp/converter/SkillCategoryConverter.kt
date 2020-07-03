@@ -90,12 +90,13 @@ class SkillCategoryConverter(
                             img = it.img,
                             name = it.name,
                             description = it.description,
-                            prices = it.prices.map { priceCombinationConverter.toString(it) },
+                            prices = it.prices.map { priceCombinationConverter.toDto(it) },
+                            upgradable = it.upgradable,
                             upgrades = it.upgrades.map {
                                 SkillUpgradeDto(
                                         lvlNum = it.lvlNum,
                                         description = it.description,
-                                        prices = it.prices.map { priceCombinationConverter.toString(it) }
+                                        prices = it.prices.map { priceCombinationConverter.toDto(it) }
                                 )
                             }
                     )
@@ -109,7 +110,7 @@ class SkillCategoryConverter(
                             schoolLvls = it.schoolLvls.map {
                                 SchoolLvlDto(
                                         lvl = it.lvl,
-                                        upgradePriceCombinations = it.upgradePriceCombinations.map { priceCombinationConverter.toString(it) },
+                                        upgradePriceCombinations = it.upgradePriceCombinations.map { priceCombinationConverter.toDto(it) },
                                         spells = it.spells.map {
                                             SpellDto(
                                                     img = it.img,
