@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.domain.game
 
+import ru.novemis.rpgapp.domain.game.shop.Shop
 import ru.novemis.rpgapp.domain.game.skill.SkillCategory
 import ru.novemis.rpgapp.domain.network.Network
 import ru.novemis.rpgapp.domain.network.Subnetwork
@@ -46,6 +47,9 @@ data class Game(
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
         var skillCategories: List<SkillCategory> = mutableListOf(),
+
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
+        var shops: List<Shop> = mutableListOf(),
 
         var deleted: Boolean = false,
 
