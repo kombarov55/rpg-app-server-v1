@@ -2,10 +2,7 @@ package ru.novemis.rpgapp.domain.game.shop
 
 import ru.novemis.rpgapp.domain.game.Game
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
+import javax.persistence.*
 
 @Entity
 data class Shop(
@@ -14,6 +11,9 @@ data class Shop(
         var name: String = "",
         var img: String = "",
         var type: ShopType = ShopType.PLAYERS,
+
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "shop")
+        var merchandiseCategories: List<MerchandiseCategory> = mutableListOf(),
 
         @ManyToOne
         @JoinColumn(name = "game_id")
