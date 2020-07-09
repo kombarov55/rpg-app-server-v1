@@ -111,8 +111,70 @@
                 </executions>
                 <configuration>
                     <jvmTarget>1.8</jvmTarget>
+                    <compilerPlugins>
+                        <plugin>spring</plugin>
+                        <plugin>jpa</plugin>
+                    </compilerPlugins>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-allopen</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.jetbrains.kotlin</groupId>
+                        <artifactId>kotlin-maven-noarg</artifactId>
+                        <version>${kotlin.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
+<!--            <plugin>-->
+<!--                <artifactId>kotlin-maven-plugin</artifactId>-->
+<!--                <groupId>org.jetbrains.kotlin</groupId>-->
+<!--                <version>${kotlin.version}</version>-->
+
+<!--                <configuration>-->
+<!--                    <compilerPlugins>-->
+<!--                        &lt;!&ndash; Or "spring" for the Spring support &ndash;&gt;-->
+<!--                        <plugin>spring</plugin>-->
+<!--                    </compilerPlugins>-->
+
+<!--                    <pluginOptions>-->
+<!--                    </pluginOptions>-->
+<!--                </configuration>-->
+
+<!--                <dependencies>-->
+<!--                    <dependency>-->
+<!--                        <groupId>org.jetbrains.kotlin</groupId>-->
+<!--                        <artifactId>kotlin-maven-allopen</artifactId>-->
+<!--                        <version>${kotlin.version}</version>-->
+<!--                    </dependency>-->
+<!--                </dependencies>-->
+<!--            </plugin>-->
+<!--            <plugin>-->
+<!--                <artifactId>kotlin-maven-plugin</artifactId>-->
+<!--                <groupId>org.jetbrains.kotlin</groupId>-->
+<!--                <version>${kotlin.version}</version>-->
+
+<!--                <configuration>-->
+<!--                    <compilerPlugins>-->
+<!--                        &lt;!&ndash; Or "jpa" for JPA support &ndash;&gt;-->
+<!--                        <plugin>jpa</plugin>-->
+<!--                    </compilerPlugins>-->
+
+<!--                    <pluginOptions>-->
+<!--                    </pluginOptions>-->
+<!--                </configuration>-->
+
+<!--                <dependencies>-->
+<!--                    <dependency>-->
+<!--                        <groupId>org.jetbrains.kotlin</groupId>-->
+<!--                        <artifactId>kotlin-maven-noarg</artifactId>-->
+<!--                        <version>${kotlin.version}</version>-->
+<!--                    </dependency>-->
+<!--                </dependencies>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 

@@ -14,13 +14,13 @@ class ShopConverter(
 ) {
 
     fun toDomain(form: ShopForm, gameId: String): Shop {
-        return Shop().apply {
-            name = form.name
-            img = form.img
-            type = form.type
+        return Shop(
+                name = form.name,
+                img = form.img,
+                type = form.type,
 
-            game = gameRepository.findById(gameId).orElseThrow { IllegalArgumentException("gameId is invalid") }
-        }
+                game = gameRepository.findById(gameId).orElseThrow { IllegalArgumentException("gameId is invalid") }
+        )
     }
 
     fun toDto(domain: Shop): ShopDto {
