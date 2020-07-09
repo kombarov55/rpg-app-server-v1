@@ -17,5 +17,5 @@ data class Shop(
 
         @ManyToOne
         @JoinColumn(name = "game_id")
-        var game: Game?
+        var game: Game
 )

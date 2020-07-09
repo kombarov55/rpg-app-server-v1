@@ -20,6 +20,7 @@ class MerchandiseCategoryConverter(
 
     fun toDto(domain: MerchandiseCategory): MerchandiseCategoryDto {
         return MerchandiseCategoryDto(
+                id = domain.id,
                 name = domain.name
         )
     }
