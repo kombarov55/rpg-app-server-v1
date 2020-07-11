@@ -32,7 +32,7 @@ class MerchandiseCategoryController(
             @PathVariable("shop-id") shopId: String,
             @RequestBody merchandiseCategoryForm: MerchandiseCategoryForm
     ): MerchandiseCategoryDto = merchandiseCategoryForm
-            .let { converter.toDomain(merchandiseCategoryForm, shopId).apply { id = merchandiseCategoryForm.id } }
+            .let { converter.toDomain(merchandiseCategoryForm, shopId).apply { id = merchandiseCategoryForm.id!! } }
             .let { repository.save(it) }
             .let { converter.toDto(it) }
 }
