@@ -8,14 +8,17 @@ import javax.persistence.*
 data class Shop(
         @Id
         var id: String = UUID.randomUUID().toString(),
-        var name: String,
-        var img: String,
-        var type: ShopType,
+        var name: String = "",
+        var img: String = "",
+        var type: ShopType? = null,
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "shop")
         var merchandiseCategories: List<MerchandiseCategory> = mutableListOf(),
 
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "shop")
+        var merchandiseTypes: List<MerchandiseType> = mutableListOf(),
+
         @ManyToOne
         @JoinColumn(name = "game_id")
-        var game: Game
+        var game: Game? = null
 )

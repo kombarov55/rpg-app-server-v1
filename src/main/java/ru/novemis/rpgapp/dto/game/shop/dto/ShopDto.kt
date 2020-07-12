@@ -7,5 +7,6 @@ data class ShopDto(
         val name: String,
         val img: String,
         val type: ShopType,
-        val merchandiseCategories: List<MerchandiseCategoryDto>
+        val merchandiseCategories: List<MerchandiseCategoryDto>,
+        val merchandiseTypes: List<MerchandiseTypeDto>
 )
