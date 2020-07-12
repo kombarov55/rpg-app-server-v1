@@ -7,18 +7,15 @@ import javax.persistence.Id
 import javax.persistence.JoinColumn
 import javax.persistence.JoinTable
 import javax.persistence.ManyToMany
+import javax.persistence.ManyToOne
 
 @Entity
 class SkillInfluence(
         @Id
         var id: String = UUID.randomUUID().toString(),
 
-        @ManyToMany
-        @JoinTable(
-                name = "skill_influence__skill",
-                joinColumns = [JoinColumn(name = "skill_influence_id")],
-                inverseJoinColumns = [JoinColumn(name = "skill_id")]
-        )
+        @ManyToOne
+        @JoinColumn(name = "skill_id")
         var skill: Skill? = null,
 
         var modifier: AriphmericModifier? = null,

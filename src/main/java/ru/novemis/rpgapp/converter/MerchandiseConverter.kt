@@ -21,7 +21,7 @@ class MerchandiseConverter(
                 category = merchandiseCategoryRepository.findById(form.categoryId).orElseThrow { IllegalArgumentException("categoryId is invalid") },
                 type = merchandiseTypeRepository.findById(form.typeId).orElseThrow { IllegalArgumentException("typeId is invalid") },
                 slots = form.slots,
-                price = form.prices.map { priceCombinationConverter.toDomain(it) },
+                price = form.prices.map { priceCombinationConverter.toDomain(it, "@FIXME!!!!!") },
                 skillInfluences = form.skillInfluences.map { skillInfluenceConverter.toDomain(it) }
         )
     }
