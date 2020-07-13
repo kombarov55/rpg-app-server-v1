@@ -9,6 +9,7 @@ import ru.novemis.rpgapp.repository.game.GameRepository
 @Component
 class SkillCategoryConverter(
         private val priceCombinationConverter: PriceCombinationConverter,
+        private val skillConverter: SkillConverter,
         private val gameRepository: GameRepository
 ) {
 
@@ -21,27 +22,7 @@ class SkillCategoryConverter(
             img = skillCategoryForm.img
             complex = skillCategoryForm.complex
 
-            skills = skillCategoryForm.skills?.map {
-                Skill().apply {
-                    val skill = this
-
-                    name = it.name
-                    description = it.description
-                    img = it.img
-                    prices = it.prices.map { listOfPrices -> priceCombinationConverter.toDomain(listOfPrices, gameId) }
-                    upgradable = it.upgradable
-                    this.skillCategory = skillCategory
-
-                    upgrades = it.skillUpgrades.map { skillUpgradeForm ->
-                        SkillUpgrade(
-                                lvlNum = skillUpgradeForm.lvlNum,
-                                description = skillUpgradeForm.description,
-                                prices = skillUpgradeForm.prices.map { listOfPrices -> priceCombinationConverter.toDomain(listOfPrices, gameId) },
-                                skill = skill
-                        )
-                    }
-                }
-            } ?: emptyList()
+            skills = skillCategoryForm.skills?.map {skillConverter.toDomain(it, gameId) } ?: emptyList()
 
             spellSchools = skillCategoryForm.spellSchools?.map { spellSchoolForm ->
                 SpellSchool().apply {
@@ -85,22 +66,7 @@ class SkillCategoryConverter(
                 name = skillCategory.name,
                 description = skillCategory.description,
                 complex = skillCategory.complex,
-                skills = skillCategory.skills.map {
-                    SkillDto(
-                            img = it.img,
-                            name = it.name,
-                            description = it.description,
-                            prices = it.prices.map { priceCombinationConverter.toDto(it) },
-                            upgradable = it.upgradable,
-                            upgrades = it.upgrades.map {
-                                SkillUpgradeDto(
-                                        lvlNum = it.lvlNum,
-                                        description = it.description,
-                                        prices = it.prices.map { priceCombinationConverter.toDto(it) }
-                                )
-                            }
-                    )
-                },
+                skills = skillCategory.skills.map {skillConverter.toDto(it) },
                 spellSchools = skillCategory.spellSchools.map {
                     SpellSchoolDto(
                             img = it.img,
