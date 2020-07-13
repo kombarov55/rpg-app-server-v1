@@ -18,29 +18,34 @@ class MerchandiseTypeController(
         private val converter: MerchandiseTypeConverter
 ) {
 
-    @PostMapping("/shop/{shop-id}/merchandiseType")
+    @GetMapping("/game/{game-id}/merchandiseType")
+    fun findByGameId(
+            @PathVariable("game-id") gameId: String
+    ): List<MerchandiseTypeDto> = repository.findByGameId(gameId).map { converter.toDto(it) }
+
+    @PostMapping("/game/{game-id}/merchandiseType")
     fun save(
-            @PathVariable("shop-id") shopId: String,
+            @PathVariable("game-id") gameId: String,
             @RequestBody form: MerchandiseTypeForm
     ): MerchandiseTypeDto = form
-            .let { converter.toDomain(it, shopId) }
+            .let { converter.toDomain(it, gameId) }
             .let { repository.save(it) }
             .let { converter.toDto(it) }
 
-    @PutMapping("/shop/{shop-id}/merchandiseType/{id}")
+    @PutMapping("/game/{game-id}/merchandiseType/{id}")
     fun update(
-            @PathVariable("shop-id") shopId: String,
+            @PathVariable("game-id") gameId: String,
             @PathVariable("id") id: String,
             @RequestBody form: MerchandiseTypeForm
     ): MerchandiseTypeDto = form
-            .let { converter.toDomain(it, shopId) }
+            .let { converter.toDomain(it, gameId) }
             .also { it.id = id }
             .let { repository.save(it) }
             .let { converter.toDto(it) }
 
-    @DeleteMapping("/shop/{shop-id}/merchandiseType/{id}")
+    @DeleteMapping("/game/{game-id}/merchandiseType/{id}")
     fun delete(
-            @PathVariable("shop-id") shopId: String,
+            @PathVariable("game-id") gameId: String,
             @PathVariable("id") id: String
     ) = repository.deleteById(id)
 }

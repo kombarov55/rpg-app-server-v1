@@ -10,20 +10,22 @@ class CurrencyController(
         private val currencyService: CurrencyService
 ) {
 
-    @GetMapping("/game/{id}/currency")
-    fun getByGameId(@PathVariable("id") gameId: String): List<CurrencyDto> = currencyService.findByGameId(gameId)
+    @GetMapping("/game/{game-id}/currency")
+    fun findByGameId(
+            @PathVariable("game-id") gameId: String
+    ): List<CurrencyDto> = currencyService.findByGameId(gameId)
 
-    @PostMapping("/game/{id}/currency")
+    @PostMapping("/game/{game-id}/currency")
     fun save(
-            @RequestBody currencyForm: CurrencyForm,
-            @PathVariable("id") gameId: String
+            @PathVariable("game-id") gameId: String,
+            @RequestBody currencyForm: CurrencyForm
     ): CurrencyDto = currencyService.save(currencyForm, gameId)
 
-    @PatchMapping("/game/{game-id}/currency/{currency-id}")
+    @PatchMapping("/game/{game-id}/currency/{id}")
     fun patch(
-            @RequestBody currencyForm: CurrencyForm,
             @PathVariable("game-id") gameId: String,
-            @PathVariable("currency-id") currencyId: String
+            @PathVariable("id") currencyId: String,
+            @RequestBody currencyForm: CurrencyForm
     ): CurrencyDto = currencyService.update(currencyForm, gameId, currencyId)
 
 }

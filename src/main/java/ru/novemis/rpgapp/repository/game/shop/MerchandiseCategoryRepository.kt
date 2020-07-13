@@ -4,4 +4,7 @@ import org.springframework.data.repository.CrudRepository
 import ru.novemis.rpgapp.domain.game.shop.MerchandiseCategory
 
 interface MerchandiseCategoryRepository : CrudRepository<MerchandiseCategory, String> {
+
+    fun findByGameId(gameId: String): List<MerchandiseCategory>
+
 }

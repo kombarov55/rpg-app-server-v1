@@ -29,9 +29,7 @@ class ShopConverter(
                 id = domain.id,
                 name = domain.name,
                 img = domain.img,
-                type = domain.type!!,
-                merchandiseCategories = domain.merchandiseCategories.map { merchandiseCategoryConverter.toDto(it) },
-                merchandiseTypes = domain.merchandiseTypes.map { merchandiseTypeConverter.toDto(it) }
+                type = domain.type!!
         )
     }
 

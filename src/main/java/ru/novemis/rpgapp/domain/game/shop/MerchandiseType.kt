@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.domain.game.shop
 
+import ru.novemis.rpgapp.domain.game.Game
 import java.util.UUID
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -14,6 +15,6 @@ data class MerchandiseType(
         var name: String = "",
 
         @ManyToOne
-        @JoinColumn(name = "shop_id")
-        var shop: Shop? = null
+        @JoinColumn(name = "game_id")
+        var game: Game? = null
 )

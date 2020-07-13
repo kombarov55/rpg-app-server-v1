@@ -12,27 +12,32 @@ class MerchandiseCategoryController(
         private val converter: MerchandiseCategoryConverter
 ) {
 
-    @PostMapping("/shop/{shop-id}/merchandiseCategory")
+    @GetMapping("/game/{game-id}/merchandiseCategory")
+    fun getByGameId(
+            @PathVariable("game-id") gameId: String
+    ): List<MerchandiseCategoryDto> = repository.findByGameId(gameId).map { converter.toDto(it) }
+
+    @PostMapping("/game/{game-id}/merchandiseCategory")
     fun save(
-            @PathVariable("shop-id") shopId: String,
+            @PathVariable("game-id") gameId: String,
             @RequestBody merchandiseCategoryForm: MerchandiseCategoryForm
     ): MerchandiseCategoryDto = merchandiseCategoryForm
-            .let { converter.toDomain(merchandiseCategoryForm, shopId) }
+            .let { converter.toDomain(merchandiseCategoryForm, gameId) }
             .let { repository.save(it) }
             .let { converter.toDto(it) }
 
-    @DeleteMapping("/shop/{shop-id}/merchandiseCategory/{category-id}")
+    @DeleteMapping("/game/{game-id}/merchandiseCategory/{category-id}")
     fun delete(
-            @PathVariable("shop-id") shopId: String,
+            @PathVariable("game-id") gameId: String,
             @PathVariable("category-id") categoryId: String
     ) = repository.deleteById(categoryId)
 
-    @PutMapping("/shop/{shop-id}/merchandiseCategory")
+    @PutMapping("/game/{game-id}/merchandiseCategory")
     fun update(
-            @PathVariable("shop-id") shopId: String,
+            @PathVariable("game-id") gameId: String,
             @RequestBody merchandiseCategoryForm: MerchandiseCategoryForm
     ): MerchandiseCategoryDto = merchandiseCategoryForm
-            .let { converter.toDomain(merchandiseCategoryForm, shopId).apply { id = merchandiseCategoryForm.id!! } }
+            .let { converter.toDomain(merchandiseCategoryForm, gameId).apply { id = merchandiseCategoryForm.id!! } }
             .let { repository.save(it) }
             .let { converter.toDto(it) }
 }

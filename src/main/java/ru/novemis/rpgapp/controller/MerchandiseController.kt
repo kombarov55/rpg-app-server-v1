@@ -15,25 +15,25 @@ class MerchandiseController(
         private val converter: MerchandiseConverter
 ) {
 
-    @PostMapping("/shop/{shop-id}/merchandise")
+    @PostMapping("/game/{game-id}/merchandise")
     fun save(
-            @PathVariable("shop-id") shopId: String,
+            @PathVariable("game-id") gameId: String,
             @RequestBody form: MerchandiseForm
     ) = form
-            .let { converter.toDomain(form) }
+            .let { converter.toDomain(form, gameId) }
             .let { repository.save(it) }
 
-    @PutMapping("/shop/{shop-id}/merchandise/{id}")
+    @PutMapping("/game/{game-id}/merchandise/{id}")
     fun update(
-            @PathVariable("shop-id") shopId: String,
+            @PathVariable("game-id") gameId: String,
             @PathVariable("id") id: String,
             @RequestBody form: MerchandiseForm
     ) = form
-            .let { converter.toDomain(form) }
+            .let { converter.toDomain(form, gameId) }
             .also { it.id = id }
             .let { repository.save(it) }
 
-    @PutMapping("/shop/{shop-id}/merchandise/{id}")
+    @PutMapping("/game/{game-id}/merchandise/{id}")
     fun delete(
             @PathVariable("id") id: String
     ) = repository.deleteById(id)
