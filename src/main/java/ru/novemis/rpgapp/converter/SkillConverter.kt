@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.skill.Skill
 import ru.novemis.rpgapp.domain.game.skill.SkillUpgrade
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillDto
+import ru.novemis.rpgapp.dto.game.skill.dto.SkillShortDto
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillUpgradeDto
 import ru.novemis.rpgapp.dto.game.skill.form.SkillForm
 
@@ -49,6 +50,13 @@ class SkillConverter(
                             prices = it.prices.map { priceCombinationConverter.toDto(it) }
                     )
                 }
+        )
+    }
+
+    fun toShortDto(domain: Skill): SkillShortDto {
+        return SkillShortDto(
+                id = domain.id,
+                name = domain.name
         )
     }
 
