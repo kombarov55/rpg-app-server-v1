@@ -2,6 +2,7 @@ package ru.novemis.rpgapp.converter
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.skill.Skill
+import ru.novemis.rpgapp.domain.game.skill.SkillCategory
 import ru.novemis.rpgapp.domain.game.skill.SkillUpgrade
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillDto
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillShortDto
@@ -13,7 +14,7 @@ class SkillConverter(
         private val priceCombinationConverter: PriceCombinationConverter
 ) {
 
-    fun toDomain(form: SkillForm, gameId: String): Skill {
+    fun toDomain(form: SkillForm, gameId: String, skillCategory: SkillCategory): Skill {
         return Skill().apply {
             val skill = this
 

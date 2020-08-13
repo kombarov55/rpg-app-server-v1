@@ -1,9 +1,9 @@
 package ru.novemis.rpgapp.dto.game.shop.form
 
-import ru.novemis.rpgapp.domain.game.shop.AriphmericModifier
+import ru.novemis.rpgapp.domain.game.shop.ArithmeticModifierForm
 
 data class SkillInfluenceForm(
         var skillId: String = "",
-        var modifier: AriphmericModifier = AriphmericModifier.PLUS,
+        var modifier: ArithmeticModifierForm? = null,
         var amount: Int = 0
 )

@@ -20,8 +20,8 @@ class MerchandiseConverter(
         return Merchandise(
                 name = form.name,
                 img = form.img,
-                category = merchandiseCategoryRepository.findById(form.category!!.id).orElseThrow { IllegalArgumentException("categoryId is invalid") },
-                type = merchandiseTypeRepository.findById(form.type!!.id).orElseThrow { IllegalArgumentException("typeId is invalid") },
+                category = merchandiseCategoryRepository.findById(form.category!!.id!!).orElseThrow { IllegalArgumentException("categoryId is invalid") },
+                type = merchandiseTypeRepository.findById(form.type!!.id!!).orElseThrow { IllegalArgumentException("typeId is invalid") },
                 slots = form.slots,
                 price = form.prices.map { priceCombinationConverter.toDomain(it, gameId) },
                 skillInfluences = form.skillInfluences.map { skillInfluenceConverter.toDomain(it) },

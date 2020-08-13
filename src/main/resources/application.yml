@@ -23,7 +23,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 
 imgPrefix:  "http://localhost:8081"
-hidden-props-path: C:\Users\nikolay\IdeaProjects\rpg-app-server-v1\src\main\resources\hidden.properties
+hidden-props-path: /home/nikolay/Projects/rpg-app-server-v1/src/main/resources/hidden.properties
 
 vk:
   api-version: 5.103

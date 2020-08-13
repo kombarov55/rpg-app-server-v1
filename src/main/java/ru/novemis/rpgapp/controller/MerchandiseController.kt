@@ -1,15 +1,17 @@
+
 package ru.novemis.rpgapp.controller
 
-import org.springframework.stereotype.Component
+import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RestController
 import ru.novemis.rpgapp.converter.MerchandiseConverter
 import ru.novemis.rpgapp.dto.game.shop.form.MerchandiseForm
 import ru.novemis.rpgapp.repository.game.shop.MerchandiseRepository
 
-@Component
+@RestController
 class MerchandiseController(
         private val repository: MerchandiseRepository,
         private val converter: MerchandiseConverter
@@ -33,7 +35,7 @@ class MerchandiseController(
             .also { it.id = id }
             .let { repository.save(it) }
 
-    @PutMapping("/game/{game-id}/merchandise/{id}")
+    @DeleteMapping("/game/{game-id}/merchandise/{id}")
     fun delete(
             @PathVariable("id") id: String
     ) = repository.deleteById(id)
