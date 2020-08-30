@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
 import ru.novemis.rpgapp.dto.game.skill.form.SkillCategoryForm
 import ru.novemis.rpgapp.service.SkillCategoryService
 
@@ -16,8 +17,6 @@ class SkillCategoryController(
     fun save(
             @RequestBody skillCategoryForm: SkillCategoryForm,
             @PathVariable("game-id") gameId: String
-    ) {
-        skillCategoryService.save(skillCategoryForm, gameId)
-    }
+    ): SkillCategoryDto = skillCategoryService.save(skillCategoryForm, gameId)
 
 }

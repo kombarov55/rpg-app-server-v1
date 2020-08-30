@@ -1,22 +1,18 @@
 package ru.novemis.rpgapp.domain.game.shop
 
-import ru.novemis.rpgapp.domain.game.skill.Skill
 import java.util.UUID
 import javax.persistence.Entity
 import javax.persistence.Id
-import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 
 @Entity
-class SkillInfluence(
+data class WarehouseEntry(
+
         @Id
         var id: String = UUID.randomUUID().toString(),
 
         @ManyToOne
-        @JoinColumn(name = "skill_id")
-        var skill: Skill? = null,
+        var merchandise: Merchandise? = null,
 
-        var modifier: ArithmeticModifier? = null,
-
-        var amount: Int = 0
+        var amount: Int
 )

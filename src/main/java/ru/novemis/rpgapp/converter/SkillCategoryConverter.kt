@@ -1,8 +1,14 @@
 package ru.novemis.rpgapp.converter
 
 import org.springframework.stereotype.Component
-import ru.novemis.rpgapp.domain.game.skill.*
-import ru.novemis.rpgapp.dto.game.skill.dto.*
+import ru.novemis.rpgapp.domain.game.skill.SchoolLvl
+import ru.novemis.rpgapp.domain.game.skill.SkillCategory
+import ru.novemis.rpgapp.domain.game.skill.Spell
+import ru.novemis.rpgapp.domain.game.skill.SpellSchool
+import ru.novemis.rpgapp.dto.game.skill.dto.SchoolLvlDto
+import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
+import ru.novemis.rpgapp.dto.game.skill.dto.SpellDto
+import ru.novemis.rpgapp.dto.game.skill.dto.SpellSchoolDto
 import ru.novemis.rpgapp.dto.game.skill.form.SkillCategoryForm
 import ru.novemis.rpgapp.repository.game.GameRepository
 
@@ -22,7 +28,7 @@ class SkillCategoryConverter(
             img = skillCategoryForm.img
             complex = skillCategoryForm.complex
 
-            skills = skillCategoryForm.skills?.map {skillConverter.toDomain(it, gameId) } ?: emptyList()
+            skills = skillCategoryForm.skills?.map {skillConverter.toDomain(it, gameId, skillCategory) } ?: emptyList()
 
             spellSchools = skillCategoryForm.spellSchools?.map { spellSchoolForm ->
                 SpellSchool().apply {
