@@ -18,4 +18,13 @@ class ShopService(
                 .let { shopRepository.save(it) }
                 .let { shopConverter.toDto(it) }
     }
+
+    fun update(form: ShopForm, gameId: String, shopId: String): ShopDto {
+        return form
+                .let { shopConverter.toDomain(form, gameId) }
+                .apply { id = shopId }
+                .let { shopRepository.save(it) }
+                .let { shopConverter.toDto(it) }
+    }
+
 }

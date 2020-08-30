@@ -13,17 +13,20 @@ spring:
     hikari:
       connection-timeout: 20000
       maximum-pool-size: 10
-    url: jdbc:postgresql://localhost:5432/rpg
-    username: rpg
-    password: rpg
-    driver-class-name: org.postgresql.Driver
+    url: jdbc:h2:file:/var/h2/rpg
+    username: sa
+    password: password
+    driver-class-name: org.h2.Driver
   jpa:
     hibernate:
       ddl-auto: update
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
 
 imgPrefix:  "http://localhost:8081"
-hidden-props-path: C:\Users\nikolay\IdeaProjects\rpg-app-server-v1\src\main\resources\hidden.properties
+hidden-props-path: /Users/u18456857/IdeaProjects/rpg-app-server-v1/src/main/resources/hidden.properties
 
 vk:
   api-version: 5.103
