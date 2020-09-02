@@ -1,12 +1,10 @@
 package ru.novemis.rpgapp.service
 
-import lombok.extern.slf4j.Slf4j
 import org.springframework.stereotype.Service
 import ru.novemis.rpgapp.converter.SkillCategoryConverter
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
 import ru.novemis.rpgapp.dto.game.skill.form.SkillCategoryForm
 import ru.novemis.rpgapp.repository.game.skillcategory.SkillCategoryRepository
-import java.lang.IllegalArgumentException
 import javax.transaction.Transactional
 
 @Service
