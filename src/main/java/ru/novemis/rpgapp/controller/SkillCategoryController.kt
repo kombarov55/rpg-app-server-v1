@@ -19,4 +19,10 @@ class SkillCategoryController(
     @GetMapping("/skillCategory/{id}")
     fun getById(@PathVariable("id") id: String): SkillCategoryDto = skillCategoryService.findById(id)
 
+    @PutMapping("/skillCategory/{id}")
+    fun update(
+            @PathVariable("id") id: String,
+            @RequestBody body: SkillCategoryForm
+    ): SkillCategoryDto = skillCategoryService.update(id, body)
+
 }
