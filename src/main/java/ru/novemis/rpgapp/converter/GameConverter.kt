@@ -45,7 +45,8 @@ class GameConverter(
                 groupLink = game.groupLink,
                 currencies = game.currencies.map { currency -> currencyConverter.toDto(currency) },
                 skillCategories = game.skillCategories.map {skillCategoryConverter.toDto(it) },
-                shops = game.shops.map { shopConverter.toDto(it) }
+                shops = game.shops.map { shopConverter.toDto(it) },
+                maxCurrenciesCount = 3
         )
     }
 

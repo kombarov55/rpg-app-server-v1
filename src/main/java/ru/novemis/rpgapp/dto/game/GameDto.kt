@@ -13,5 +13,6 @@ data class GameDto(
         var groupLink: String,
         var currencies: List<CurrencyDto>,
         var skillCategories: List<SkillCategoryDto>,
-        var shops: List<ShopDto>
+        var shops: List<ShopDto>,
+        var maxCurrenciesCount: Int
 )

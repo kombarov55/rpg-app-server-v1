@@ -71,6 +71,4 @@ class GameController(
     fun delete(@PathVariable("game-id") gameId: String) {
         return gameService.delete(gameId)
     }
-
-
 }

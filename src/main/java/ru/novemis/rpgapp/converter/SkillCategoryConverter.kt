@@ -68,6 +68,7 @@ class SkillCategoryConverter(
 
     fun toDto(skillCategory: SkillCategory): SkillCategoryDto {
         return SkillCategoryDto(
+                id = skillCategory.id,
                 img = skillCategory.img,
                 name = skillCategory.name,
                 description = skillCategory.description,
