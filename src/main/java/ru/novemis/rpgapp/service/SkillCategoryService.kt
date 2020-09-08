@@ -36,6 +36,6 @@ open class SkillCategoryService(
                         description = body.description
                     }
                     .let { repository.save(it) }
-                    .let { converter.toDto(it) }₽
+                    .let { converter.toDto(it) }
 
 }
