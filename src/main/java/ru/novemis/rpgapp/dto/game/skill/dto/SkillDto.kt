@@ -2,6 +2,7 @@ package ru.novemis.rpgapp.dto.game.skill.dto
 
 import ru.novemis.rpgapp.dto.game.common.dto.PriceDto
 
+
 data class SkillDto(
         var id: String,
         val img: String,
