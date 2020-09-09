@@ -26,7 +26,7 @@ class SkillConverter(
             upgradable = form.upgradable
             this.skillCategory = skillCategory
 
-            upgrades = form.skillUpgrades.map { skillUpgradeForm ->
+            upgrades = form.upgrades.map { skillUpgradeForm ->
                 SkillUpgrade(
                         lvlNum = skillUpgradeForm.lvlNum,
                         description = skillUpgradeForm.description,

@@ -8,5 +8,5 @@ data class SkillForm(
         var description: String = "",
         var prices: List<List<PriceForm>> = mutableListOf(),
         var upgradable: Boolean = false,
-        var skillUpgrades: List<SkillUpgradeForm> = mutableListOf()
+        var upgrades: List<SkillUpgradeForm> = mutableListOf()
 )
