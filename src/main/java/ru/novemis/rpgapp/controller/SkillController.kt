@@ -66,6 +66,7 @@ open class SkillController(
     }
 
     @DeleteMapping("/skill/{id}")
+    @Transactional
     open fun delete(@PathVariable("id") id: String): SkillDto {
         return repository.findById(id).orElseThrow { IllegalArgumentException() }
                 .let { converter.toDto(it) }
