@@ -10,6 +10,10 @@ class SkillCategoryController(
         private val skillCategoryService: SkillCategoryService
 ) {
 
+    @GetMapping("/game/{id}/skillCategory")
+    fun getAllByGameId(@PathVariable("id") gameId: String): SkillCategoryDto =
+            skillCategoryService.findByGameId(gameId)
+
     @PostMapping("/game/{game-id}/skillCategory")
     fun save(
             @RequestBody skillCategoryForm: SkillCategoryForm,

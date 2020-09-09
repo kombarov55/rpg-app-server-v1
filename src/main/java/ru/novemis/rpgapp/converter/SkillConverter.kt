@@ -8,6 +8,7 @@ import ru.novemis.rpgapp.dto.game.skill.dto.SkillDto
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillShortDto
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillUpgradeDto
 import ru.novemis.rpgapp.dto.game.skill.form.SkillForm
+import java.lang.IllegalArgumentException
 
 @Component
 class SkillConverter(
@@ -35,6 +36,12 @@ class SkillConverter(
             }
         }
     }
+
+    fun toDomain(form: SkillForm, skillCategory: SkillCategory): Skill =
+            toDomain(form,
+                    skillCategory.game?.id ?: throw IllegalArgumentException(),
+                    skillCategory
+            )
 
     fun toDto(domain: Skill): SkillDto {
         return SkillDto(

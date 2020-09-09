@@ -7,5 +7,6 @@ data class SkillCategoryDto(
         val description: String,
         val complex: Boolean,
         val skills: List<SkillDto>,
-        val spellSchools: List<SpellSchoolDto>
+        val spellSchools: List<SpellSchoolDto>,
+        val gameId: String
 )

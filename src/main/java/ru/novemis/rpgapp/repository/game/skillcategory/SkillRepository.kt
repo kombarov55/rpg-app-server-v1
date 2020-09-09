@@ -9,4 +9,6 @@ interface SkillRepository : CrudRepository<Skill, String> {
     @Query("select s from Skill s where s.skillCategory.game.id = :gameId")
     fun findByGameId(gameId: String): List<Skill>
 
+    fun findBySkillCategoryId(skillCategoryId: String): List<Skill>
+
 }

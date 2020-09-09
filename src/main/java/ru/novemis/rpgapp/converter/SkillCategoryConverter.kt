@@ -94,7 +94,8 @@ class SkillCategoryConverter(
                                 )
                             }
                     )
-                }
+                },
+                gameId = skillCategory.game?.id ?: ""
         )
     }
 

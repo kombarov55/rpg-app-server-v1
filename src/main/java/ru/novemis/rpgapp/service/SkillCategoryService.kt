@@ -13,7 +13,14 @@ open class SkillCategoryService(
         private val converter: SkillCategoryConverter
 ) {
 
-    fun save(skillCategoryForm: SkillCategoryForm, gameId: String): SkillCategoryDto =
+    @Transactional
+    open fun findByGameId(gameId: String): SkillCategoryDto =
+            repository
+                    .findByGameId(gameId)
+                    ?.let { converter.toDto(it) }
+                    ?: throw IllegalArgumentException()
+
+    open fun save(skillCategoryForm: SkillCategoryForm, gameId: String): SkillCategoryDto =
             skillCategoryForm
                     .let { converter.toDomain(it, gameId) }
                     .let { repository.save(it) }
