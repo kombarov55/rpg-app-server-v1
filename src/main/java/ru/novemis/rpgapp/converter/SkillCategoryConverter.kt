@@ -16,6 +16,7 @@ import ru.novemis.rpgapp.repository.game.GameRepository
 class SkillCategoryConverter(
         private val priceCombinationConverter: PriceCombinationConverter,
         private val skillConverter: SkillConverter,
+        private val schoolLvlUpgradePriceCombinationConverter: SchoolLvlUpgradePriceCombinationConverter,
         private val gameRepository: GameRepository
 ) {
 
@@ -45,8 +46,8 @@ class SkillCategoryConverter(
 
                             lvl = schoolLvlForm.lvl
                             this.spellSchool = spellSchool
-                            upgradePriceCombinations = schoolLvlForm.schoolLvlUpgradePriceCombinations.map { listOfPrices ->
-                                priceCombinationConverter.toDomain(listOfPrices, gameId)
+                            upgradePriceCombinations = schoolLvlForm.schoolLvlUpgradePriceCombinations.map { schoolLvlUpgradePriceCombination ->
+                                schoolLvlUpgradePriceCombinationConverter.toDomain(schoolLvlUpgradePriceCombination, gameId).apply { this.schoolLvl = schoolLvl }
                             }
 
                             spells = schoolLvlForm.spells.map { spellForm ->
@@ -59,6 +60,7 @@ class SkillCategoryConverter(
                             }
                         }
                     }
+                    this.skillCategory = skillCategory
                 }
             } ?: emptyList()
 
@@ -83,7 +85,7 @@ class SkillCategoryConverter(
                             schoolLvls = it.schoolLvls.map {
                                 SchoolLvlDto(
                                         lvl = it.lvl,
-                                        upgradePriceCombinations = it.upgradePriceCombinations.map { priceCombinationConverter.toDto(it) },
+                                        upgradePriceCombinations = it.upgradePriceCombinations.map { schoolLvlUpgradePriceCombinationConverter.toDto(it) },
                                         spells = it.spells.map {
                                             SpellDto(
                                                     img = it.img,

@@ -7,6 +7,6 @@ import ru.novemis.rpgapp.domain.game.skill.SkillCategory
 interface SkillCategoryRepository : CrudRepository<SkillCategory, String> {
 
     @Query("select s from SkillCategory s where s.game.id = :gameId")
-    fun findByGameId(gameId: String): SkillCategory?
+    fun findAllByGameId(gameId: String): List<SkillCategory>
 
 }

@@ -14,11 +14,10 @@ open class SkillCategoryService(
 ) {
 
     @Transactional
-    open fun findByGameId(gameId: String): SkillCategoryDto =
+    open fun findAllByGameId(gameId: String): List<SkillCategoryDto> =
             repository
-                    .findByGameId(gameId)
-                    ?.let { converter.toDto(it) }
-                    ?: throw IllegalArgumentException()
+                    .findAllByGameId(gameId)
+                    .map { converter.toDto(it) }
 
     open fun save(skillCategoryForm: SkillCategoryForm, gameId: String): SkillCategoryDto =
             skillCategoryForm

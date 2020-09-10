@@ -4,21 +4,25 @@ import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
 import ru.novemis.rpgapp.dto.game.skill.form.SkillCategoryForm
 import ru.novemis.rpgapp.service.SkillCategoryService
+import javax.transaction.Transactional
 
 @RestController
-class SkillCategoryController(
+open class SkillCategoryController(
         private val skillCategoryService: SkillCategoryService
 ) {
 
     @GetMapping("/game/{id}/skillCategory")
-    fun getAllByGameId(@PathVariable("id") gameId: String): SkillCategoryDto =
-            skillCategoryService.findByGameId(gameId)
+    @Transactional
+    open fun getAllByGameId(@PathVariable("id") gameId: String): List<SkillCategoryDto> =
+            skillCategoryService.findAllByGameId(gameId)
 
     @PostMapping("/game/{game-id}/skillCategory")
-    fun save(
+    @Transactional
+    open fun save(
             @RequestBody skillCategoryForm: SkillCategoryForm,
             @PathVariable("game-id") gameId: String
-    ): SkillCategoryDto = skillCategoryService.save(skillCategoryForm, gameId)
+    ): SkillCategoryDto =
+            skillCategoryService.save(skillCategoryForm, gameId)
 
     @GetMapping("/skillCategory/{id}")
     fun getById(@PathVariable("id") id: String): SkillCategoryDto = skillCategoryService.findById(id)
