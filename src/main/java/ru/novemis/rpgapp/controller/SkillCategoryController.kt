@@ -33,4 +33,9 @@ open class SkillCategoryController(
             @RequestBody body: SkillCategoryForm
     ): SkillCategoryDto = skillCategoryService.update(id, body)
 
+    @DeleteMapping("/skillCategory/{id}")
+    @Transactional
+    open fun delete(@PathVariable("id") id: String): SkillCategoryDto = skillCategoryService.deleteById(id)
+
+
 }

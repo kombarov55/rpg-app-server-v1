@@ -44,4 +44,13 @@ open class SkillCategoryService(
                     .let { repository.save(it) }
                     .let { converter.toDto(it) }
 
+
+    @Transactional
+    open fun deleteById(id: String): SkillCategoryDto {
+        val skillCategory = repository.findById(id).orElseThrow { IllegalArgumentException() }
+
+        return converter.toDto(skillCategory)
+                .also { repository.deleteById(id) }
+    }
+
 }
