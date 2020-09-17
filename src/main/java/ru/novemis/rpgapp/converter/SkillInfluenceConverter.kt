@@ -12,7 +12,7 @@ class SkillInfluenceConverter(
 ) {
 
     fun toDomain(form: SkillInfluenceForm) = SkillInfluence(
-            skill = skillRepository.findById(form.skillId).orElseThrow { IllegalArgumentException("skillId is invalid") },
+            skill = skillRepository.findById(form.skill!!.id).orElseThrow { IllegalArgumentException("skillId is invalid") },
             modifier = form.modifier!!.toDomain(),
             amount = form.amount
     )
