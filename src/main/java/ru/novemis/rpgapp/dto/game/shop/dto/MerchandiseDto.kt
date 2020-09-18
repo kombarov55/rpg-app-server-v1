@@ -6,6 +6,7 @@ data class MerchandiseDto(
         val id: String,
         val name: String,
         val img: String,
+        val description: String,
         val category: MerchandiseCategoryDto,
         val type: MerchandiseTypeDto,
         val slots: Int,

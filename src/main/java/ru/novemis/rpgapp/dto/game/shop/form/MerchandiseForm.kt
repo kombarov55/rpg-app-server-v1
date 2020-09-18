@@ -5,6 +5,7 @@ import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 data class MerchandiseForm(
         var name: String = "",
         var img: String = "",
+        val description: String = "",
         var category: MerchandiseCategoryForm? = null,
         var type: MerchandiseTypeForm? = null,
         var slots: Int = 0,

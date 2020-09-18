@@ -23,6 +23,7 @@ class MerchandiseConverter(
         return Merchandise(
                 name = form.name,
                 img = form.img,
+                description = form.description,
                 category = merchandiseCategoryRepository.findById(form.category!!.id!!).orElseThrow { IllegalArgumentException("categoryId is invalid") },
                 type = merchandiseTypeRepository.findById(form.type!!.id!!).orElseThrow { IllegalArgumentException("typeId is invalid") },
                 slots = form.slots,
@@ -37,6 +38,7 @@ class MerchandiseConverter(
                 id = domain.id,
                 name = domain.name,
                 img = domain.img,
+                description = domain.description ?: "",
                 category = domain.category!!.let { MerchandiseCategoryDto(it.id, it.name) },
                 type = domain.type!!.let { MerchandiseTypeDto(it.id, it.name) },
                 slots = domain.slots,

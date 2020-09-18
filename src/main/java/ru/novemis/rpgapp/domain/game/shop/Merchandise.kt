@@ -17,6 +17,8 @@ data class Merchandise(
 
         var name: String = "",
 
+        val description: String? = "",
+
         var img: String = "",
 
         @ManyToOne
