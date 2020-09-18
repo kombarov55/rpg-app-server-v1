@@ -5,25 +5,35 @@ import ru.novemis.rpgapp.converter.ShopConverter
 import ru.novemis.rpgapp.dto.game.shop.dto.ShopDto
 import ru.novemis.rpgapp.dto.game.shop.form.ShopForm
 import ru.novemis.rpgapp.repository.game.shop.ShopRepository
+import javax.transaction.Transactional
 
 @Component
-class ShopService(
+open class ShopService(
         private val shopRepository: ShopRepository,
         private val shopConverter: ShopConverter
 ) {
 
-    fun save(shopForm: ShopForm, gameId: String): ShopDto {
+    @Transactional
+    open fun save(shopForm: ShopForm, gameId: String): ShopDto {
         return shopForm
                 .let { shopConverter.toDomain(it, gameId) }
                 .let { shopRepository.save(it) }
                 .let { shopConverter.toDto(it) }
     }
 
-    fun update(form: ShopForm, gameId: String, shopId: String): ShopDto {
+    @Transactional
+    open fun update(form: ShopForm, gameId: String, shopId: String): ShopDto {
         return form
                 .let { shopConverter.toDomain(form, gameId) }
                 .apply { id = shopId }
                 .let { shopRepository.save(it) }
+                .let { shopConverter.toDto(it) }
+    }
+
+    @Transactional
+    open fun delete(id: String): ShopDto {
+        return shopRepository.findById(id).orElseThrow { IllegalArgumentException() }
+                .also { shopRepository.delete(it) }
                 .let { shopConverter.toDto(it) }
     }
 

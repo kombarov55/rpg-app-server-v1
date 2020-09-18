@@ -23,4 +23,11 @@ class ShopController(
             @RequestBody form: ShopForm
     ): ShopDto = shopService.update(form, gameId, shopId)
 
+    @DeleteMapping("/shop/{id}")
+    fun delete(
+            @PathVariable("id") id: String
+    ): ShopDto {
+        return shopService.delete(id)
+    }
+
 }
