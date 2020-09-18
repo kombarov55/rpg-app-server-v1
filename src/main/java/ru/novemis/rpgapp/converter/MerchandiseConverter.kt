@@ -2,7 +2,9 @@ package ru.novemis.rpgapp.converter
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.shop.Merchandise
+import ru.novemis.rpgapp.dto.game.shop.dto.MerchandiseCategoryDto
 import ru.novemis.rpgapp.dto.game.shop.dto.MerchandiseDto
+import ru.novemis.rpgapp.dto.game.shop.dto.MerchandiseTypeDto
 import ru.novemis.rpgapp.dto.game.shop.form.MerchandiseForm
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.shop.MerchandiseCategoryRepository
@@ -35,8 +37,8 @@ class MerchandiseConverter(
                 id = domain.id,
                 name = domain.name,
                 img = domain.img,
-                categoryName = domain.category!!.name,
-                typeName = domain.type!!.name,
+                category = domain.category!!.let { MerchandiseCategoryDto(it.id, it.name) },
+                type = domain.type!!.let { MerchandiseTypeDto(it.id, it.name) },
                 slots = domain.slots,
                 prices = domain.price.map { priceCombinationConverter.toDto(it) },
                 skillInfluences = domain.skillInfluences.map { skillInfluenceConverter.toDto(it) }

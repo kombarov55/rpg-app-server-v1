@@ -6,8 +6,8 @@ data class MerchandiseDto(
         val id: String,
         val name: String,
         val img: String,
-        val categoryName: String,
-        val typeName: String,
+        val category: MerchandiseCategoryDto,
+        val type: MerchandiseTypeDto,
         val slots: Int,
         val prices: List<List<PriceDto>>,
         val skillInfluences: List<SkillInfluenceDto>

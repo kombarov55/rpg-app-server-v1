@@ -38,10 +38,11 @@ open class MerchandiseController(
             @PathVariable("game-id") gameId: String,
             @PathVariable("id") id: String,
             @RequestBody form: MerchandiseForm
-    ) = form
+    ): MerchandiseDto = form
             .let { converter.toDomain(form, gameId) }
             .also { it.id = id }
             .let { repository.save(it) }
+            .let { converter.toDto(it) }
 
     @DeleteMapping("/game/{game-id}/merchandise/{id}")
     @Transactional

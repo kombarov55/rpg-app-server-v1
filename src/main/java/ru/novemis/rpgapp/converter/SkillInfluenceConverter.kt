@@ -8,7 +8,8 @@ import ru.novemis.rpgapp.repository.game.skillcategory.SkillRepository
 
 @Component
 class SkillInfluenceConverter(
-        private val skillRepository: SkillRepository
+        private val skillRepository: SkillRepository,
+        private val skillConverter: SkillConverter
 ) {
 
     fun toDomain(form: SkillInfluenceForm) = SkillInfluence(
@@ -18,7 +19,7 @@ class SkillInfluenceConverter(
     )
 
     fun toDto(domain: SkillInfluence) = SkillInfluenceDto(
-            domain.skill!!.name,
+            skill = skillConverter.toShortDto(domain.skill!!),
             modifier = domain.modifier!!.toDto(),
             amount = domain.amount
     )
