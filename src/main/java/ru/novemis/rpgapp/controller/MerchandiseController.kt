@@ -33,7 +33,8 @@ open class MerchandiseController(
             .let { converter.toDto(it) }
 
     @PutMapping("/game/{game-id}/merchandise/{id}")
-    fun update(
+    @Transactional
+    open fun update(
             @PathVariable("game-id") gameId: String,
             @PathVariable("id") id: String,
             @RequestBody form: MerchandiseForm
@@ -43,7 +44,8 @@ open class MerchandiseController(
             .let { repository.save(it) }
 
     @DeleteMapping("/game/{game-id}/merchandise/{id}")
-    fun delete(
+    @Transactional
+    open fun delete(
             @PathVariable("id") id: String
     ) = repository.deleteById(id)
 
