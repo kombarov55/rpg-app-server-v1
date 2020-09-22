@@ -10,8 +10,7 @@ import java.lang.IllegalArgumentException
 @Component
 class ShopConverter(
         private val gameRepository: GameRepository,
-        private val merchandiseCategoryConverter: MerchandiseCategoryConverter,
-        private val merchandiseTypeConverter: MerchandiseTypeConverter
+        private val warehouseEntryConverter: WarehouseEntryConverter
 ) {
 
     fun toDomain(form: ShopForm, gameId: String): Shop {
@@ -29,7 +28,8 @@ class ShopConverter(
                 id = domain.id,
                 name = domain.name,
                 img = domain.img,
-                type = domain.type!!
+                type = domain.type!!,
+                warehouseEntries = domain.warehouseEntries.map { warehouseEntryConverter.toDto(it) }
         )
     }
 

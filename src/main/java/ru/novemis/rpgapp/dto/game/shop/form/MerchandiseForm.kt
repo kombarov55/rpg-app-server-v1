@@ -3,6 +3,7 @@ package ru.novemis.rpgapp.dto.game.shop.form
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 
 data class MerchandiseForm(
+        var id: String? = null,
         var name: String = "",
         var img: String = "",
         val description: String = "",
