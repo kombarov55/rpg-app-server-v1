@@ -1,0 +1,5 @@
+spring:
+  datasource:
+    url: ${JDBC_DATABASE_URL:}
+    driver-class-name: org.postgresql.Driver
+#    driver-class-name: org.h2.Driver
