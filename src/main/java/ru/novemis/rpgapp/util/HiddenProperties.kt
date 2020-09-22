@@ -1,6 +1,7 @@
 package ru.novemis.rpgapp.util
 
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.Resource
 import org.springframework.stereotype.Component
 import java.io.FileReader
@@ -9,16 +10,13 @@ import javax.annotation.PostConstruct
 
 
 @Component
-class HiddenProperties(
-        @Value("classpath:hidden.properties")
-        private val hiddenPropsResource: Resource
-) {
+class HiddenProperties{
 
     private val internal = Properties()
 
     @PostConstruct
     fun load() {
-        internal.load(FileReader(hiddenPropsResource.file))
+        internal.load(FileReader(ClassPathResource("hidden.properties").file))
     }
 
     val appId: Int
