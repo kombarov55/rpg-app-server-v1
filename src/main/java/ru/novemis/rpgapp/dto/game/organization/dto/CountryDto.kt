@@ -15,5 +15,6 @@ class CountryDto(
         shops: List<ShopDto>,
 
         val entranceTax: List<PriceDto>,
-        val incomeTax: Double?
+        val incomeTax: Double?,
+        val creditOffers: List<CreditOfferDto>
 ) : OrganizationDto(id, name, description, type, heads, initialBudget, shops)

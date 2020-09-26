@@ -8,6 +8,7 @@ import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import java.util.*
 import javax.persistence.CascadeType
 import javax.persistence.Entity
+import javax.persistence.OneToMany
 import javax.persistence.OneToOne
 
 @Entity
@@ -24,5 +25,8 @@ open class Country(
         @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
         val entranceTax: PriceCombination? = null,
 
-        val incomeTax: Double? = null
+        val incomeTax: Double? = null,
+
+        @OneToMany(cascade = [CascadeType.ALL])
+        var creditOffers: List<CreditOffer> = mutableListOf()
 ) : Organization(id, name, description, type, organizationHeads, initialBudget, shops, game)
