@@ -30,7 +30,8 @@ class UserAccountConverter {
         return UserAccountShortDto(
                 id = domain.id,
                 fullName = domain.firstName + " " + domain.lastName,
-                img = domain.photo50Url
+                img = domain.photo50Url,
+                role = domain.role.label
         )
     }
 
