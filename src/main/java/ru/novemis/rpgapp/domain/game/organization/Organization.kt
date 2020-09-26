@@ -23,7 +23,7 @@ open class Organization(
                 joinColumns = [JoinColumn(name = "organization_id")],
                 inverseJoinColumns = [JoinColumn(name = "user_account_id")]
         )
-        val organizationHeads: List<UserAccount> = mutableListOf(),
+        var organizationHeads: List<UserAccount> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
         val initialBudget: List<Price> = mutableListOf(),

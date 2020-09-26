@@ -6,6 +6,7 @@ import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationDto
 import ru.novemis.rpgapp.dto.game.organization.form.OrganizationForm
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.organization.OrganizationRepository
+import ru.novemis.rpgapp.repository.useraccount.UserAccountRepository
 import javax.transaction.Transactional
 
 @RestController
@@ -13,7 +14,8 @@ open class OrganizationController(
         private val repository: OrganizationRepository,
         private val converter: OrganizationConverter,
 
-        private val gameRepository: GameRepository
+        private val gameRepository: GameRepository,
+        private val userAccountRepository: UserAccountRepository
 ) {
 
     @GetMapping("/game/{game-id}/organization")
@@ -48,6 +50,30 @@ open class OrganizationController(
                     this.id = id
                     this.game = gameRepository.findById(gameId).orElseThrow { IllegalArgumentException() }
                 }
+                .let { repository.save(it) }
+                .let { converter.toDto(it) }
+    }
+
+    @PostMapping("/organization/{id}/head/{head-id}")
+    @Transactional
+    open fun addHead(
+            @PathVariable("id") id: String,
+            @PathVariable("head-id") headId: String
+    ): OrganizationDto {
+        return repository.findById(id).orElseThrow { IllegalArgumentException() }
+                .apply { organizationHeads += userAccountRepository.findById(headId).orElseThrow { IllegalArgumentException() } }
+                .let { repository.save(it) }
+                .let { converter.toDto(it) }
+    }
+
+    @DeleteMapping("/organization/{id}/head/{head-id}")
+    @Transactional
+    open fun removeHead(
+            @PathVariable("id") id: String,
+            @PathVariable("head-id") headId: String
+    ): OrganizationDto {
+        return repository.findById(id).orElseThrow { IllegalArgumentException() }
+                .apply { organizationHeads = organizationHeads.filter { it.id != headId } }
                 .let { repository.save(it) }
                 .let { converter.toDto(it) }
     }
