@@ -12,5 +12,8 @@ class CountryDto(
         type: OrganizationTypeDto,
         heads: List<UserAccountShortDto>,
         initialBudget: List<PriceDto>,
-        shops: List<ShopDto>
+        shops: List<ShopDto>,
+
+        val entranceTax: List<PriceDto>,
+        val incomeTax: Double?
 ) : OrganizationDto(id, name, description, type, heads, initialBudget, shops)
