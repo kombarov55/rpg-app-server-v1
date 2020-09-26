@@ -2,11 +2,13 @@ package ru.novemis.rpgapp.domain.game.organization
 
 import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.common.Price
+import ru.novemis.rpgapp.domain.game.shop.Shop
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import java.util.*
 import javax.persistence.*
 
 @Entity
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 open class Organization(
         @Id
         var id: String = UUID.randomUUID().toString(),
@@ -28,8 +30,10 @@ open class Organization(
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
         val initialBudget: List<Price> = mutableListOf(),
 
+        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+        var shops: List<Shop> = mutableListOf(),
+
         @ManyToOne
         @JoinColumn(name = "game_id")
         var game: Game? = null
-
 )

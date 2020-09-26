@@ -48,7 +48,7 @@ data class Game(
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
         var skillCategories: List<SkillCategory> = mutableListOf(),
 
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
+        @OneToMany(cascade = [CascadeType.ALL])
         var shops: List<Shop> = mutableListOf(),
 
         var deleted: Boolean = false,

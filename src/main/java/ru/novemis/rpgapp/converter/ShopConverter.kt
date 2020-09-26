@@ -17,9 +17,7 @@ class ShopConverter(
         return Shop(
                 name = form.name,
                 img = form.img,
-                type = form.type,
-
-                game = gameRepository.findById(gameId).orElseThrow { IllegalArgumentException("gameId is invalid") }
+                type = form.type
         )
     }
 

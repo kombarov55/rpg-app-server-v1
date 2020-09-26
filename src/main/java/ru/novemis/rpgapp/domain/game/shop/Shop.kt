@@ -13,9 +13,5 @@ data class Shop(
         var type: ShopType? = null,
 
         @OneToMany(mappedBy = "shop", orphanRemoval = true, cascade = [CascadeType.ALL])
-        var warehouseEntries: List<WarehouseEntry> = mutableListOf(),
-
-        @ManyToOne
-        @JoinColumn(name = "game_id")
-        var game: Game? = null
+        var warehouseEntries: List<WarehouseEntry> = mutableListOf()
 )
