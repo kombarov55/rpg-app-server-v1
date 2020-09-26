@@ -63,7 +63,8 @@ class OrganizationConverter(
                     description = domain.description,
                     type = domain.type!!.toDto(),
                     heads = domain.organizationHeads.map { userAccountConverter.toShortDto(it) },
-                    initialBudget = domain.initialBudget.map { priceCombinationConverter.toDto(it) }
+                    initialBudget = domain.initialBudget.map { priceCombinationConverter.toDto(it) },
+                    shops = domain.shops.map { shopConverter.toDto(it) }
             )
         }
     }

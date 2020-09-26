@@ -12,6 +12,5 @@ class CountryDto(
         type: OrganizationTypeDto,
         heads: List<UserAccountShortDto>,
         initialBudget: List<PriceDto>,
-
-        val shops: List<ShopDto>
-) : OrganizationDto(id, name, description, type, heads, initialBudget)
+        shops: List<ShopDto>
+) : OrganizationDto(id, name, description, type, heads, initialBudget, shops)
