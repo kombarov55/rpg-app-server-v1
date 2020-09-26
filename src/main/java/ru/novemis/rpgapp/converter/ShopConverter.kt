@@ -13,7 +13,7 @@ class ShopConverter(
         private val warehouseEntryConverter: WarehouseEntryConverter
 ) {
 
-    fun toDomain(form: ShopForm, gameId: String): Shop {
+    fun toDomain(form: ShopForm): Shop {
         return Shop(
                 name = form.name,
                 img = form.img,

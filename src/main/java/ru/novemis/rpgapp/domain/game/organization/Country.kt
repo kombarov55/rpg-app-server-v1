@@ -4,11 +4,12 @@ import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.common.Price
 import ru.novemis.rpgapp.domain.game.shop.Shop
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
+import java.util.*
 import javax.persistence.Entity
 
 @Entity
 open class Country(
-        id: String = "",
+        id: String = UUID.randomUUID().toString(),
         name: String = "",
         description: String = "",
         type: OrganizationType? = null,

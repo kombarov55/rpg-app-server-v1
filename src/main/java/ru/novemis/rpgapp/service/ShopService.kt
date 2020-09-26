@@ -16,7 +16,7 @@ open class ShopService(
     @Transactional
     open fun save(shopForm: ShopForm, gameId: String): ShopDto {
         return shopForm
-                .let { shopConverter.toDomain(it, gameId) }
+                .let { shopConverter.toDomain(it) }
                 .let { shopRepository.save(it) }
                 .let { shopConverter.toDto(it) }
     }
@@ -24,7 +24,7 @@ open class ShopService(
     @Transactional
     open fun update(form: ShopForm, gameId: String, shopId: String): ShopDto {
         return form
-                .let { shopConverter.toDomain(form, gameId) }
+                .let { shopConverter.toDomain(form) }
                 .apply { id = shopId }
                 .let { shopRepository.save(it) }
                 .let { shopConverter.toDto(it) }

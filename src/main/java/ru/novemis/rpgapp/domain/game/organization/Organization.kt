@@ -30,7 +30,7 @@ open class Organization(
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
         val initialBudget: List<Price> = mutableListOf(),
 
-        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+        @OneToMany(cascade = [CascadeType.ALL])
         var shops: List<Shop> = mutableListOf(),
 
         @ManyToOne
