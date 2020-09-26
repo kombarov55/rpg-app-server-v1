@@ -5,6 +5,7 @@ import ru.novemis.rpgapp.converter.UserAccountConverter
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import ru.novemis.rpgapp.domain.useraccount.UserAccountRole
 import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountDto
+import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountShortDto
 import ru.novemis.rpgapp.http.VkRequests
 import ru.novemis.rpgapp.repository.announcement.AnnouncementRepository
 import ru.novemis.rpgapp.repository.useraccount.UserAccountRepository
@@ -72,5 +73,10 @@ open class UserAccountService(
     open fun findAll(): List<UserAccountDto> {
         return userAccountRepository.findAll()
                 .map { userAccountConverter.toDto(it) }
+    }
+
+    open fun findAllShort(): List<UserAccountShortDto> {
+        return userAccountRepository.findAll()
+                .map { userAccountConverter.toShortDto(it) }
     }
 }

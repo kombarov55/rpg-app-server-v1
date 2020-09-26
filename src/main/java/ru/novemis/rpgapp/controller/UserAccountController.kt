@@ -2,6 +2,7 @@ package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountDto
+import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountShortDto
 import ru.novemis.rpgapp.dto.useraccount.form.ToggleFavoriteAnnouncementForm
 import ru.novemis.rpgapp.dto.useraccount.form.ToggleRespondAnnouncementForm
 import ru.novemis.rpgapp.service.UserAccountService
@@ -15,6 +16,11 @@ class UserAccountController(
     @GetMapping
     fun findAll(): List<UserAccountDto> {
         return userAccountService.findAll()
+    }
+
+    @GetMapping("/short")
+    fun findAllShort(): List<UserAccountShortDto> {
+        return userAccountService.findAllShort()
     }
 
     @GetMapping("/{user-id}")
