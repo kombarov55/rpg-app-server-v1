@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.domain.game.organization
 
+import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.common.Price
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import java.util.*
@@ -25,6 +26,10 @@ open class Organization(
         val organizationHeads: List<UserAccount> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-        val initialBudget: List<Price> = mutableListOf()
+        val initialBudget: List<Price> = mutableListOf(),
+
+        @ManyToOne
+        @JoinColumn(name = "game_id")
+        var game: Game? = null
 
 )

@@ -12,6 +12,14 @@ class PriceCombinationConverter(
         private val currencyRepository: CurrencyRepository
 ) {
 
+    fun toDomain(form: PriceForm, gameId: String): Price {
+        return Price(
+                currency = currencyRepository.findByGameIdAndName(gameId, form.name)
+                        ?: throw IllegalArgumentException("currency not found"),
+                amount = form.amount
+        )
+    }
+
     fun toDomain(listOfPrices: List<PriceForm>, gameId: String): PriceCombination {
         return PriceCombination().apply {
             prices = listOfPrices.map { priceForm ->
@@ -22,6 +30,13 @@ class PriceCombinationConverter(
                 )
             }
         }
+    }
+
+    fun toDto(domain: Price): PriceDto {
+        return PriceDto(
+                name = domain.currency!!.name,
+                amount = domain.amount
+        )
     }
 
     fun toDto(priceCombination: PriceCombination): List<PriceDto> {
