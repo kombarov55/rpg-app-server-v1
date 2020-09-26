@@ -30,7 +30,7 @@ open class OrganizationController(
             @PathVariable("game-id") gameId: String,
             @RequestBody form: OrganizationForm
     ): OrganizationDto {
-        return converter.toDomain(form)
+        return converter.toDomain(form, gameId)
                 .apply { game = gameRepository.findById(gameId).orElseThrow { IllegalArgumentException() } }
                 .let { repository.save(it) }
                 .let { converter.toDto(it) }
@@ -43,7 +43,7 @@ open class OrganizationController(
             @PathVariable("id") id: String,
             @RequestBody form: OrganizationForm
     ): OrganizationDto {
-        return converter.toDomain(form)
+        return converter.toDomain(form, gameId)
                 .apply {
                     this.id = id
                     this.game = gameRepository.findById(gameId).orElseThrow { IllegalArgumentException() }
