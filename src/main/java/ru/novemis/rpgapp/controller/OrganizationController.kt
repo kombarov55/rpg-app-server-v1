@@ -114,12 +114,12 @@ open class OrganizationController(
                 .let { converter.toDto(it) }
     }
 
-    @PostMapping("/organization/{id}/ownedMerchandise/{merchandise-id}/{amount}")
+    @PostMapping("/organization/{id}/ownedMerchandise/{merchandise-id}")
     @Transactional
     open fun addOwnedMerchandise(
             @PathVariable("id") id: String,
             @PathVariable("merchandise-id") merchandiseId: String,
-            @PathVariable("amount") amount: Int
+            @RequestParam("amount") amount: Int
     ): OrganizationDto {
         val organization = repository.findById(id).orElseThrow { IllegalArgumentException() }
         val merchandise = merchandiseRepository.findById(merchandiseId).orElseThrow { IllegalArgumentException() }
