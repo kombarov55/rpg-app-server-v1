@@ -11,7 +11,7 @@ data class OrganizationForm(
         var description: String = "",
         var type: OrganizationTypeForm? = null,
         var heads: List<UserAccountShortForm> = mutableListOf(),
-        var initialBudget: List<PriceForm> = mutableListOf(),
+        var balance: List<PriceForm> = mutableListOf(),
         var shops: List<ShopForm> = mutableListOf(),
         var entranceTax: List<PriceForm> = mutableListOf(),
         var incomeTax: Double = 0.0

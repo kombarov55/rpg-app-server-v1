@@ -18,7 +18,7 @@ open class Country(
         description: String = "",
         type: OrganizationType? = null,
         organizationHeads: List<UserAccount> = mutableListOf(),
-        initialBudget: List<Price> = mutableListOf(),
+        balance: List<Price> = mutableListOf(),
         shops: List<Shop> = mutableListOf(),
         game: Game? = null,
 
@@ -29,4 +29,4 @@ open class Country(
 
         @OneToMany(cascade = [CascadeType.ALL])
         var creditOffers: List<CreditOffer> = mutableListOf()
-) : Organization(id, name, description, type, organizationHeads, initialBudget, shops, game)
+) : Organization(id, name, description, type, organizationHeads, balance, shops, game)

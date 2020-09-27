@@ -11,10 +11,10 @@ class CountryDto(
         description: String,
         type: OrganizationTypeDto,
         heads: List<UserAccountShortDto>,
-        initialBudget: List<PriceDto>,
+        balance: List<PriceDto>,
         shops: List<ShopDto>,
 
         val entranceTax: List<PriceDto>,
         val incomeTax: Double?,
         val creditOffers: List<CreditOfferDto>
-) : OrganizationDto(id, name, description, type, heads, initialBudget, shops)
+) : OrganizationDto(id, name, description, type, heads, balance, shops)

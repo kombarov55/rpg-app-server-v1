@@ -11,6 +11,6 @@ open class OrganizationDto(
         val description: String,
         val type: OrganizationTypeDto,
         val heads: List<UserAccountShortDto>,
-        val initialBudget: List<PriceDto>,
+        val balance: List<PriceDto>,
         val shops: List<ShopDto>
 )

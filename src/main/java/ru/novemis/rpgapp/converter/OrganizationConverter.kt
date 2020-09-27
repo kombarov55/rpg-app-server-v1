@@ -30,7 +30,7 @@ class OrganizationConverter(
                     description = form.description,
                     type = form.type!!.toDomain(),
                     organizationHeads = form.heads.map { userAccountRepository.findById(it.id).get() },
-                    initialBudget = form.initialBudget.map { price -> priceCombinationConverter.toDomain(price, gameId) },
+                    balance = form.balance.map { price -> priceCombinationConverter.toDomain(price, gameId) },
                     shops = form.shops.map {
                         it.id?.let { id ->
                             shopRepository.findById(id).orElse(shopConverter.toDomain(it)
@@ -47,7 +47,7 @@ class OrganizationConverter(
                     description = form.description,
                     type = form.type!!.toDomain(),
                     organizationHeads = form.heads.map { userAccountRepository.findById(it.id).get() },
-                    initialBudget = form.initialBudget.map { price -> priceCombinationConverter.toDomain(price, gameId) },
+                    balance = form.balance.map { price -> priceCombinationConverter.toDomain(price, gameId) },
                     shops = form.shops.map {
                         it.id?.let { id ->
                             shopRepository.findById(id).orElse(shopConverter.toDomain(it)
@@ -68,7 +68,7 @@ class OrganizationConverter(
                         description = domain.description,
                         type = domain.type!!.toDto(),
                         heads = domain.organizationHeads.map { userAccountConverter.toShortDto(it) },
-                        initialBudget = domain.initialBudget.map { priceCombinationConverter.toDto(it) },
+                        balance = domain.balance.map { priceCombinationConverter.toDto(it) },
                         shops = domain.shops.map { shopConverter.toDto(it) },
 
                         entranceTax = domain.entranceTax?.let { priceCombinationConverter.toDto(it) } ?: emptyList(),
@@ -82,7 +82,7 @@ class OrganizationConverter(
                     description = domain.description,
                     type = domain.type!!.toDto(),
                     heads = domain.organizationHeads.map { userAccountConverter.toShortDto(it) },
-                    initialBudget = domain.initialBudget.map { priceCombinationConverter.toDto(it) },
+                    balance = domain.balance.map { priceCombinationConverter.toDto(it) },
                     shops = domain.shops.map { shopConverter.toDto(it) }
             )
         }
