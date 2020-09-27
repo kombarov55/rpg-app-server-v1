@@ -17,6 +17,7 @@ class MerchandiseConverter(
         private val merchandiseTypeRepository: MerchandiseTypeRepository,
         private val priceCombinationConverter: PriceCombinationConverter,
         private val skillInfluenceConverter: SkillInfluenceConverter,
+        private val merchandiseUpgradeConverter: MerchandiseUpgradeConverter,
         private val gameRepository: GameRepository
 ) {
 
@@ -30,7 +31,9 @@ class MerchandiseConverter(
                 slots = form.slots,
                 price = form.prices.map { priceCombinationConverter.toDomain(it, gameId) },
                 skillInfluences = form.skillInfluences.map { skillInfluenceConverter.toDomain(it) },
-                game = gameRepository.findById(gameId).orElseThrow { IllegalArgumentException("gameId is invalid") }
+                game = gameRepository.findById(gameId).orElseThrow { IllegalArgumentException("gameId is invalid") },
+                destination = form.destination,
+                merchandiseUpgrades = form.merchandiseUpgrades.map { merchandiseUpgradeConverter.toDomain(it, gameId) }
         )
     }
 
@@ -44,7 +47,9 @@ class MerchandiseConverter(
                 type = domain.type!!.let { MerchandiseTypeDto(it.id, it.name) },
                 slots = domain.slots,
                 prices = domain.price.map { priceCombinationConverter.toDto(it) },
-                skillInfluences = domain.skillInfluences.map { skillInfluenceConverter.toDto(it) }
+                skillInfluences = domain.skillInfluences.map { skillInfluenceConverter.toDto(it) },
+                destination = domain.destination!!,
+                merchandiseUpgrades = domain.merchandiseUpgrades.map { merchandiseUpgradeConverter.toDto(it) }
         )
     }
 

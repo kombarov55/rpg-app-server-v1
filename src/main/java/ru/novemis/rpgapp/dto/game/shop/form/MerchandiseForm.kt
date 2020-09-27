@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.dto.game.shop.form
 
+import ru.novemis.rpgapp.domain.game.shop.MerchandiseDestination
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 
 data class MerchandiseForm(
@@ -11,5 +12,7 @@ data class MerchandiseForm(
         var type: MerchandiseTypeForm? = null,
         var slots: Int = 0,
         var prices: List<List<PriceForm>> = mutableListOf(),
-        var skillInfluences: List<SkillInfluenceForm> = mutableListOf()
+        var skillInfluences: List<SkillInfluenceForm> = mutableListOf(),
+        val destination: MerchandiseDestination? = null,
+        var merchandiseUpgrades: List<MerchandiseUpgradeForm> = mutableListOf()
 )

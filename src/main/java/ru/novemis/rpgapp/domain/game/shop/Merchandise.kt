@@ -3,12 +3,7 @@ package ru.novemis.rpgapp.domain.game.shop
 import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.common.PriceCombination
 import java.util.UUID
-import javax.persistence.CascadeType
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
-import javax.persistence.OneToMany
+import javax.persistence.*
 
 @Entity
 data class Merchandise(
@@ -34,6 +29,11 @@ data class Merchandise(
 
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
         var skillInfluences: List<SkillInfluence> = mutableListOf(),
+
+        var destination: MerchandiseDestination? = null,
+
+        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+        var merchandiseUpgrades: List<MerchandiseUpgrade> = mutableListOf(),
 
         @ManyToOne
         @JoinColumn(name = "game_id")
