@@ -15,9 +15,5 @@ data class WarehouseEntry(
         @ManyToOne
         var merchandise: Merchandise? = null,
 
-        @ManyToOne
-        @JoinColumn(name = "shop_id")
-        var shop: Shop? = null,
-
         var amount: Int = 0
 )

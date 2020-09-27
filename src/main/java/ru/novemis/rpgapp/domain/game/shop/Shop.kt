@@ -12,6 +12,6 @@ data class Shop(
         var img: String = "",
         var type: ShopType? = null,
 
-        @OneToMany(mappedBy = "shop", orphanRemoval = true, cascade = [CascadeType.ALL])
+        @OneToMany(orphanRemoval = true, cascade = [CascadeType.ALL])
         var warehouseEntries: List<WarehouseEntry> = mutableListOf()
 )

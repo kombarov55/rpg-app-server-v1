@@ -20,7 +20,9 @@ class OrganizationConverter(
         private val shopConverter: ShopConverter,
         private val shopRepository: ShopRepository,
 
-        private val creditOfferConverter: CreditOfferConverter
+        private val creditOfferConverter: CreditOfferConverter,
+
+        private val warehouseEntryConverter: WarehouseEntryConverter
 ) {
 
     fun toDomain(form: OrganizationForm, gameId: String): Organization {
@@ -38,6 +40,7 @@ class OrganizationConverter(
                         } ?: shopConverter.toDomain(it)
                                 .let { shop -> shopRepository.save((shop)) }
                     },
+                    ownedMerchandise = form.ownedMerchandise.map { warehouseEntryConverter.toDomain(it) },
 
                     entranceTax = priceCombinationConverter.toDomain(form.entranceTax, gameId),
                     incomeTax = form.incomeTax
@@ -54,7 +57,8 @@ class OrganizationConverter(
                                     .let { shop -> shopRepository.save(shop) })
                         } ?: shopConverter.toDomain(it)
                                 .let { shop -> shopRepository.save((shop)) }
-                    }
+                    },
+                    ownedMerchandise = form.ownedMerchandise.map { warehouseEntryConverter.toDomain(it) }
             )
         }
     }
@@ -70,6 +74,7 @@ class OrganizationConverter(
                         heads = domain.organizationHeads.map { userAccountConverter.toShortDto(it) },
                         balance = domain.balance.map { priceCombinationConverter.toDto(it) },
                         shops = domain.shops.map { shopConverter.toDto(it) },
+                        ownedMerchandise = domain.ownedMerchandise.map { warehouseEntryConverter.toDto(it) },
 
                         entranceTax = domain.entranceTax?.let { priceCombinationConverter.toDto(it) } ?: emptyList(),
                         incomeTax = domain.incomeTax,
@@ -83,7 +88,8 @@ class OrganizationConverter(
                     type = domain.type!!.toDto(),
                     heads = domain.organizationHeads.map { userAccountConverter.toShortDto(it) },
                     balance = domain.balance.map { priceCombinationConverter.toDto(it) },
-                    shops = domain.shops.map { shopConverter.toDto(it) }
+                    shops = domain.shops.map { shopConverter.toDto(it) },
+                    ownedMerchandise = domain.ownedMerchandise.map { warehouseEntryConverter.toDto(it) }
             )
         }
     }

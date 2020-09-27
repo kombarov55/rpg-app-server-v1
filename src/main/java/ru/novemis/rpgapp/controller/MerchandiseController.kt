@@ -3,6 +3,7 @@ package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.MerchandiseConverter
+import ru.novemis.rpgapp.domain.game.shop.Destination
 import ru.novemis.rpgapp.dto.game.shop.dto.MerchandiseDto
 import ru.novemis.rpgapp.dto.game.shop.form.MerchandiseForm
 import ru.novemis.rpgapp.repository.game.shop.MerchandiseRepository
@@ -49,5 +50,14 @@ open class MerchandiseController(
     open fun delete(
             @PathVariable("id") id: String
     ) = repository.deleteById(id)
+
+    @GetMapping("/game/{game-id}/merchandise/")
+    open fun findByGameIdAndDestination(
+            @PathVariable("game-id") gameId: String,
+            @RequestParam("destination") destination: Destination
+    ): List<MerchandiseDto> {
+        return repository.findAllByGameIdAndDestination(gameId, destination)
+                .map { converter.toDto(it) }
+    }
 
 }

@@ -3,11 +3,13 @@ package ru.novemis.rpgapp.controller
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.OrganizationConverter
 import ru.novemis.rpgapp.converter.PriceCombinationConverter
+import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationDto
 import ru.novemis.rpgapp.dto.game.organization.form.OrganizationForm
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.organization.OrganizationRepository
+import ru.novemis.rpgapp.repository.game.shop.MerchandiseRepository
 import ru.novemis.rpgapp.repository.useraccount.UserAccountRepository
 import ru.novemis.rpgapp.service.CalcService
 import javax.transaction.Transactional
@@ -22,7 +24,9 @@ open class OrganizationController(
 
         private val priceCombinationConverter: PriceCombinationConverter,
 
-        private val calcService: CalcService
+        private val calcService: CalcService,
+
+        private val merchandiseRepository: MerchandiseRepository
 ) {
 
     @GetMapping("/game/{game-id}/organization")
@@ -107,6 +111,25 @@ open class OrganizationController(
                     balance = calcService.sum(balance, convertedFormAmounts)
                 }
                 .let { repository.save(it) }
+                .let { converter.toDto(it) }
+    }
+
+    @PostMapping("/organization/{id}/ownedMerchandise/{merchandise-id}/{amount}")
+    @Transactional
+    open fun addOwnedMerchandise(
+            @PathVariable("id") id: String,
+            @PathVariable("merchandise-id") merchandiseId: String,
+            @PathVariable("amount") amount: Int
+    ): OrganizationDto {
+        val organization = repository.findById(id).orElseThrow { IllegalArgumentException() }
+        val merchandise = merchandiseRepository.findById(merchandiseId).orElseThrow { IllegalArgumentException() }
+
+        organization.ownedMerchandise += WarehouseEntry(
+                merchandise = merchandise,
+                amount = amount
+        )
+
+        return repository.save(organization)
                 .let { converter.toDto(it) }
     }
 }

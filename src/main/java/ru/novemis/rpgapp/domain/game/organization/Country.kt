@@ -3,7 +3,9 @@ package ru.novemis.rpgapp.domain.game.organization
 import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.common.Price
 import ru.novemis.rpgapp.domain.game.common.PriceCombination
+import ru.novemis.rpgapp.domain.game.shop.Merchandise
 import ru.novemis.rpgapp.domain.game.shop.Shop
+import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import java.util.*
 import javax.persistence.CascadeType
@@ -20,6 +22,7 @@ open class Country(
         organizationHeads: List<UserAccount> = mutableListOf(),
         balance: List<Price> = mutableListOf(),
         shops: List<Shop> = mutableListOf(),
+        ownedMerchandise: List<WarehouseEntry> = mutableListOf(),
         game: Game? = null,
 
         @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
@@ -29,4 +32,4 @@ open class Country(
 
         @OneToMany(cascade = [CascadeType.ALL])
         var creditOffers: List<CreditOffer> = mutableListOf()
-) : Organization(id, name, description, type, organizationHeads, balance, shops, game)
+) : Organization(id, name, description, type, organizationHeads, balance, shops, ownedMerchandise, game)
