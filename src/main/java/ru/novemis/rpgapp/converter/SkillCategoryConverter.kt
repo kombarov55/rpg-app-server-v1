@@ -31,6 +31,8 @@ class SkillCategoryConverter(
 
             skills = skillCategoryForm.skills?.map {skillConverter.toDomain(it, gameId, skillCategory) } ?: emptyList()
 
+            destination = skillCategoryForm.destination
+
             spellSchools = skillCategoryForm.spellSchools?.map { spellSchoolForm ->
                 SpellSchool().apply {
                     val spellSchool = this
@@ -97,6 +99,7 @@ class SkillCategoryConverter(
                             }
                     )
                 },
+                destination = skillCategory.destination,
                 gameId = skillCategory.game?.id ?: ""
         )
     }

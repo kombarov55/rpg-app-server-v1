@@ -30,7 +30,7 @@ data class Merchandise(
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
         var skillInfluences: List<SkillInfluence> = mutableListOf(),
 
-        var destination: MerchandiseDestination? = null,
+        var destination: Destination? = null,
 
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
         var merchandiseUpgrades: List<MerchandiseUpgrade> = mutableListOf(),

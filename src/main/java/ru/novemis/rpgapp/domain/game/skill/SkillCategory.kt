@@ -1,6 +1,7 @@
 package ru.novemis.rpgapp.domain.game.skill
 
 import ru.novemis.rpgapp.domain.game.Game
+import ru.novemis.rpgapp.domain.game.shop.Destination
 import java.util.UUID
 import javax.persistence.*
 
@@ -23,6 +24,8 @@ data class SkillCategory(
 
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, mappedBy = "skillCategory")
         var spellSchools: List<SpellSchool> = mutableListOf(),
+
+        var destination: Destination? = null,
 
         @ManyToOne
         @JoinColumn(name = "game_id")
