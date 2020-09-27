@@ -17,5 +17,5 @@ data class Price(
         @JoinColumn(name = "currency_id")
         var currency: Currency? = null,
 
-        var amount: Int = 0
+        val amount: Int = 0
 )

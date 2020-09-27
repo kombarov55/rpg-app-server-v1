@@ -27,8 +27,8 @@ open class Organization(
         )
         var organizationHeads: List<UserAccount> = mutableListOf(),
 
-        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-        val balance: List<Price> = mutableListOf(),
+        @OneToMany(cascade = [CascadeType.ALL])
+        var balance: List<Price> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL])
         var shops: List<Shop> = mutableListOf(),

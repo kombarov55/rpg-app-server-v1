@@ -2,11 +2,14 @@ package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.OrganizationConverter
+import ru.novemis.rpgapp.converter.PriceCombinationConverter
+import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationDto
 import ru.novemis.rpgapp.dto.game.organization.form.OrganizationForm
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.organization.OrganizationRepository
 import ru.novemis.rpgapp.repository.useraccount.UserAccountRepository
+import ru.novemis.rpgapp.service.CalcService
 import javax.transaction.Transactional
 
 @RestController
@@ -15,7 +18,11 @@ open class OrganizationController(
         private val converter: OrganizationConverter,
 
         private val gameRepository: GameRepository,
-        private val userAccountRepository: UserAccountRepository
+        private val userAccountRepository: UserAccountRepository,
+
+        private val priceCombinationConverter: PriceCombinationConverter,
+
+        private val calcService: CalcService
 ) {
 
     @GetMapping("/game/{game-id}/organization")
@@ -85,6 +92,21 @@ open class OrganizationController(
     ): OrganizationDto {
         return repository.findById(id).orElseThrow { IllegalArgumentException() }
                 .also { repository.deleteById(id) }
+                .let { converter.toDto(it) }
+    }
+
+    @PostMapping("/organization/{id}/balance")
+    @Transactional
+    open fun addBalance(
+            @PathVariable("id") id: String,
+            @RequestBody amounts: List<PriceForm>
+    ): OrganizationDto {
+        return repository.findById(id).orElseThrow { IllegalArgumentException() }
+                .apply {
+                    val convertedFormAmounts = amounts.map { priceCombinationConverter.toDomain(it, this.game!!.id) }
+                    balance = calcService.sum(balance, convertedFormAmounts)
+                }
+                .let { repository.save(it) }
                 .let { converter.toDto(it) }
     }
 }
