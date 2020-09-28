@@ -17,7 +17,7 @@ class ItemForSaleConverter(
 
     fun toDomain(form: ItemForSaleForm, gameId: String): ItemForSale {
         return ItemForSale(
-                merchandise = merchandiseRepository.findById(form.merchandise!!.id).get(),
+                merchandise = merchandiseRepository.findById(form.merchandise!!.id!!).get(),
                 price = priceCombinationConverter.toDomain(form.price, gameId),
                 amount = form.amount
         )

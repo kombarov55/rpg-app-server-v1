@@ -2,10 +2,7 @@ package ru.novemis.rpgapp.domain.game.shop
 
 import ru.novemis.rpgapp.domain.game.common.PriceCombination
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.OneToOne
+import javax.persistence.*
 
 @Entity
 data class ItemForSale(
@@ -16,7 +13,7 @@ data class ItemForSale(
         @JoinColumn(name = "merchandise_id")
         var merchandise: Merchandise? = null,
 
-        @OneToOne
+        @OneToOne(cascade = [CascadeType.ALL])
         var price: PriceCombination? = null,
 
         var amount: Int = 1
