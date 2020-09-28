@@ -10,6 +10,13 @@ class ShopController(
         private val shopService: ShopService
 ) {
 
+    @GetMapping("/game/{game-id}/shop")
+    fun getAllByGameId(
+            @PathVariable("game-id") gameId: String
+    ): List<ShopDto> {
+         return shopService.getAllByGameId(gameId)
+    }
+
     @PostMapping("/game/{game-id}/shop")
     fun save(
             @PathVariable("game-id") gameId: String,
@@ -23,11 +30,12 @@ class ShopController(
             @RequestBody form: ShopForm
     ): ShopDto = shopService.update(form, gameId, shopId)
 
-    @DeleteMapping("/shop/{id}")
+    @DeleteMapping("/game/{game-id}/shop/{id}")
     fun delete(
+            @PathVariable("game-id") gameId: String,
             @PathVariable("id") id: String
     ): ShopDto {
-        return shopService.delete(id)
+        return shopService.delete(id, gameId)
     }
 
 }

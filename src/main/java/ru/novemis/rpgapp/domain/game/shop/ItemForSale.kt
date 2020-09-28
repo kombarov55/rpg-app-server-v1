@@ -17,5 +17,7 @@ data class ItemForSale(
         var merchandise: Merchandise? = null,
 
         @OneToOne
-        var price: PriceCombination? = null
+        var price: PriceCombination? = null,
+
+        var amount: Int = 1
 )

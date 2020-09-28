@@ -7,5 +7,5 @@ data class ShopDto(
         val name: String,
         val img: String,
         val type: ShopType,
-        val warehouseEntries: List<WarehouseEntryDto>
+        val itemsForSale: List<ItemForSaleDto>
 )
