@@ -51,13 +51,15 @@ open class MerchandiseController(
             @PathVariable("id") id: String
     ) = repository.deleteById(id)
 
-    @GetMapping("/game/{game-id}/merchandise/")
+    @GetMapping("/game/{game-id}/merchandise/filter")
+    @Transactional
     open fun findByGameIdAndDestination(
             @PathVariable("game-id") gameId: String,
-            @RequestParam("destination") destination: Destination
+            @RequestParam("destination") destinationsDelimited: String
     ): List<MerchandiseDto> {
-        return repository.findAllByGameIdAndDestination(gameId, destination)
+        val destinations = destinationsDelimited.split(",").map { Destination.valueOf(it) }
+
+        return repository.findAllByGameIdAndDestination(gameId, destinations)
                 .map { converter.toDto(it) }
     }
-
 }

@@ -16,7 +16,4 @@ data class Shop(
 
         @OneToMany(orphanRemoval = true, cascade = [CascadeType.ALL])
         var itemsForSale: List<ItemForSale> = mutableListOf()
-
-//        @OneToMany(orphanRemoval = true, cascade = [CascadeType.ALL])
-//        var warehouseEntries: List<WarehouseEntry> = mutableListOf()
 )

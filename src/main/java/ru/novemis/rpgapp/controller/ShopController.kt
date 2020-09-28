@@ -2,6 +2,7 @@ package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.dto.game.shop.dto.ShopDto
+import ru.novemis.rpgapp.dto.game.shop.form.ItemForSaleForm
 import ru.novemis.rpgapp.dto.game.shop.form.ShopForm
 import ru.novemis.rpgapp.service.ShopService
 
@@ -36,6 +37,16 @@ class ShopController(
             @PathVariable("id") id: String
     ): ShopDto {
         return shopService.delete(id, gameId)
+    }
+
+
+    @PostMapping("/game/{game-id}/shop/{id}/itemForSale")
+    fun addItemForSale(
+            @PathVariable("game-id") gameId: String,
+            @PathVariable("id") id: String,
+            @RequestBody form: ItemForSaleForm
+    ): ShopDto {
+        return shopService.addItemForSale(gameId, id, form)
     }
 
 }
