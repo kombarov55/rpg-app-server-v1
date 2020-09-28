@@ -1,8 +1,10 @@
 package ru.novemis.rpgapp.domain.game.shop
 
-import ru.novemis.rpgapp.domain.game.Game
 import java.util.*
-import javax.persistence.*
+import javax.persistence.CascadeType
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.OneToMany
 
 @Entity
 data class Shop(
