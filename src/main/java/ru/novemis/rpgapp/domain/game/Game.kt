@@ -1,18 +1,11 @@
 package ru.novemis.rpgapp.domain.game
 
-import ru.novemis.rpgapp.domain.game.shop.Shop
+import ru.novemis.rpgapp.domain.game.shop.ItemForSale
 import ru.novemis.rpgapp.domain.game.skill.SkillCategory
 import ru.novemis.rpgapp.domain.network.Network
 import ru.novemis.rpgapp.domain.network.Subnetwork
-import java.util.Date
-import java.util.UUID
-import javax.persistence.CascadeType
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
-import javax.persistence.OneToMany
+import java.util.*
+import javax.persistence.*
 
 @Entity
 data class Game(
@@ -39,6 +32,9 @@ data class Game(
         @JoinColumn(name = "subnetwork_id")
         var subnetwork: Subnetwork? = null,
 
+        @OneToMany(cascade = [CascadeType.ALL])
+        var itemsForSale: List<ItemForSale> = mutableListOf(),
+
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
         var currencies: List<Currency> = mutableListOf(),
 
@@ -47,9 +43,6 @@ data class Game(
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
         var skillCategories: List<SkillCategory> = mutableListOf(),
-
-        @OneToMany(cascade = [CascadeType.ALL])
-        var shops: List<Shop> = mutableListOf(),
 
         var deleted: Boolean = false,
 

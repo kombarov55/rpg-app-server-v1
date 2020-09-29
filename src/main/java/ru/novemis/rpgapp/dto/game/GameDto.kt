@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.dto.game
 
+import ru.novemis.rpgapp.dto.game.shop.dto.ItemForSaleDto
 import ru.novemis.rpgapp.dto.game.shop.dto.ShopDto
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
 
@@ -13,6 +14,6 @@ data class GameDto(
         var groupLink: String,
         var currencies: List<CurrencyDto>,
         var skillCategories: List<SkillCategoryDto>,
-        var shops: List<ShopDto>,
-        var maxCurrenciesCount: Int
+        var maxCurrenciesCount: Int,
+        var itemsForSale: List<ItemForSaleDto>
 )

@@ -1,10 +1,8 @@
 package ru.novemis.rpgapp.domain.game.shop
 
+import ru.novemis.rpgapp.domain.game.organization.Organization
 import java.util.*
-import javax.persistence.CascadeType
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.OneToMany
+import javax.persistence.*
 
 @Entity
 data class Shop(
@@ -15,5 +13,9 @@ data class Shop(
         var type: ShopType? = null,
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "shop")
-        var itemsForSale: List<ItemForSale> = mutableListOf()
+        var itemsForSale: List<ItemForSale> = mutableListOf(),
+
+        @ManyToOne
+        @JoinColumn(name = "organization_id")
+        var organization: Organization? = null
 )

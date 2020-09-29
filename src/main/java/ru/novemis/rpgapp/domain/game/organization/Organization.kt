@@ -32,7 +32,7 @@ open class Organization(
         @OneToMany(cascade = [CascadeType.ALL])
         var balance: List<Price> = mutableListOf(),
 
-        @OneToMany(cascade = [CascadeType.ALL])
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "organization", orphanRemoval = true)
         var shops: List<Shop> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL])
