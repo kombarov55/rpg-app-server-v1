@@ -18,6 +18,8 @@ data class ItemForSale(
 
         var amount: Int = 1,
 
+        var creationDate: Date = Date(),
+
         @ManyToOne
         @JoinColumn(name = "shop_id")
         var shop: Shop? = null

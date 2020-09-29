@@ -11,7 +11,6 @@ data class MerchandiseDto(
         val category: MerchandiseCategoryDto,
         val type: MerchandiseTypeDto,
         val slots: Int,
-        val prices: List<List<PriceDto>>,
         val skillInfluences: List<SkillInfluenceDto>,
         val destination: Destination,
         val merchandiseUpgrades: List<MerchandiseUpgradeDto>

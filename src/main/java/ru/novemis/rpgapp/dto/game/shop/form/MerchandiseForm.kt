@@ -11,7 +11,6 @@ data class MerchandiseForm(
         var category: MerchandiseCategoryForm? = null,
         var type: MerchandiseTypeForm? = null,
         var slots: Int = 0,
-        var prices: List<List<PriceForm>> = mutableListOf(),
         var skillInfluences: List<SkillInfluenceForm> = mutableListOf(),
         val destination: Destination? = null,
         var merchandiseUpgrades: List<MerchandiseUpgradeForm> = mutableListOf()

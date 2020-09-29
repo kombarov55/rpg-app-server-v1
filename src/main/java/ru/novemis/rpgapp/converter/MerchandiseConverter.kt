@@ -15,7 +15,6 @@ import ru.novemis.rpgapp.repository.game.shop.MerchandiseTypeRepository
 class MerchandiseConverter(
         private val merchandiseCategoryRepository: MerchandiseCategoryRepository,
         private val merchandiseTypeRepository: MerchandiseTypeRepository,
-        private val priceCombinationConverter: PriceCombinationConverter,
         private val skillInfluenceConverter: SkillInfluenceConverter,
         private val merchandiseUpgradeConverter: MerchandiseUpgradeConverter,
         private val gameRepository: GameRepository
@@ -29,7 +28,6 @@ class MerchandiseConverter(
                 category = merchandiseCategoryRepository.findById(form.category!!.id!!).orElseThrow { IllegalArgumentException("categoryId is invalid") },
                 type = merchandiseTypeRepository.findById(form.type!!.id!!).orElseThrow { IllegalArgumentException("typeId is invalid") },
                 slots = form.slots,
-                price = form.prices.map { priceCombinationConverter.toDomain(it, gameId) },
                 skillInfluences = form.skillInfluences.map { skillInfluenceConverter.toDomain(it) },
                 game = gameRepository.findById(gameId).orElseThrow { IllegalArgumentException("gameId is invalid") },
                 destination = form.destination,
@@ -46,7 +44,6 @@ class MerchandiseConverter(
                 category = domain.category!!.let { MerchandiseCategoryDto(it.id, it.name) },
                 type = domain.type!!.let { MerchandiseTypeDto(it.id, it.name) },
                 slots = domain.slots,
-                prices = domain.price.map { priceCombinationConverter.toDto(it) },
                 skillInfluences = domain.skillInfluences.map { skillInfluenceConverter.toDto(it) },
                 destination = domain.destination!!,
                 merchandiseUpgrades = domain.merchandiseUpgrades.map { merchandiseUpgradeConverter.toDto(it) }
