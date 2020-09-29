@@ -2,16 +2,22 @@ package ru.novemis.rpgapp.service
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.GameConverter
+import ru.novemis.rpgapp.converter.ItemForSaleConverter
+import ru.novemis.rpgapp.domain.game.shop.ItemForSale
 import ru.novemis.rpgapp.dto.game.GameDto
 import ru.novemis.rpgapp.dto.game.GameForm
+import ru.novemis.rpgapp.dto.game.shop.form.ItemForSaleForm
 import ru.novemis.rpgapp.repository.game.GameRepository
+import ru.novemis.rpgapp.repository.game.shop.MerchandiseRepository
 import java.util.Date
 import javax.transaction.Transactional
 
 @Component
 open class GameService(
         private val gameConverter: GameConverter,
-        private val gameRepository: GameRepository
+        private val gameRepository: GameRepository,
+
+        private val itemForSaleConverter: ItemForSaleConverter
 ) {
 
     @Transactional
@@ -67,6 +73,17 @@ open class GameService(
         game.deletionDate = Date()
 
         gameRepository.save(game)
+    }
+
+    @Transactional
+    open fun addItemForSale(gameId: String, form: ItemForSaleForm): GameDto {
+        val game = gameRepository.findById(gameId).get()
+        val itemForSale = itemForSaleConverter.toDomain(form, gameId)
+
+        game.itemsForSale += itemForSale
+
+        return gameRepository.save(game)
+                .let { gameConverter.toDto(it) }
     }
 
 

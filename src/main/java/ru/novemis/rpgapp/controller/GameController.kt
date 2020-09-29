@@ -3,6 +3,7 @@ package ru.novemis.rpgapp.controller
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.dto.game.GameDto
 import ru.novemis.rpgapp.dto.game.GameForm
+import ru.novemis.rpgapp.dto.game.shop.form.ItemForSaleForm
 import ru.novemis.rpgapp.service.GameService
 
 @RestController
@@ -70,5 +71,13 @@ class GameController(
     @DeleteMapping("/game/{game-id}")
     fun delete(@PathVariable("game-id") gameId: String) {
         return gameService.delete(gameId)
+    }
+
+    @PostMapping("/game/{game-id}/itemForSale")
+    fun addItemForSale(
+            @PathVariable("game-id") gameId: String,
+            @RequestBody itemForSaleForm: ItemForSaleForm
+    ): GameDto {
+        return gameService.addItemForSale(gameId, itemForSaleForm)
     }
 }
