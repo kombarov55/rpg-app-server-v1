@@ -14,6 +14,6 @@ data class Shop(
         var img: String = "",
         var type: ShopType? = null,
 
-        @OneToMany(cascade = [CascadeType.ALL])
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "shop")
         var itemsForSale: List<ItemForSale> = mutableListOf()
 )

@@ -16,5 +16,9 @@ data class ItemForSale(
         @OneToOne(cascade = [CascadeType.ALL])
         var price: PriceCombination? = null,
 
-        var amount: Int = 1
+        var amount: Int = 1,
+
+        @ManyToOne
+        @JoinColumn(name = "shop_id")
+        var shop: Shop? = null
 )

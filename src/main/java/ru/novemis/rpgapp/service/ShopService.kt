@@ -63,7 +63,10 @@ open class ShopService(
     @Transactional
     open fun addItemForSale(gameId: String, shopId: String, form: ItemForSaleForm): ShopDto {
         return repository.findById(shopId).get()
-                .apply { itemsForSale += itemForSaleConverter.toDomain(form, gameId) }
+                .apply {
+                    val shop = this
+                    itemsForSale += itemForSaleConverter.toDomain(form, gameId).apply { this.shop = shop }
+                }
                 .let { repository.save(it) }
                 .let { converter.toDto(it) }
     }
