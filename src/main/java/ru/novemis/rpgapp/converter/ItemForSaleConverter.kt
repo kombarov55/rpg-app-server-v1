@@ -28,7 +28,8 @@ class ItemForSaleConverter(
                 id = domain.id,
                 merchandise = merchandiseConverter.toDto(domain.merchandise!!),
                 amount = domain.amount,
-                price = priceCombinationConverter.toDto(domain.price!!)
+                price = priceCombinationConverter.toDto(domain.price!!),
+                creationDate = domain.creationDate
         )
     }
 
