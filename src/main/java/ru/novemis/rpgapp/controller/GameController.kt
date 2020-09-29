@@ -80,4 +80,12 @@ class GameController(
     ): GameDto {
         return gameService.addItemForSale(gameId, itemForSaleForm)
     }
+
+    @DeleteMapping("/game/{game-id}/itemForSale/{id}")
+    fun removeItemForSale(
+            @PathVariable("game-id") gameId: String,
+            @PathVariable("id") id: String
+    ): GameDto {
+        return gameService.removeItemForSale(gameId, id)
+    }
 }

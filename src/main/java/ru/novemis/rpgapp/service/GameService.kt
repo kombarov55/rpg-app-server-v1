@@ -6,6 +6,7 @@ import ru.novemis.rpgapp.converter.ItemForSaleConverter
 import ru.novemis.rpgapp.domain.game.shop.ItemForSale
 import ru.novemis.rpgapp.dto.game.GameDto
 import ru.novemis.rpgapp.dto.game.GameForm
+import ru.novemis.rpgapp.dto.game.shop.dto.ItemForSaleDto
 import ru.novemis.rpgapp.dto.game.shop.form.ItemForSaleForm
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.shop.MerchandiseRepository
@@ -83,6 +84,15 @@ open class GameService(
         game.itemsForSale += itemForSale
 
         return gameRepository.save(game)
+                .let { gameConverter.toDto(it) }
+    }
+
+    @Transactional
+    open fun removeItemForSale(gameId: String, itemForSaleId: String): GameDto {
+        return gameRepository.findById(gameId).get()
+                .apply {
+                    itemsForSale = itemsForSale.filter { it.id != itemForSaleId }
+                }.let { gameRepository.save(it) }
                 .let { gameConverter.toDto(it) }
     }
 
