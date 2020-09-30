@@ -12,6 +12,7 @@ import java.lang.IllegalArgumentException
 
 @Component
 class SkillConverter(
+        private val skillUpgradeConverter: SkillUpgradeConverter,
         private val priceCombinationConverter: PriceCombinationConverter
 ) {
 
@@ -26,13 +27,9 @@ class SkillConverter(
             upgradable = form.upgradable
             this.skillCategory = skillCategory
 
-            upgrades = form.upgrades.map { skillUpgradeForm ->
-                SkillUpgrade(
-                        lvlNum = skillUpgradeForm.lvlNum,
-                        description = skillUpgradeForm.description,
-                        prices = skillUpgradeForm.prices.map { listOfPrices -> priceCombinationConverter.toDomain(listOfPrices, gameId) },
-                        skill = skill
-                )
+            upgrades = form.upgrades.map {
+                skillUpgradeConverter.toDomain(it, gameId)
+                        .apply { this.skill = skill }
             }
         }
     }
@@ -51,13 +48,7 @@ class SkillConverter(
                 description = domain.description,
                 prices = domain.prices.map { priceCombinationConverter.toDto(it) },
                 upgradable = domain.upgradable,
-                upgrades = domain.upgrades.map {
-                    SkillUpgradeDto(
-                            lvlNum = it.lvlNum,
-                            description = it.description,
-                            prices = it.prices.map { priceCombinationConverter.toDto(it) }
-                    )
-                }
+                upgrades = domain.upgrades.map { skillUpgradeConverter.toDto(it) }
         )
     }
 
