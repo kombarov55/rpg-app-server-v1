@@ -28,7 +28,8 @@ open class SkillCategoryController(
     fun getById(@PathVariable("id") id: String): SkillCategoryDto = skillCategoryService.findById(id)
 
     @PutMapping("/skillCategory/{id}")
-    fun update(
+    @Transactional
+    open fun update(
             @PathVariable("id") id: String,
             @RequestBody body: SkillCategoryForm
     ): SkillCategoryDto = skillCategoryService.update(id, body)
