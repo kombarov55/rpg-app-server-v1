@@ -19,7 +19,7 @@ data class SkillUpgrade(
 
         var description: String = "",
 
-        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+        @OneToMany(cascade = [CascadeType.ALL])
         var prices: List<PriceCombination> = mutableListOf(),
 
         @ManyToOne

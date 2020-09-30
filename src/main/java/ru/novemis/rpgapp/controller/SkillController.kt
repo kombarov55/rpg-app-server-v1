@@ -2,19 +2,23 @@ package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.SkillConverter
+import ru.novemis.rpgapp.converter.SkillUpgradeConverter
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillDto
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillShortDto
 import ru.novemis.rpgapp.dto.game.skill.form.SkillForm
+import ru.novemis.rpgapp.dto.game.skill.form.SkillUpgradeForm
+import ru.novemis.rpgapp.repository.game.PriceCombinationRepository
 import ru.novemis.rpgapp.repository.game.skillcategory.SkillCategoryRepository
 import ru.novemis.rpgapp.repository.game.skillcategory.SkillRepository
-import java.lang.IllegalArgumentException
 import javax.transaction.Transactional
 
 @RestController
 open class SkillController(
         private val repository: SkillRepository,
         private val skillCategoryRepository: SkillCategoryRepository,
-        private val converter: SkillConverter
+        private val converter: SkillConverter,
+        private val skillUpgradeConverter: SkillUpgradeConverter,
+        private val priceCombinationRepository: PriceCombinationRepository
 ) {
 
     @GetMapping("/game/{game-id}/skill/{id}")
@@ -73,6 +77,26 @@ open class SkillController(
                 .also {
                     repository.deleteById(id)
                 }
+    }
+
+    @PutMapping("/game/{game-id}/skill/{skill-id}/upgrade/{skill-upgrade-id}")
+    @Transactional
+    open fun upgradeSkillUpgrade(
+            @PathVariable("game-id") gameId: String,
+            @PathVariable("skill-id") skillId: String,
+            @PathVariable("skill-upgrade-id") skillUpgradeId: String,
+            @RequestBody form: SkillUpgradeForm
+    ): SkillDto {
+        val skill = repository.findById(skillId).get()
+        val convertedSkillUpgrade = skillUpgradeConverter.toDomain(form, gameId)
+
+        skill.upgrades.find { it.id == skillUpgradeId }!!.apply {
+            description = convertedSkillUpgrade.description
+            prices = convertedSkillUpgrade.prices
+        }
+
+        return repository.save(skill)
+                .let { converter.toDto(it) }
     }
 
 }
