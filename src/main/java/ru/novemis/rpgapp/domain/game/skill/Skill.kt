@@ -26,7 +26,7 @@ data class Skill(
 
         var upgradable: Boolean = false,
 
-        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, mappedBy = "skill")
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "skill")
         var upgrades: List<SkillUpgrade> = mutableListOf(),
 
         @ManyToOne

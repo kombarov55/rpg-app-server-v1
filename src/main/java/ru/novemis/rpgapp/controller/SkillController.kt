@@ -5,11 +5,13 @@ import ru.novemis.rpgapp.converter.SkillConverter
 import ru.novemis.rpgapp.converter.SkillUpgradeConverter
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillDto
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillShortDto
+import ru.novemis.rpgapp.dto.game.skill.dto.SkillUpgradeDto
 import ru.novemis.rpgapp.dto.game.skill.form.SkillForm
 import ru.novemis.rpgapp.dto.game.skill.form.SkillUpgradeForm
 import ru.novemis.rpgapp.repository.game.PriceCombinationRepository
 import ru.novemis.rpgapp.repository.game.skillcategory.SkillCategoryRepository
 import ru.novemis.rpgapp.repository.game.skillcategory.SkillRepository
+import ru.novemis.rpgapp.repository.game.skillcategory.SkillUpgradeRepository
 import javax.transaction.Transactional
 
 @RestController
@@ -18,7 +20,7 @@ open class SkillController(
         private val skillCategoryRepository: SkillCategoryRepository,
         private val converter: SkillConverter,
         private val skillUpgradeConverter: SkillUpgradeConverter,
-        private val priceCombinationRepository: PriceCombinationRepository
+        private val skillUpgradeRepository: SkillUpgradeRepository
 ) {
 
     @GetMapping("/game/{game-id}/skill/{id}")
@@ -96,6 +98,26 @@ open class SkillController(
         }
 
         return repository.save(skill)
+                .let { converter.toDto(it) }
+    }
+
+    @DeleteMapping("/skill/{skill-id}/upgrade/{id}")
+    @Transactional
+    open fun deleteSkillUpgrade(
+            @PathVariable("skill-id") skillId: String,
+            @PathVariable("id") id: String
+    ): SkillDto {
+        return repository.findById(skillId).get()
+                .apply {
+                    val upgrade = upgrades.find { it.id == id }!!
+                    val maxLvl = upgrades.map { it.lvlNum }.max()
+
+                    if (upgrade.lvlNum != maxLvl) throw IllegalArgumentException("Удалить можно только последний уровень.")
+
+                    upgrades = upgrades.filter { it.id != id }
+                    skillUpgradeRepository.delete(upgrade)
+                }
+                .let { repository.save(it) }
                 .let { converter.toDto(it) }
     }
 
