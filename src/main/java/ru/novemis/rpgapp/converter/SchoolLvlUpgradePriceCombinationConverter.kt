@@ -13,7 +13,7 @@ class SchoolLvlUpgradePriceCombinationConverter(
     fun toDomain(form: SchoolLvlUpgradePriceCombinationForm, gameId: String): SchoolLvlUpgradePriceCombination {
         return SchoolLvlUpgradePriceCombination().apply {
             spellCount = form.spellCount
-            priceCombinations = form.priceCombinationList.map { priceCombinationConverter.toDomain(it, gameId) }
+            priceCombinations = form.priceCombinations.map { priceCombinationConverter.toDomain(it, gameId) }
         }
     }
 
