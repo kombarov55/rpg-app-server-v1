@@ -1,9 +1,6 @@
 package ru.novemis.rpgapp.controller
 
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.SpellSchoolConverter
 import ru.novemis.rpgapp.dto.game.skill.dto.SpellSchoolDto
 import ru.novemis.rpgapp.dto.game.skill.form.SpellSchoolForm
@@ -31,5 +28,21 @@ open class SpellSchoolController(
 
         return repository.save(spellSchool)
                 .let { converter.toDto(it) }
+    }
+
+    @PutMapping("/spellSchool/{id}")
+    @Transactional
+    open fun editSpellSchool(
+            @PathVariable("id") id: String,
+            @RequestBody form: SpellSchoolForm
+    ): SpellSchoolDto {
+        val savedEntity = repository.findById(id).get()
+        val convertedEntity = converter.toDomain(form, savedEntity.skillCategory!!.game!!.id)
+
+        return convertedEntity.apply {
+            this.id = savedEntity.id
+            schoolLvls = savedEntity.schoolLvls
+            skillCategory = savedEntity.skillCategory
+        }.let { repository.save(it) }.let { converter.toDto(it) }
     }
 }
