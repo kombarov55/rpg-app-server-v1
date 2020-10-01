@@ -5,7 +5,7 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-data class SchoolLvlUpgradePriceCombination(
+data class SpellPurchaseOption(
         @Id
         val id: String = UUID.randomUUID().toString(),
 

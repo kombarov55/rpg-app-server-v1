@@ -7,14 +7,14 @@ import ru.novemis.rpgapp.dto.game.skill.dto.SchoolLvlDto
 @Component
 class SchoolLvlConverter(
         private val spellConverter: SpellConverter,
-        private val schoolLvlUpgradePriceCombinationConverter: SchoolLvlUpgradePriceCombinationConverter
+        private val spellPurchaseOptionConverter: SpellPurchaseOptionConverter
 ) {
 
     fun toDto(domain: SchoolLvl): SchoolLvlDto {
         return SchoolLvlDto(
                 id = domain.id,
                 lvl = domain.lvl,
-                upgradePriceCombinations = domain.upgradePriceCombinations.map { schoolLvlUpgradePriceCombinationConverter.toDto(it) },
+                spellPurchaseOptions = domain.spellPurchaseOptions.map { spellPurchaseOptionConverter.toDto(it) },
                 spells = domain.spells.map { spellConverter.toDto(it) }
         )
     }

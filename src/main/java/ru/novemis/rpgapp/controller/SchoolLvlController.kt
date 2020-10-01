@@ -42,7 +42,7 @@ open class SchoolLvlController(
     ): SchoolLvlDto {
         val schoolLvl = repository.findById(id).get()
 
-        if (schoolLvl.spells.isNotEmpty() || schoolLvl.upgradePriceCombinations.isNotEmpty()) {
+        if (schoolLvl.spells.isNotEmpty() || schoolLvl.spellPurchaseOptions.isNotEmpty()) {
             throw RuntimeException("Cannot delete not empty school lvl")
         }
 

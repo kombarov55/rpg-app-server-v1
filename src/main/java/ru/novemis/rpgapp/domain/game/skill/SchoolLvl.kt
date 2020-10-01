@@ -12,7 +12,7 @@ data class SchoolLvl(
         var lvl: Int = 0,
 
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, mappedBy = "schoolLvl")
-        var upgradePriceCombinations: List<SchoolLvlUpgradePriceCombination> = mutableListOf(),
+        var spellPurchaseOptions: List<SpellPurchaseOption> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, mappedBy = "schoolLvl")
         var spells: List<Spell> = mutableListOf(),
