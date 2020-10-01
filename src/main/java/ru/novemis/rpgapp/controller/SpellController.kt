@@ -37,6 +37,7 @@ open class SpellController(
         val savedEntity = repository.findById(id).get()
 
         return converter.toDomain(form).apply {
+            this.id = savedEntity.id
             schoolLvl = savedEntity.schoolLvl
         }.let { repository.save(it) }.let { converter.toDto(it) }
     }
