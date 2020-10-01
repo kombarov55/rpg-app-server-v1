@@ -4,13 +4,16 @@ import org.springframework.stereotype.Service
 import ru.novemis.rpgapp.converter.SkillCategoryConverter
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
 import ru.novemis.rpgapp.dto.game.skill.form.SkillCategoryForm
+import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.skillcategory.SkillCategoryRepository
 import javax.transaction.Transactional
 
 @Service
 open class SkillCategoryService(
         private val repository: SkillCategoryRepository,
-        private val converter: SkillCategoryConverter
+        private val converter: SkillCategoryConverter,
+
+        private val gameRepository: GameRepository
 ) {
 
     @Transactional
@@ -21,7 +24,7 @@ open class SkillCategoryService(
 
     open fun save(skillCategoryForm: SkillCategoryForm, gameId: String): SkillCategoryDto =
             skillCategoryForm
-                    .let { converter.toDomain(it, gameId) }
+                    .let { converter.toDomain(it).apply { game = gameRepository.findById(gameId).get() } }
                     .let { repository.save(it) }
                     .let { converter.toDto(it) }
 

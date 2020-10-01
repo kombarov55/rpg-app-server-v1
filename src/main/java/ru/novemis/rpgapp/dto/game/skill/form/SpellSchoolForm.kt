@@ -7,6 +7,5 @@ data class SpellSchoolForm(
         var img: String = "",
         var description: String = "",
         var minSpellCountToUpgrade: Int = 0,
-        var schoolLvls: List<SchoolLvlForm> = mutableListOf(),
         var purchasePriceCombinations: List<List<PriceForm>> = mutableListOf()
 )

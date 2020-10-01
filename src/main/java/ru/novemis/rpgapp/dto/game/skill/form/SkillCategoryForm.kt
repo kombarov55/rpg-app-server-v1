@@ -8,7 +8,5 @@ data class SkillCategoryForm(
         var img: String = "",
         var description: String = "",
         var complex: Boolean = false,
-        var skills: List<SkillForm>? = null,
-        var spellSchools: List<SpellSchoolForm>? = null,
         var destination: Destination? = null
 )
