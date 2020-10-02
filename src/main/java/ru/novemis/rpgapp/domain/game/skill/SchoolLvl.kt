@@ -11,7 +11,7 @@ data class SchoolLvl(
 
         var lvl: Int = 0,
 
-        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, mappedBy = "schoolLvl")
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "schoolLvl")
         var spellPurchaseOptions: List<SpellPurchaseOption> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true, mappedBy = "schoolLvl")
