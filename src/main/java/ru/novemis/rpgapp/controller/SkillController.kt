@@ -59,6 +59,7 @@ open class SkillController(
     }
 
     @PutMapping("/skill/{id}")
+    @Transactional
     open fun update(
             @PathVariable("id") id: String,
             @RequestBody form: SkillForm
