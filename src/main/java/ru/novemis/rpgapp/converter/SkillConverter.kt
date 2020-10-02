@@ -18,19 +18,12 @@ class SkillConverter(
 
     fun toDomain(form: SkillForm, gameId: String, skillCategory: SkillCategory): Skill {
         return Skill().apply {
-            val skill = this
-
             name = form.name
             description = form.description
             img = form.img
             prices = form.prices.map { listOfPrices -> priceCombinationConverter.toDomain(listOfPrices, gameId) }
             upgradable = form.upgradable
             this.skillCategory = skillCategory
-
-            upgrades = form.upgrades.map {
-                skillUpgradeConverter.toDomain(it, gameId)
-                        .apply { this.skill = skill }
-            }
         }
     }
 
