@@ -46,7 +46,10 @@ class MerchandiseConverter(
                 slots = domain.slots,
                 skillInfluences = domain.skillInfluences.map { skillInfluenceConverter.toDto(it) },
                 destination = domain.destination!!,
-                merchandiseUpgrades = domain.merchandiseUpgrades.map { merchandiseUpgradeConverter.toDto(it) }
+                merchandiseUpgrades = domain.merchandiseUpgrades.map { merchandiseUpgradeConverter.toDto(it) },
+                canBeEquipped = domain.canBeEquipped,
+                canBeUsedInCraft = domain.canBeUsedInCraft,
+                canBeCrafted = domain.canBeUsedInCraft
         )
     }
 

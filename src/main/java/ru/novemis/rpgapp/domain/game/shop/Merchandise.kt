@@ -31,6 +31,12 @@ data class Merchandise(
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
         var merchandiseUpgrades: List<MerchandiseUpgrade> = mutableListOf(),
 
+        var canBeEquipped: Boolean = false,
+
+        var canBeUsedInCraft: Boolean = false,
+
+        var canBeCrafted: Boolean = false,
+
         @ManyToOne
         @JoinColumn(name = "game_id")
         var game: Game? = null

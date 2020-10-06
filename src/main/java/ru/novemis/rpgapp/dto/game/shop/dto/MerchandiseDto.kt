@@ -13,5 +13,8 @@ data class MerchandiseDto(
         val slots: Int,
         val skillInfluences: List<SkillInfluenceDto>,
         val destination: Destination,
+        val canBeEquipped: Boolean,
+        val canBeUsedInCraft: Boolean,
+        val canBeCrafted: Boolean,
         val merchandiseUpgrades: List<MerchandiseUpgradeDto>
 )
