@@ -15,5 +15,7 @@ data class MerchandiseDto(
         val canBeEquipped: Boolean,
         val canBeUsedInCraft: Boolean,
         val canBeCrafted: Boolean,
+        val upgradable: Boolean,
+        val lvl: Int,
         val upgrades: List<MerchandiseUpgradeDto>
 )

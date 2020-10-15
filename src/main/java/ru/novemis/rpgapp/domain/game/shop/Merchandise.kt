@@ -33,8 +33,12 @@ data class Merchandise(
 
         var destination: Destination? = null,
 
+        var upgradable: Boolean = false,
+
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
         var upgrades: List<MerchandiseUpgrade> = mutableListOf(),
+
+        var lvl: Int,
 
         var canBeEquipped: Boolean = false,
 
