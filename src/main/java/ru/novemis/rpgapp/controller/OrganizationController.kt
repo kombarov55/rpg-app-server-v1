@@ -192,7 +192,7 @@ open class OrganizationController(
 
             shopRepository.delete(shopToDelete)
 
-            shops = shops.filter { it.id != shopId }2222
+            shops = shops.filter { it.id != shopId }
         }.let { converter.toDto(it) }
     }
 }
