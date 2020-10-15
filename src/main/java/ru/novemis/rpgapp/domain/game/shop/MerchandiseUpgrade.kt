@@ -1,7 +1,7 @@
 package ru.novemis.rpgapp.domain.game.shop
 
 import ru.novemis.rpgapp.domain.game.common.PriceCombination
-import java.util.*
+import java.util.UUID
 import javax.persistence.CascadeType
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -19,6 +19,6 @@ class MerchandiseUpgrade(
         var skillInfluences: List<SkillInfluence> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-        val purchasePrices: List<PriceCombination> = mutableListOf()
+        val prices: List<PriceCombination> = mutableListOf()
 
 )

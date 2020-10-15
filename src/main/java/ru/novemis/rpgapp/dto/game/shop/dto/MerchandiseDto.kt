@@ -1,7 +1,6 @@
 package ru.novemis.rpgapp.dto.game.shop.dto
 
 import ru.novemis.rpgapp.domain.game.shop.Destination
-import ru.novemis.rpgapp.dto.game.common.dto.PriceDto
 
 data class MerchandiseDto(
         val id: String,
@@ -16,5 +15,5 @@ data class MerchandiseDto(
         val canBeEquipped: Boolean,
         val canBeUsedInCraft: Boolean,
         val canBeCrafted: Boolean,
-        val merchandiseUpgrades: List<MerchandiseUpgradeDto>
+        val upgrades: List<MerchandiseUpgradeDto>
 )

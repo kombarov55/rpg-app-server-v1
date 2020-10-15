@@ -31,7 +31,7 @@ class MerchandiseConverter(
                 skillInfluences = form.skillInfluences.map { skillInfluenceConverter.toDomain(it) },
                 game = gameRepository.findById(gameId).orElseThrow { IllegalArgumentException("gameId is invalid") },
                 destination = form.destination,
-                merchandiseUpgrades = form.merchandiseUpgrades.map { merchandiseUpgradeConverter.toDomain(it, gameId) },
+                upgrades = form.upgrades.map { merchandiseUpgradeConverter.toDomain(it, gameId) },
                 canBeEquipped = form.canBeEquipped,
                 canBeCrafted = form.canBeCrafted,
                 canBeUsedInCraft = form.canBeUsedInCraft
@@ -49,7 +49,7 @@ class MerchandiseConverter(
                 slots = domain.slots,
                 skillInfluences = domain.skillInfluences.map { skillInfluenceConverter.toDto(it) },
                 destination = domain.destination!!,
-                merchandiseUpgrades = domain.merchandiseUpgrades.map { merchandiseUpgradeConverter.toDto(it) },
+                upgrades = domain.upgrades.map { merchandiseUpgradeConverter.toDto(it) },
                 canBeEquipped = domain.canBeEquipped,
                 canBeUsedInCraft = domain.canBeUsedInCraft,
                 canBeCrafted = domain.canBeCrafted
