@@ -1,0 +1,15 @@
+GET {{root}}/game/{{game-id}}/skillCategory
+
+###
+POST {{root}}/game/{{game-id}}/skillCategory
+Content-Type: application/json
+
+{
+  "name": "для удаениея",
+  "description": "для удаления",
+  "img": "1",
+  "complex": false,
+  "destination": "PLAYER"
+}
+
+> {% client.global.set("skill-category-id", response.body.id) %}

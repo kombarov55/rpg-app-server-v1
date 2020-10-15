@@ -2,12 +2,20 @@ package ru.novemis.rpgapp.domain.game.organization
 
 import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.common.Price
-import ru.novemis.rpgapp.domain.game.shop.Merchandise
 import ru.novemis.rpgapp.domain.game.shop.Shop
 import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
-import java.util.*
-import javax.persistence.*
+import java.util.UUID
+import javax.persistence.CascadeType
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.Inheritance
+import javax.persistence.InheritanceType
+import javax.persistence.JoinColumn
+import javax.persistence.JoinTable
+import javax.persistence.ManyToMany
+import javax.persistence.ManyToOne
+import javax.persistence.OneToMany
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -32,7 +40,7 @@ open class Organization(
         @OneToMany(cascade = [CascadeType.ALL])
         var balance: List<Price> = mutableListOf(),
 
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "organization", orphanRemoval = true)
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "organization")
         var shops: List<Shop> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL])

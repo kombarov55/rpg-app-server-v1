@@ -1,0 +1,6 @@
+GET {{root}}/game
+
+> {% client.global.set("game-id", response.body[0].id) %}
+
+###
+GET {{root}}/game/{{game-id}}
