@@ -6,5 +6,5 @@ data class MerchandiseUpgradeForm(
         var id: String? = null,
         val lvlNum: Int = 0,
         val skillInfluences: List<SkillInfluenceForm> = mutableListOf(),
-        val purchasePrices: List<List<PriceForm>> = mutableListOf()
+        val prices: List<List<PriceForm>> = mutableListOf()
 )

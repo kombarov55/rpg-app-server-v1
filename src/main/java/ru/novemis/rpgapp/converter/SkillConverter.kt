@@ -46,7 +46,8 @@ class SkillConverter(
         return SkillShortDto(
                 id = domain.id,
                 name = domain.name,
-                img = domain.img
+                img = domain.img,
+                destination = domain.skillCategory!!.destination!!
         )
     }
 

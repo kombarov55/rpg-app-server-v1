@@ -6,5 +6,5 @@ data class MerchandiseUpgradeDto(
         val id: String,
         val lvlNum: Int,
         val skillInfluences: List<SkillInfluenceDto>,
-        val purchasePrices: List<List<PriceDto>>
+        val prices: List<List<PriceDto>>
 )

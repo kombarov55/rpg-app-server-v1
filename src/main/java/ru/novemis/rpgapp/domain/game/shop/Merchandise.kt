@@ -1,13 +1,8 @@
 package ru.novemis.rpgapp.domain.game.shop
 
 import ru.novemis.rpgapp.domain.game.Game
-import java.util.UUID
-import javax.persistence.CascadeType
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
-import javax.persistence.OneToMany
+import java.util.*
+import javax.persistence.*
 
 @Entity
 data class Merchandise(
@@ -38,7 +33,7 @@ data class Merchandise(
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
         var upgrades: List<MerchandiseUpgrade> = mutableListOf(),
 
-        var lvl: Int,
+        var lvl: Int = 0,
 
         var canBeEquipped: Boolean = false,
 

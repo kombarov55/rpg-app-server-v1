@@ -15,7 +15,7 @@ class MerchandiseUpgradeConverter(
         return MerchandiseUpgrade(
                 lvlNum = form.lvlNum,
                 skillInfluences = form.skillInfluences.map { skillInfluenceConverter.toDomain(it) },
-                prices = form.purchasePrices.map { priceCombinationConverter.toDomain(it, gameId) }
+                prices = form.prices.map { priceCombinationConverter.toDomain(it, gameId) }
         )
     }
 
@@ -24,7 +24,7 @@ class MerchandiseUpgradeConverter(
                 id = domain.id,
                 lvlNum = domain.lvlNum,
                 skillInfluences = domain.skillInfluences.map { skillInfluenceConverter.toDto(it) },
-                purchasePrices = domain.prices.map { priceCombinationConverter.toDto(it) }
+                prices = domain.prices.map { priceCombinationConverter.toDto(it) }
         )
     }
 }

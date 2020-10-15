@@ -3,12 +3,11 @@ package ru.novemis.rpgapp.controller
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.SkillConverter
 import ru.novemis.rpgapp.converter.SkillUpgradeConverter
+import ru.novemis.rpgapp.domain.game.shop.Destination
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillDto
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillShortDto
-import ru.novemis.rpgapp.dto.game.skill.dto.SkillUpgradeDto
 import ru.novemis.rpgapp.dto.game.skill.form.SkillForm
 import ru.novemis.rpgapp.dto.game.skill.form.SkillUpgradeForm
-import ru.novemis.rpgapp.repository.game.PriceCombinationRepository
 import ru.novemis.rpgapp.repository.game.skillcategory.SkillCategoryRepository
 import ru.novemis.rpgapp.repository.game.skillcategory.SkillRepository
 import ru.novemis.rpgapp.repository.game.skillcategory.SkillUpgradeRepository
@@ -120,6 +119,16 @@ open class SkillController(
                 }
                 .let { repository.save(it) }
                 .let { converter.toDto(it) }
+    }
+
+    @GetMapping("/game/{game-id}/skill/short/find")
+    @Transactional
+    open fun findShortByGameIdAndDestination(
+            @PathVariable("game-id") gameId: String,
+            @RequestParam("destination") destination: String
+    ): List<SkillShortDto> {
+        return repository.findByGameIdAndDestination(gameId, Destination.valueOf(destination))
+                .map { converter.toShortDto(it) }
     }
 
 }

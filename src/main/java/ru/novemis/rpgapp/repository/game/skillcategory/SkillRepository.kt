@@ -2,6 +2,7 @@ package ru.novemis.rpgapp.repository.game.skillcategory
 
 import org.springframework.data.jpa.repository.Query
 import org.springframework.data.repository.CrudRepository
+import ru.novemis.rpgapp.domain.game.shop.Destination
 import ru.novemis.rpgapp.domain.game.skill.Skill
 
 interface SkillRepository : CrudRepository<Skill, String> {
@@ -10,5 +11,8 @@ interface SkillRepository : CrudRepository<Skill, String> {
     fun findByGameId(gameId: String): List<Skill>
 
     fun findBySkillCategoryId(skillCategoryId: String): List<Skill>
+
+    @Query("select T from Skill T where T.skillCategory.game.id = :gameId and T.skillCategory.destination = :destination")
+    fun findByGameIdAndDestination(gameId: String, destination: Destination): List<Skill>
 
 }
