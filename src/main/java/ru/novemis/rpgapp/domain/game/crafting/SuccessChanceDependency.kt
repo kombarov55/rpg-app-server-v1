@@ -18,6 +18,6 @@ data class SuccessChanceDependency(
         var percent: Int = 0,
 
         @ManyToOne
-        @JoinColumn(name = "receipe_id")
+        @JoinColumn(name = "recipe_id")
         var recipe: Recipe? = null
 )

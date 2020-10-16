@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.domain.game.crafting
 
+import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.shop.Merchandise
 import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
 import ru.novemis.rpgapp.domain.game.skill.Skill
@@ -21,9 +22,13 @@ data class Recipe (
         @ManyToOne
         var dependantSkill: Skill? = null,
 
-        var minSkillLevel: Int = 0,
+        var minSkillLvl: Int = 0,
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "recipe", orphanRemoval = true)
-        var successChanceDependencies: List<SuccessChanceDependency> = mutableListOf()
+        var successChanceDependencies: List<SuccessChanceDependency> = mutableListOf(),
+
+        @ManyToOne
+        @JoinColumn(name = "game_id")
+        var game: Game? = null
 
 )

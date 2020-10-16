@@ -64,7 +64,11 @@ class MerchandiseConverter(
         return MerchandiseShortDto(
                 id = domain.id,
                 name = domain.name,
-                img = domain.img
+                img = domain.img,
+                description = domain.description,
+                canBeEquipped = domain.canBeEquipped,
+                canBeCrafted = domain.canBeCrafted,
+                canBeUsedInCraft = domain.canBeUsedInCraft
         )
     }
 
