@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.dto.game
+package ru.novemis.rpgapp.dto.game.form
 
 data class GameForm(
         var title: String = "",

@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.dto.game
+package ru.novemis.rpgapp.dto.game.dto
 
 data class CurrencyDto(
         var id: String? = null,

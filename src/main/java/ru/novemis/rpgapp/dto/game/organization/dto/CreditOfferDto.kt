@@ -1,6 +1,6 @@
 package ru.novemis.rpgapp.dto.game.organization.dto
 
-import ru.novemis.rpgapp.dto.game.CurrencyDto
+import ru.novemis.rpgapp.dto.game.dto.CurrencyDto
 
 data class CreditOfferDto(
         val id: String,

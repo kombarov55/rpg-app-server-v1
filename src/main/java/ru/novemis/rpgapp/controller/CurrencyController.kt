@@ -1,8 +1,8 @@
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.novemis.rpgapp.dto.game.CurrencyDto
-import ru.novemis.rpgapp.dto.game.CurrencyForm
+import ru.novemis.rpgapp.dto.game.dto.CurrencyDto
+import ru.novemis.rpgapp.dto.game.form.CurrencyForm
 import ru.novemis.rpgapp.service.CurrencyService
 
 @RestController

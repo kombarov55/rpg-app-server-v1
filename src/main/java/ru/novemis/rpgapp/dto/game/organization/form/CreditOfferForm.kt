@@ -1,6 +1,6 @@
 package ru.novemis.rpgapp.dto.game.organization.form
 
-import ru.novemis.rpgapp.dto.game.CurrencyForm
+import ru.novemis.rpgapp.dto.game.form.CurrencyForm
 
 data class CreditOfferForm(
         val name: String = "",

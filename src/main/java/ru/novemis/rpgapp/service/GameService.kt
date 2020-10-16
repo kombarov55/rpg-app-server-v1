@@ -3,14 +3,12 @@ package ru.novemis.rpgapp.service
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.GameConverter
 import ru.novemis.rpgapp.converter.ItemForSaleConverter
-import ru.novemis.rpgapp.domain.game.shop.ItemForSale
-import ru.novemis.rpgapp.dto.game.GameDto
-import ru.novemis.rpgapp.dto.game.GameForm
-import ru.novemis.rpgapp.dto.game.shop.dto.ItemForSaleDto
+import ru.novemis.rpgapp.dto.game.dto.GameDto
+import ru.novemis.rpgapp.dto.game.dto.GameShortDto
+import ru.novemis.rpgapp.dto.game.form.GameForm
 import ru.novemis.rpgapp.dto.game.shop.form.ItemForSaleForm
 import ru.novemis.rpgapp.repository.game.GameRepository
-import ru.novemis.rpgapp.repository.game.shop.MerchandiseRepository
-import java.util.Date
+import java.util.*
 import javax.transaction.Transactional
 
 @Component
@@ -30,6 +28,11 @@ open class GameService(
     @Transactional
     open fun findOpenGames(): List<GameDto> {
         return gameRepository.findOpenGames().map { gameConverter.toDto(it) }
+    }
+
+    @Transactional
+    open fun findAllGames(): List<GameShortDto> {
+        return gameRepository.findAll().map { gameConverter.toShortDto(it) }
     }
 
     @Transactional

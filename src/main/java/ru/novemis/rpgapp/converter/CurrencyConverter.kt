@@ -3,11 +3,10 @@ package ru.novemis.rpgapp.converter
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.Currency
 import ru.novemis.rpgapp.domain.game.Game
-import ru.novemis.rpgapp.dto.game.CurrencyDto
-import ru.novemis.rpgapp.dto.game.CurrencyForm
+import ru.novemis.rpgapp.dto.game.dto.CurrencyDto
+import ru.novemis.rpgapp.dto.game.form.CurrencyForm
 import ru.novemis.rpgapp.repository.game.CurrencyRepository
 import ru.novemis.rpgapp.repository.game.GameRepository
-import java.lang.IllegalArgumentException
 
 @Component
 class CurrencyConverter(

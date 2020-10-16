@@ -2,8 +2,8 @@ package ru.novemis.rpgapp.service
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.ConversionConverter
-import ru.novemis.rpgapp.dto.game.ConversionDto
-import ru.novemis.rpgapp.dto.game.ConversionForm
+import ru.novemis.rpgapp.dto.game.dto.ConversionDto
+import ru.novemis.rpgapp.dto.game.form.ConversionForm
 import ru.novemis.rpgapp.repository.game.ConversionRepository
 import javax.transaction.Transactional
 

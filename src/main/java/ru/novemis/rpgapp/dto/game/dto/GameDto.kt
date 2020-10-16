@@ -1,7 +1,6 @@
-package ru.novemis.rpgapp.dto.game
+package ru.novemis.rpgapp.dto.game.dto
 
 import ru.novemis.rpgapp.dto.game.shop.dto.ItemForSaleDto
-import ru.novemis.rpgapp.dto.game.shop.dto.ShopDto
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
 
 

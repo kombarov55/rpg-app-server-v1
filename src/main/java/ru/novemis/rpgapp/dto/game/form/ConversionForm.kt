@@ -1,4 +1,4 @@
-package ru.novemis.rpgapp.dto.game
+package ru.novemis.rpgapp.dto.game.form
 
 class ConversionForm(
         var id: String? = null,

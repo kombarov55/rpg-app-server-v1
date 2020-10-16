@@ -2,8 +2,8 @@ package ru.novemis.rpgapp.service
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.CurrencyConverter
-import ru.novemis.rpgapp.dto.game.CurrencyDto
-import ru.novemis.rpgapp.dto.game.CurrencyForm
+import ru.novemis.rpgapp.dto.game.dto.CurrencyDto
+import ru.novemis.rpgapp.dto.game.form.CurrencyForm
 import ru.novemis.rpgapp.repository.game.CurrencyRepository
 import ru.novemis.rpgapp.repository.game.GameRepository
 

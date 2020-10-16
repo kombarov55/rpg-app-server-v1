@@ -1,8 +1,9 @@
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.novemis.rpgapp.dto.game.GameDto
-import ru.novemis.rpgapp.dto.game.GameForm
+import ru.novemis.rpgapp.dto.game.dto.GameDto
+import ru.novemis.rpgapp.dto.game.dto.GameShortDto
+import ru.novemis.rpgapp.dto.game.form.GameForm
 import ru.novemis.rpgapp.dto.game.shop.form.ItemForSaleForm
 import ru.novemis.rpgapp.service.GameService
 
@@ -16,9 +17,14 @@ class GameController(
         return gameService.getById(id)
     }
 
-    @GetMapping("/game")
+    @GetMapping("/game/open")
     fun findOpenGames(): List<GameDto> {
         return gameService.findOpenGames()
+    }
+
+    @GetMapping("/game")
+    fun findAllGames(): List<GameShortDto> {
+        return gameService.findAllGames()
     }
 
     @PostMapping("/game")

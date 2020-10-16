@@ -1,8 +1,8 @@
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.novemis.rpgapp.dto.game.ConversionDto
-import ru.novemis.rpgapp.dto.game.ConversionForm
+import ru.novemis.rpgapp.dto.game.dto.ConversionDto
+import ru.novemis.rpgapp.dto.game.form.ConversionForm
 import ru.novemis.rpgapp.service.MyConversionService
 
 @RestController

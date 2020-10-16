@@ -2,13 +2,13 @@ package ru.novemis.rpgapp.converter
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.Game
-import ru.novemis.rpgapp.dto.game.GameDto
-import ru.novemis.rpgapp.dto.game.GameForm
-import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
+import ru.novemis.rpgapp.dto.game.dto.GameDto
+import ru.novemis.rpgapp.dto.game.dto.GameShortDto
+import ru.novemis.rpgapp.dto.game.form.GameForm
 import ru.novemis.rpgapp.repository.network.NetworkRepository
 import ru.novemis.rpgapp.repository.network.SubnetworkRepository
 import ru.novemis.rpgapp.util.appendProtocol
-import java.util.UUID
+import java.util.*
 
 @Component
 class GameConverter(
@@ -44,9 +44,17 @@ class GameConverter(
                 backgroundImgSrc = game.backgroundName,
                 groupLink = game.groupLink,
                 currencies = game.currencies.map { currency -> currencyConverter.toDto(currency) },
-                skillCategories = game.skillCategories.map {skillCategoryConverter.toDto(it) },
+                skillCategories = game.skillCategories.map { skillCategoryConverter.toDto(it) },
                 maxCurrenciesCount = 3,
                 itemsForSale = game.itemsForSale.map { itemForSaleConverter.toDto(it) }
+        )
+    }
+
+    fun toShortDto(domain: Game): GameShortDto {
+        return GameShortDto(
+                id = domain.id,
+                name = domain.title,
+                img = domain.imgName
         )
     }
 
