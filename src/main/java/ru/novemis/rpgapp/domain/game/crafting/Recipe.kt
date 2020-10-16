@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.domain.game.crafting
 
+import ru.novemis.rpgapp.domain.game.shop.Merchandise
 import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
 import ru.novemis.rpgapp.domain.game.skill.Skill
 import java.util.*
@@ -11,10 +12,13 @@ data class Recipe (
         @Id
         val id: String = UUID.randomUUID().toString(),
 
+        @ManyToOne
+        var target: Merchandise? = null,
+
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
         var ingredients: List<WarehouseEntry> = mutableListOf(),
 
-        @OneToOne
+        @ManyToOne
         var dependantSkill: Skill? = null,
 
         var minSkillLevel: Int = 0,
