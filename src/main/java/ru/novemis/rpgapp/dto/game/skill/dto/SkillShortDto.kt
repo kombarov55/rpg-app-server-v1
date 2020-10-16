@@ -6,5 +6,4 @@ data class SkillShortDto(
         val id: String,
         val name: String,
         val img: String,
-        val destination: Destination
-)
+        val destination: Destination)
