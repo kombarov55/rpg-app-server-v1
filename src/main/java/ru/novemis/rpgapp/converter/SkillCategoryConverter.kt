@@ -3,8 +3,8 @@ package ru.novemis.rpgapp.converter
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.skill.SkillCategory
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
+import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryShortDto
 import ru.novemis.rpgapp.dto.game.skill.form.SkillCategoryForm
-import ru.novemis.rpgapp.repository.game.GameRepository
 
 @Component
 class SkillCategoryConverter(
@@ -34,6 +34,15 @@ class SkillCategoryConverter(
                 spellSchools = domain.spellSchools.map { spellSchoolConverter.toDto(it) },
                 destination = domain.destination,
                 gameId = domain.game?.id!!
+        )
+    }
+
+    fun toShortDto(domain: SkillCategory): SkillCategoryShortDto {
+        return SkillCategoryShortDto(
+                id = domain.id,
+                name = domain.name,
+                description = domain.description,
+                img = domain.img
         )
     }
 

@@ -2,6 +2,7 @@ package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.QuestionnaireTemplateConverter
+import ru.novemis.rpgapp.dto.game.questionnaire_template.dto.QuestionnaireTemplateDto
 import ru.novemis.rpgapp.dto.game.questionnaire_template.dto.QuestionnaireTemplateShortDto
 import ru.novemis.rpgapp.dto.game.questionnaire_template.form.QuestionnaireTemplateForm
 import ru.novemis.rpgapp.repository.game.GameRepository
@@ -24,6 +25,13 @@ open class QuestionnaireTemplateController(
         return repository.findAllByGameId(gameId).map { converter.toShortDto(it) }
     }
 
+    @GetMapping("/questionnaireTemplate/{id}")
+    @Transactional
+    open fun getById(
+            @PathVariable("id") id: String
+    ): QuestionnaireTemplateDto {
+        return repository.findById(id).get().let { converter.toDto(it) }
+    }
 
     @PostMapping("/game/{game-id}/questionnaireTemplate")
     @Transactional

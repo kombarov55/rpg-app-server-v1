@@ -15,6 +15,8 @@ class QuestionnaireTemplateField (
 
         val description: String = "",
 
+        val img: String = "",
+
         val type: QuestionnaireTemplateFieldType = QuestionnaireTemplateFieldType.STRING,
 
         @ManyToOne
