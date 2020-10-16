@@ -15,7 +15,7 @@ class SkillCategoryToPointsConverter(
 
     fun toDomain(form: SkillCategoryToPointsForm, questionnaireTemplate: QuestionnaireTemplate? = null): SkillCategoryToPoints {
         return SkillCategoryToPoints(
-                skillCategory = skillCategoryRepository.findById(form.skillCategory.id!!).get(),
+                skillCategory = skillCategoryRepository.findById(form.skillCategory!!.id!!).get(),
                 amount = form.amount,
                 questionnaireTemplate = questionnaireTemplate
         )

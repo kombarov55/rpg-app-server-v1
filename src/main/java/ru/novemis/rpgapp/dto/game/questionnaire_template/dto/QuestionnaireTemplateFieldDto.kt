@@ -5,7 +5,7 @@ import ru.novemis.rpgapp.domain.game.questionnaire_template.QuestionnaireTemplat
 data class QuestionnaireTemplateFieldDto(
         val id: String,
         val name: String,
-        val description: String,
+        val description: String?,
         val type: QuestionnaireTemplateFieldType,
         val choices: List<String>?
 )

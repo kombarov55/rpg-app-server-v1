@@ -13,7 +13,7 @@ class QuestionnaireTemplateField (
 
         var name: String = "",
 
-        var description: String = "",
+        var description: String? = "",
 
         var type: QuestionnaireTemplateFieldType = QuestionnaireTemplateFieldType.STRING,
 

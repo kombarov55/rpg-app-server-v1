@@ -3,6 +3,7 @@ package ru.novemis.rpgapp.service
 import org.springframework.stereotype.Service
 import ru.novemis.rpgapp.converter.SkillCategoryConverter
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
+import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryShortDto
 import ru.novemis.rpgapp.dto.game.skill.form.SkillCategoryForm
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.skillcategory.SkillCategoryRepository
@@ -21,6 +22,12 @@ open class SkillCategoryService(
             repository
                     .findAllByGameId(gameId)
                     .map { converter.toDto(it) }
+
+    @Transactional
+    open fun findAllShortByGameId(gameId: String): List<SkillCategoryShortDto> =
+            repository
+                    .findAllByGameId(gameId)
+                    .map { converter.toShortDto(it) }
 
     open fun save(skillCategoryForm: SkillCategoryForm, gameId: String): SkillCategoryDto =
             skillCategoryForm

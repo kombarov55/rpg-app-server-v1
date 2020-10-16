@@ -2,6 +2,7 @@ package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
+import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryShortDto
 import ru.novemis.rpgapp.dto.game.skill.form.SkillCategoryForm
 import ru.novemis.rpgapp.service.SkillCategoryService
 import javax.transaction.Transactional
@@ -15,6 +16,11 @@ open class SkillCategoryController(
     @Transactional
     open fun getAllByGameId(@PathVariable("id") gameId: String): List<SkillCategoryDto> =
             skillCategoryService.findAllByGameId(gameId)
+
+    @GetMapping("/game/{id}/skillCategory/short")
+    @Transactional
+    open fun getAllShortByGameId(@PathVariable("id") gameId: String): List<SkillCategoryShortDto> =
+            skillCategoryService.findAllShortByGameId(gameId)
 
     @PostMapping("/game/{game-id}/skillCategory")
     @Transactional
