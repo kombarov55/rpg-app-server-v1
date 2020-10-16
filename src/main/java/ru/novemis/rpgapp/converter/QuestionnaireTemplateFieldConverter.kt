@@ -12,10 +12,10 @@ class QuestionnaireTemplateFieldConverter {
     fun toDomain(form: QuestionnaireTemplateFieldForm, questionnaireTemplate: QuestionnaireTemplate): QuestionnaireTemplateField {
         return QuestionnaireTemplateField(
                 name = form.name,
-                img = form.img,
                 description = form.description,
                 type = form.type,
-                questionnaireTemplate = questionnaireTemplate
+                questionnaireTemplate = questionnaireTemplate,
+                choicesDelimitedByComma = form.choices?.joinToString(",")
         )
     }
 
@@ -24,8 +24,8 @@ class QuestionnaireTemplateFieldConverter {
                 id = domain.id,
                 name = domain.name,
                 description = domain.description,
-                img = domain.description,
-                type = domain.type
+                type = domain.type,
+                choices = domain.choicesDelimitedByComma?.split(",")?.toList()
         )
     }
 

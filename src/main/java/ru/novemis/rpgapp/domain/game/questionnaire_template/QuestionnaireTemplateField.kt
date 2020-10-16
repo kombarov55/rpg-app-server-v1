@@ -11,13 +11,13 @@ class QuestionnaireTemplateField (
         @Id
         var id: String = UUID.randomUUID().toString(),
 
-        val name: String = "",
+        var name: String = "",
 
-        val description: String = "",
+        var description: String = "",
 
-        val img: String = "",
+        var type: QuestionnaireTemplateFieldType = QuestionnaireTemplateFieldType.STRING,
 
-        val type: QuestionnaireTemplateFieldType = QuestionnaireTemplateFieldType.STRING,
+        var choicesDelimitedByComma: String? = null,
 
         @ManyToOne
         @JoinColumn(name = "questionnaire_template_id")

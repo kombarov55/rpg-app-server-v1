@@ -5,6 +5,6 @@ import ru.novemis.rpgapp.domain.game.questionnaire_template.QuestionnaireTemplat
 data class QuestionnaireTemplateFieldForm(
         var name: String = "",
         var description: String = "",
-        var img: String = "",
-        var type: QuestionnaireTemplateFieldType = QuestionnaireTemplateFieldType.STRING
+        var type: QuestionnaireTemplateFieldType = QuestionnaireTemplateFieldType.STRING,
+        var choices: List<String>? = mutableListOf()
 )
