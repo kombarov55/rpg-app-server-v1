@@ -24,7 +24,7 @@ data class Recipe (
 
         var minSkillLvl: Int = 0,
 
-        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "recipe", orphanRemoval = true)
         var successChanceDependencies: List<SuccessChanceDependency> = mutableListOf(),
 
         @ManyToOne
