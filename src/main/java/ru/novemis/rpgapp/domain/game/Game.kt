@@ -1,6 +1,7 @@
 package ru.novemis.rpgapp.domain.game
 
 import ru.novemis.rpgapp.domain.game.crafting.Recipe
+import ru.novemis.rpgapp.domain.game.questionnaire_template.QuestionnaireTemplate
 import ru.novemis.rpgapp.domain.game.shop.ItemForSale
 import ru.novemis.rpgapp.domain.game.skill.SkillCategory
 import ru.novemis.rpgapp.domain.network.Network
@@ -47,6 +48,9 @@ data class Game(
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
         var recipes: List<Recipe> = mutableListOf(),
+
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game", orphanRemoval = true)
+        var questionnaireTemplates: List<QuestionnaireTemplate> = mutableListOf(),
 
         var deleted: Boolean = false,
 
