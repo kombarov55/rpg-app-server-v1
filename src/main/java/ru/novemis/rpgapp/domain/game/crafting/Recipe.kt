@@ -11,7 +11,7 @@ import javax.persistence.*
 data class Recipe (
 
         @Id
-        val id: String = UUID.randomUUID().toString(),
+        var id: String = UUID.randomUUID().toString(),
 
         @ManyToOne
         var target: Merchandise? = null,
@@ -24,7 +24,7 @@ data class Recipe (
 
         var minSkillLvl: Int = 0,
 
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "recipe", orphanRemoval = true)
+        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
         var successChanceDependencies: List<SuccessChanceDependency> = mutableListOf(),
 
         @ManyToOne

@@ -26,7 +26,7 @@ class RecipeConverter(
             ingredients = form.ingredients.map { warehouseEntryConverter.toDomain(it) }
             dependantSkill = skillRepository.findById(form.dependantSkill!!.id).get()
             minSkillLvl = form.minSkillLvl
-            successChanceDependencies = form.successChanceDependencies.map { successChanceDependencyConverter.toDomain(it, this) }
+            successChanceDependencies = form.successChanceDependencies.map { successChanceDependencyConverter.toDomain(it) }
             game = gameId?.let { gameRepository.findById(it).orElse(null) }
         }
     }
