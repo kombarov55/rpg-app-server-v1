@@ -19,7 +19,7 @@ open class QuestionnaireTemplateController(
 
     @GetMapping("/game/{game-id}/questionnaireTemplate")
     @Transactional
-    open fun findAllByGameId(
+     open fun findAllByGameId(
             @PathVariable("game-id") gameId: String
     ): List<QuestionnaireTemplateShortDto> {
         return repository.findAllByGameId(gameId).map { converter.toShortDto(it) }
