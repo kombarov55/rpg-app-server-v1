@@ -32,6 +32,7 @@ class GameConverter(
             network = networkId?.let { networkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             subnetwork = subnetworkId?.let { subnetworkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             currencies = form.currencies.map { currencyForm -> currencyConverter.toDomainOrExisting(thatGame, currencyForm) }
+            disclaimerText = form.disclaimerText
         }
     }
 
@@ -46,7 +47,8 @@ class GameConverter(
                 currencies = game.currencies.map { currency -> currencyConverter.toDto(currency) },
                 skillCategories = game.skillCategories.map { skillCategoryConverter.toDto(it) },
                 maxCurrenciesCount = 3,
-                itemsForSale = game.itemsForSale.map { itemForSaleConverter.toDto(it) }
+                itemsForSale = game.itemsForSale.map { itemForSaleConverter.toDto(it) },
+                disclaimerText = game.disclaimerText
         )
     }
 

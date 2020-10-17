@@ -42,7 +42,8 @@ class SkillCategoryConverter(
                 id = domain.id,
                 name = domain.name,
                 description = domain.description,
-                img = domain.img
+                img = domain.img,
+                destination = domain.destination!!.name
         )
     }
 

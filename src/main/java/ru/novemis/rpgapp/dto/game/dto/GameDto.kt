@@ -5,14 +5,15 @@ import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
 
 
 data class GameDto(
-        var id: String,
-        var title: String,
-        var description: String,
-        var imgSrc: String,
-        var backgroundImgSrc: String,
-        var groupLink: String,
-        var currencies: List<CurrencyDto>,
-        var skillCategories: List<SkillCategoryDto>,
-        var maxCurrenciesCount: Int,
-        var itemsForSale: List<ItemForSaleDto>
+        val id: String,
+        val title: String,
+        val description: String,
+        val imgSrc: String,
+        val backgroundImgSrc: String,
+        val groupLink: String,
+        val currencies: List<CurrencyDto>,
+        val skillCategories: List<SkillCategoryDto>,
+        val maxCurrenciesCount: Int,
+        val itemsForSale: List<ItemForSaleDto>,
+        val disclaimerText: String?
 )

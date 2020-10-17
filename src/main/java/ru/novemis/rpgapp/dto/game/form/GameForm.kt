@@ -6,5 +6,6 @@ data class GameForm(
         var img: String = "",
         var background: String = "",
         var groupLink: String = "",
-        var currencies: List<CurrencyForm> = mutableListOf()
+        var currencies: List<CurrencyForm> = mutableListOf(),
+        var disclaimerText: String? = null
 )

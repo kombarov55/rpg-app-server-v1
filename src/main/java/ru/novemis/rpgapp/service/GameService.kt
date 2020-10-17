@@ -8,95 +8,108 @@ import ru.novemis.rpgapp.dto.game.dto.GameShortDto
 import ru.novemis.rpgapp.dto.game.form.GameForm
 import ru.novemis.rpgapp.dto.game.shop.form.ItemForSaleForm
 import ru.novemis.rpgapp.repository.game.GameRepository
+import ru.novemis.rpgapp.util.appendProtocol
 import java.util.*
 import javax.transaction.Transactional
 
 @Component
 open class GameService(
-        private val gameConverter: GameConverter,
-        private val gameRepository: GameRepository,
+        private val converter: GameConverter,
+        private val repository: GameRepository,
 
         private val itemForSaleConverter: ItemForSaleConverter
 ) {
 
     @Transactional
     open fun getById(id: String): GameDto {
-        return gameRepository.findById(id).orElseThrow { IllegalArgumentException() }
-                .let { gameConverter.toDto(it) }
+        return repository.findById(id).orElseThrow { IllegalArgumentException() }
+                .let { converter.toDto(it) }
     }
 
     @Transactional
     open fun findOpenGames(): List<GameDto> {
-        return gameRepository.findOpenGames().map { gameConverter.toDto(it) }
+        return repository.findOpenGames().map { converter.toDto(it) }
     }
 
     @Transactional
     open fun findAllGames(): List<GameShortDto> {
-        return gameRepository.findAll().map { gameConverter.toShortDto(it) }
+        return repository.findAll().map { converter.toShortDto(it) }
     }
 
     @Transactional
     open fun save(networkId: String? = null, subnetworkId: String? = null, gameId: String? = null, form: GameForm): GameDto {
-        return gameConverter.toDto(
-                gameRepository.save(
-                        gameConverter.toDomain(gameId = gameId, networkId = networkId, subnetworkId = subnetworkId, form = form)
+        return converter.toDto(
+                repository.save(
+                        converter.toDomain(gameId = gameId, networkId = networkId, subnetworkId = subnetworkId, form = form)
                 )
         )
     }
 
     @Transactional
+    open fun update(id: String, form: GameForm): GameDto {
+        return repository.findById(id).get().apply {
+            title = form.title
+            description = form.description
+            imgName = form.img
+            backgroundName = form.background
+            groupLink = appendProtocol(form.groupLink)
+            disclaimerText = form.disclaimerText
+        }.let { repository.save(it) }.let { converter.toDto(it) }
+    }
+
+    @Transactional
     open fun findByNetworkId(id: String): List<GameDto> {
-        return gameRepository.findByNetworkId(id)
-                .map { gameConverter.toDto(it) }
+        return repository.findByNetworkId(id)
+                .map { converter.toDto(it) }
     }
 
     @Transactional
     open fun findBySubnetworkId(id: String): List<GameDto> {
-        return gameRepository.findBySubnetworkId(id)
-                .map { gameConverter.toDto(it) }
+        return repository.findBySubnetworkId(id)
+                .map { converter.toDto(it) }
     }
 
     @Transactional
     open fun updateByNetworkId(gameId: String, networkId: String, form: GameForm): GameDto {
-        return gameConverter.toDto(
-                gameRepository.save(
-                        gameConverter.toDomain(form = form, gameId = gameId, networkId = networkId)))
+        return converter.toDto(
+                repository.save(
+                        converter.toDomain(form = form, gameId = gameId, networkId = networkId)))
     }
 
     @Transactional
     open fun updateBySubnetwork(gameId: String, subnetworkId: String, form: GameForm): GameDto {
-        return gameConverter.toDto(
-                gameRepository.save(
-                        gameConverter.toDomain(form = form, gameId = gameId, subnetworkId = subnetworkId)))
+        return converter.toDto(
+                repository.save(
+                        converter.toDomain(form = form, gameId = gameId, subnetworkId = subnetworkId)))
     }
 
     @Transactional
     open fun delete(gameId: String) {
-        val game = gameRepository.findById(gameId).orElseThrow { IllegalArgumentException() }
+        val game = repository.findById(gameId).orElseThrow { IllegalArgumentException() }
         game.deleted = true
         game.deletionDate = Date()
 
-        gameRepository.save(game)
+        repository.save(game)
     }
 
     @Transactional
     open fun addItemForSale(gameId: String, form: ItemForSaleForm): GameDto {
-        val game = gameRepository.findById(gameId).get()
+        val game = repository.findById(gameId).get()
         val itemForSale = itemForSaleConverter.toDomain(form, gameId)
 
         game.itemsForSale += itemForSale
 
-        return gameRepository.save(game)
-                .let { gameConverter.toDto(it) }
+        return repository.save(game)
+                .let { converter.toDto(it) }
     }
 
     @Transactional
     open fun removeItemForSale(gameId: String, itemForSaleId: String): GameDto {
-        return gameRepository.findById(gameId).get()
+        return repository.findById(gameId).get()
                 .apply {
                     itemsForSale = itemsForSale.filter { it.id != itemForSaleId }
-                }.let { gameRepository.save(it) }
-                .let { gameConverter.toDto(it) }
+                }.let { repository.save(it) }
+                .let { converter.toDto(it) }
     }
 
 

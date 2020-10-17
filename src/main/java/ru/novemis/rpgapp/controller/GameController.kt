@@ -35,7 +35,7 @@ class GameController(
     @PutMapping("/game/{game-id}")
     fun updateGame(@PathVariable("game-id") gameId: String,
                    @RequestBody form: GameForm): GameDto {
-        return gameService.save(gameId = gameId, form = form)
+        return gameService.update(gameId, form)
     }
 
     @PostMapping("/network/{network-id}/game")

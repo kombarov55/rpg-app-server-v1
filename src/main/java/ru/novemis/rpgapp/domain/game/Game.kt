@@ -49,6 +49,8 @@ data class Game(
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
         var recipes: List<Recipe> = mutableListOf(),
 
+        var disclaimerText: String? = null,
+
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game", orphanRemoval = true)
         var questionnaireTemplates: List<QuestionnaireTemplate> = mutableListOf(),
 
