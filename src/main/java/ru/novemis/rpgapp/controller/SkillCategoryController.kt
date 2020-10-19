@@ -1,6 +1,7 @@
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
+import ru.novemis.rpgapp.domain.game.shop.Destination
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryShortDto
 import ru.novemis.rpgapp.dto.game.skill.form.SkillCategoryForm
@@ -9,18 +10,26 @@ import javax.transaction.Transactional
 
 @RestController
 open class SkillCategoryController(
-        private val skillCategoryService: SkillCategoryService
+        private val service: SkillCategoryService
 ) {
 
     @GetMapping("/game/{id}/skillCategory")
     @Transactional
     open fun getAllByGameId(@PathVariable("id") gameId: String): List<SkillCategoryDto> =
-            skillCategoryService.findAllByGameId(gameId)
+            service.findAllByGameId(gameId)
 
     @GetMapping("/game/{id}/skillCategory/short")
     @Transactional
     open fun getAllShortByGameId(@PathVariable("id") gameId: String): List<SkillCategoryShortDto> =
-            skillCategoryService.findAllShortByGameId(gameId)
+            service.findAllShortByGameId(gameId)
+
+    @GetMapping("/game/{id}/skillCategory/filter")
+    open fun getAllByGameIdAndDestination(
+            @PathVariable("id") gameId: String,
+            @RequestParam("destination") destination: String
+    ): List<SkillCategoryDto> {
+        return service.findAllByGameIdAndDestination(gameId, Destination.valueOf(destination))
+    }
 
     @PostMapping("/game/{game-id}/skillCategory")
     @Transactional
@@ -28,21 +37,21 @@ open class SkillCategoryController(
             @RequestBody skillCategoryForm: SkillCategoryForm,
             @PathVariable("game-id") gameId: String
     ): SkillCategoryDto =
-            skillCategoryService.save(skillCategoryForm, gameId)
+            service.save(skillCategoryForm, gameId)
 
     @GetMapping("/skillCategory/{id}")
-    fun getById(@PathVariable("id") id: String): SkillCategoryDto = skillCategoryService.findById(id)
+    fun getById(@PathVariable("id") id: String): SkillCategoryDto = service.findById(id)
 
     @PutMapping("/skillCategory/{id}")
     @Transactional
     open fun update(
             @PathVariable("id") id: String,
             @RequestBody body: SkillCategoryForm
-    ): SkillCategoryDto = skillCategoryService.update(id, body)
+    ): SkillCategoryDto = service.update(id, body)
 
     @DeleteMapping("/skillCategory/{id}")
     @Transactional
-    open fun delete(@PathVariable("id") id: String): SkillCategoryDto = skillCategoryService.deleteById(id)
+    open fun delete(@PathVariable("id") id: String): SkillCategoryDto = service.deleteById(id)
 
 
 }
