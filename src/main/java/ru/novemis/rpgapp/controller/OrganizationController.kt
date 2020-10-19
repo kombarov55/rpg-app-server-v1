@@ -1,16 +1,10 @@
 package ru.novemis.rpgapp.controller
 
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.OrganizationConverter
 import ru.novemis.rpgapp.converter.PriceCombinationConverter
 import ru.novemis.rpgapp.converter.ShopConverter
+import ru.novemis.rpgapp.domain.game.organization.OrganizationType
 import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationDto
@@ -194,5 +188,15 @@ open class OrganizationController(
 
             shops = shops.filter { it.id != shopId }
         }.let { converter.toDto(it) }
+    }
+
+    @GetMapping("/game/{id}/organization/filter")
+    @Transactional
+    open fun findByGameIdAndType(
+            @PathVariable("id") gameId: String,
+            @RequestParam("type") type: String
+    ): List<OrganizationDto> {
+        return repository.findAllByGameIdAndType(gameId, OrganizationType.valueOf(type))
+                .map { converter.toDto(it) }
     }
 }
