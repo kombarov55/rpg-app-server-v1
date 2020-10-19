@@ -2,6 +2,7 @@
 
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.QuestionnaireConverter
+import ru.novemis.rpgapp.dto.game.questionnaire.dto.QuestionnaireDto
 import ru.novemis.rpgapp.dto.game.questionnaire.form.QuestionnaireForm
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.questionnaire.QuestionnaireRepository
@@ -25,11 +26,19 @@ open class QuestionnaireController(
             @RequestBody form: QuestionnaireForm,
             @RequestHeader("authorization") jwtToken: String
     ) {
-        val userAccount = jwtToken
+        val userAccount = jwtToken.substring("Bearer ".length)
                 .let { jwtUtil.getUsernameFromToken(it).toLong() }
                 .let { userAccountRepository.findByUserId(it) }!!
         val game = gameRepository.findById(gameId).get()
 
         converter.toDomain(form, game, userAccount).let { repository.save(it) }
+    }
+
+    @GetMapping("/game/{game-id}/questionnaire")
+    @Transactional
+    open fun findAllByGameId(
+            @PathVariable("game-id") gameId: String
+    ): List<QuestionnaireDto> {
+        return repository.findAllByGameId(gameId).map { converter.toDto(it) }
     }
 }

@@ -4,5 +4,5 @@ import ru.novemis.rpgapp.dto.game.questionnaire_template.form.QuestionnaireTempl
 
 data class FieldToValueForm(
         var field: QuestionnaireTemplateFieldForm? = null,
-        var value: String
+        var value: String = ""
 )

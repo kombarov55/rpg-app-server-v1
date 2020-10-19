@@ -6,6 +6,7 @@ import ru.novemis.rpgapp.domain.game.organization.Organization
 import ru.novemis.rpgapp.domain.game.organization.OrganizationType
 import ru.novemis.rpgapp.dto.game.organization.dto.CountryDto
 import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationDto
+import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationShortDto
 import ru.novemis.rpgapp.dto.game.organization.form.OrganizationForm
 import ru.novemis.rpgapp.repository.game.shop.ShopRepository
 import ru.novemis.rpgapp.repository.useraccount.UserAccountRepository
@@ -92,6 +93,16 @@ class OrganizationConverter(
                     ownedMerchandise = domain.ownedMerchandise.map { warehouseEntryConverter.toDto(it) }
             )
         }
+    }
+
+    fun toShortDto(domain: Organization): OrganizationShortDto {
+        return OrganizationShortDto(
+                id = domain.id,
+                name = domain.name,
+                description = domain.description,
+                type = domain.type!!
+        )
+
     }
 
 }
