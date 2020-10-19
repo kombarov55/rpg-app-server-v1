@@ -6,5 +6,6 @@ data class UserAccountDto(
         var firstName: String = "",
         var lastName: String = "",
         var photo50Url: String = "",
-        var userAccountPreferences: UserAccountPreferencesDto = UserAccountPreferencesDto()
+        var userAccountPreferences: UserAccountPreferencesDto = UserAccountPreferencesDto(),
+        var gameIdToActiveCharacterId: Map<String, String>
 )

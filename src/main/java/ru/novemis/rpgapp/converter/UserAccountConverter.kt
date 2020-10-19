@@ -20,8 +20,8 @@ class UserAccountConverter {
                     userAccountPreferences = UserAccountPreferencesDto(
                             favAnnouncementIds = it.userAccountPreferences.favoriteAnnouncements.map { it.id },
                             respondedAnnouncementIds = it.userAccountPreferences.respondedAnnouncements.map { it.id }
-                    )
-
+                    ),
+                    gameIdToActiveCharacterId = userAccount.gameToActiveCharacter.map { it.game!!.id to it.character!!.id }.toMap()
             )
         }
     }

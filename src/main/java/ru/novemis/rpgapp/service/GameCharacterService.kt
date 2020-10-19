@@ -10,11 +10,14 @@ import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 @Component
 class GameCharacterService(
         private val repository: GameCharacterRepository,
-        private val currencyRepository: CurrencyRepository
+        private val currencyRepository: CurrencyRepository,
+        private val userAccountService: UserAccountService
 ) {
 
     fun createCharacter(questionnaire: Questionnaire) {
-        repository.save(generateFromQuestionnaire(questionnaire))
+        val gameCharacter = generateFromQuestionnaire(questionnaire)
+        repository.save(gameCharacter)
+        userAccountService.setActiveCharacterForGame(gameCharacter.owner!!, gameCharacter.game!!, gameCharacter)
     }
 
     fun generateFromQuestionnaire(questionnaire: Questionnaire): GameCharacter {

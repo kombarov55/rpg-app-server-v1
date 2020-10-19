@@ -2,6 +2,9 @@ package ru.novemis.rpgapp.service
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.UserAccountConverter
+import ru.novemis.rpgapp.domain.game.Game
+import ru.novemis.rpgapp.domain.game.character.GameCharacter
+import ru.novemis.rpgapp.domain.useraccount.GameToActiveCharacter
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import ru.novemis.rpgapp.domain.useraccount.UserAccountRole
 import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountDto
@@ -78,5 +81,16 @@ open class UserAccountService(
     open fun findAllShort(): List<UserAccountShortDto> {
         return userAccountRepository.findAll()
                 .map { userAccountConverter.toShortDto(it) }
+    }
+
+    fun setActiveCharacterForGame(userAccount: UserAccount, game: Game, character: GameCharacter) {
+        val updatedEntity = userAccount.gameToActiveCharacter.find { it.game!!.id == game.id } ?: GameToActiveCharacter(
+                game = game,
+                userAccount = userAccount
+        ).apply { this.character = character }
+
+        userAccount.gameToActiveCharacter = userAccount.gameToActiveCharacter.filter { it.id != updatedEntity.id } + updatedEntity
+
+        userAccountRepository.save(userAccount)
     }
 }

@@ -24,5 +24,8 @@ data class UserAccount(
         var userAccountPreferences: UserAccountPreferences = UserAccountPreferences(),
 
         @OneToMany(cascade = [CascadeType.ALL])
-        var announcements: List<Announcement> = emptyList()
+        var announcements: List<Announcement> = emptyList(),
+
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "userAccount")
+        var gameToActiveCharacter: List<GameToActiveCharacter> = mutableListOf()
 )
