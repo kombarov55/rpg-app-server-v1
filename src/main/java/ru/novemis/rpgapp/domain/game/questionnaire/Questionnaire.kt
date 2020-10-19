@@ -41,5 +41,11 @@ class Questionnaire(
 
         @ManyToOne
         @JoinColumn(name = "user_acccount_id")
-        var author: UserAccount? = null
+        var author: UserAccount? = null,
+
+        val creationDate: Date = Date(),
+
+        var status: QuestionnaireStatus = QuestionnaireStatus.ON_REVIEW,
+
+        var statusChangeDate: Date = Date()
 )
