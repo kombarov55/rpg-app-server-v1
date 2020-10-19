@@ -41,4 +41,14 @@ open class SpellController(
             schoolLvl = savedEntity.schoolLvl
         }.let { repository.save(it) }.let { converter.toDto(it) }
     }
+
+    @DeleteMapping("/spell/{id}")
+    @Transactional
+    open fun delete(
+            @PathVariable("id") id: String
+    ): SpellDto {
+        return repository.findById(id)
+                .get().also { repository.delete(it) }
+                .let { converter.toDto(it) }
+    }
 }
