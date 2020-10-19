@@ -11,7 +11,7 @@ class NotificationConverter {
         return NotificationDto(
                 id = domain.id,
                 text = domain.text,
-                data = domain.extractData(),
+                severity = domain.severity,
                 creationDate = domain.creationDate.time
         )
     }

@@ -5,7 +5,6 @@ import ru.novemis.rpgapp.converter.NotificationConverter
 import ru.novemis.rpgapp.domain.procedure.Notification
 import ru.novemis.rpgapp.dto.procedure.dto.NotificationDto
 import ru.novemis.rpgapp.repository.procedure.NotificationRepository
-import java.util.*
 
 @Component
 class NotificationService(
@@ -17,8 +16,8 @@ class NotificationService(
         repository.save(notification)
     }
 
-    fun pullNotifications(toWhom: Long, from: Date): List<NotificationDto> {
-        return repository.findByRecipientIdAndCreationDateAfter(toWhom, from)
+    fun pullNotifications(toWhom: Long): List<NotificationDto> {
+        return repository.findByRecipientId(toWhom)
                 .onEach { repository.delete(it) }
                 .map { converter.toDto(it) }
     }
