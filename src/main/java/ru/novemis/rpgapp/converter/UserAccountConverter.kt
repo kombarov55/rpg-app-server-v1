@@ -29,6 +29,7 @@ class UserAccountConverter {
     fun toShortDto(domain: UserAccount): UserAccountShortDto {
         return UserAccountShortDto(
                 id = domain.id,
+                vkUserId = domain.userId,
                 fullName = domain.firstName + " " + domain.lastName,
                 img = domain.photo50Url,
                 role = domain.role.label
