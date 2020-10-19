@@ -63,6 +63,10 @@ class JWTUtil : Serializable {
         return !isTokenExpired(token)
     }
 
+    fun getUserIdFromRawToken(token: String): Long {
+        return getUsernameFromToken(token.substring("Bearer ".length)).toLong()
+    }
+
     companion object {
         val expirationTime = 31556926L
     }
