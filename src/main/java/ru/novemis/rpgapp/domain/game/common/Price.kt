@@ -1,7 +1,8 @@
 package ru.novemis.rpgapp.domain.game.common
 
 import ru.novemis.rpgapp.domain.game.Currency
-import java.util.UUID
+import ru.novemis.rpgapp.domain.game.character.GameCharacter
+import java.util.*
 import javax.persistence.Entity
 import javax.persistence.Id
 import javax.persistence.JoinColumn
@@ -17,5 +18,9 @@ data class Price(
         @JoinColumn(name = "currency_id")
         var currency: Currency? = null,
 
-        val amount: Int = 0
+        val amount: Int = 0,
+
+        @ManyToOne
+        @JoinColumn(name = "game_character_id")
+        var character: GameCharacter? = null
 )

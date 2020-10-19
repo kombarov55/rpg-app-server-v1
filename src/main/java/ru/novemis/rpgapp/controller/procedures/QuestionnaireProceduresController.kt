@@ -2,6 +2,8 @@ package ru.novemis.rpgapp.controller.procedures
 
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.domain.game.questionnaire.QuestionnaireStatus
+import ru.novemis.rpgapp.repository.game.questionnaire.QuestionnaireRepository
+import ru.novemis.rpgapp.service.GameCharacterService
 import ru.novemis.rpgapp.service.NotificationService
 import ru.novemis.rpgapp.service.NotificationTemplateService
 import ru.novemis.rpgapp.service.QuestionnaireService
@@ -14,6 +16,8 @@ open class QuestionnaireProceduresController(
         private val questionnaireService: QuestionnaireService,
         private val notificationService: NotificationService,
         private val notificationTemplateService: NotificationTemplateService,
+        private val gameCharacterService: GameCharacterService,
+        private val questionnaireRepository: QuestionnaireRepository,
         private val jwtUtil: JWTUtil
 ) {
 
@@ -25,6 +29,7 @@ open class QuestionnaireProceduresController(
     ) {
         val userId = jwtUtil.getUserIdFromRawToken(jwtToken)
         questionnaireService.changeStatus(form.questionnaireId, QuestionnaireStatus.APPROVED)
+        gameCharacterService.createCharacter(questionnaireRepository.findById(form.questionnaireId).get())
         notificationService.addNotification(notificationTemplateService.questionnaireApproved(userId))
     }
 

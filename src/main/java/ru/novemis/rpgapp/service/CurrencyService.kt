@@ -16,7 +16,7 @@ class CurrencyService(
 
     fun findByGameId(gameId: String): List<CurrencyDto> {
         return currencyRepository
-                .findByGameId(gameId)
+                .findAllByGameId(gameId)
                 .map { currencyConverter.toDto(it) }
     }
 

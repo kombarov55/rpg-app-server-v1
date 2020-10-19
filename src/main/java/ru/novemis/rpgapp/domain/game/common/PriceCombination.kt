@@ -1,7 +1,10 @@
 package ru.novemis.rpgapp.domain.game.common
 
 import java.util.*
-import javax.persistence.*
+import javax.persistence.CascadeType
+import javax.persistence.Entity
+import javax.persistence.Id
+import javax.persistence.OneToMany
 
 @Entity
 class PriceCombination(

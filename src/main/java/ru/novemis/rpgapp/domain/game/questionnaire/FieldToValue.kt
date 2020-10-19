@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.domain.game.questionnaire
 
+import ru.novemis.rpgapp.domain.game.character.GameCharacter
 import ru.novemis.rpgapp.domain.game.questionnaire_template.QuestionnaireTemplateField
 import java.util.*
 import javax.persistence.Entity
@@ -20,5 +21,9 @@ class FieldToValue (
 
         @ManyToOne
         @JoinColumn(name = "questionnaire_id")
-        var questionnaire: Questionnaire? = null
+        var questionnaire: Questionnaire? = null,
+
+        @ManyToOne
+        @JoinColumn(name = "game_character_id")
+        var character: GameCharacter? = null
 )
