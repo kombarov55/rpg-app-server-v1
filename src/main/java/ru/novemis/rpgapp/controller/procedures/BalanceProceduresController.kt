@@ -7,7 +7,6 @@ import ru.novemis.rpgapp.repository.game.organization.OrganizationRepository
 import ru.novemis.rpgapp.service.BalanceService
 import ru.novemis.rpgapp.service.NotificationService
 import ru.novemis.rpgapp.service.NotificationTemplateService
-import ru.novemis.rpgapp.util.JWTUtil
 import javax.transaction.Transactional
 
 @RestController
@@ -17,8 +16,7 @@ open class BalanceProceduresController(
         private val notificationService: NotificationService,
         private val notificationTemplateService: NotificationTemplateService,
         private val characterRepository: GameCharacterRepository,
-        private val organizationRepository: OrganizationRepository,
-        private val jwtUtil: JWTUtil
+        private val organizationRepository: OrganizationRepository
 ) {
 
 
