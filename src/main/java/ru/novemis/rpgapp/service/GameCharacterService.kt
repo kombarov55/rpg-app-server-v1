@@ -26,7 +26,7 @@ class GameCharacterService(
 
             balance = currencyRepository.findAllByGameId(questionnaire.game!!.id)
                     .map { currency ->
-                        Price(currency = currency, amount = 0)
+                        Price(currency = currency, amount = 0, character = character)
                     }
             fieldToValueList = questionnaire.fieldToValueList
                     .map { fieldToValue ->
