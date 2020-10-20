@@ -24,7 +24,7 @@ class SkillToLvlConverter(
     fun toDto(domain: SkillToLvl): SkillToLvlDto {
         return SkillToLvlDto(
                 id = domain.id,
-                skill = skillConverter.toShortDto(domain.skill!!),
+                skill = skillConverter.toDto(domain.skill!!),
                 amount = domain.amount
         )
     }
