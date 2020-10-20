@@ -18,7 +18,7 @@ class NotificationController(
             @RequestHeader("Authorization") jwtToken: String
     ): List<NotificationDto> {
         val userId = jwtUtil.getUserIdFromRawToken(jwtToken)
-        return notificationService.pullNotifications(userId)
+        return notificationService.pull(userId)
     }
 
 }

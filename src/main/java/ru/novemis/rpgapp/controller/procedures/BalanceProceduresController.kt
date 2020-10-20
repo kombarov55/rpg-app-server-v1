@@ -1,16 +1,24 @@
 package ru.novemis.rpgapp.controller.procedures
 
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
-import ru.novemis.rpgapp.repository.game.BalanceRepository
+import org.springframework.web.bind.annotation.*
+import ru.novemis.rpgapp.domain.game.common.TransferDestinationType
+import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
+import ru.novemis.rpgapp.repository.game.organization.OrganizationRepository
+import ru.novemis.rpgapp.service.BalanceService
+import ru.novemis.rpgapp.service.NotificationService
+import ru.novemis.rpgapp.service.NotificationTemplateService
+import ru.novemis.rpgapp.util.JWTUtil
 import javax.transaction.Transactional
 
 @RestController
 @RequestMapping("/balance")
 open class BalanceProceduresController(
-            private val repository: BalanceRepository
+        private val service: BalanceService,
+        private val notificationService: NotificationService,
+        private val notificationTemplateService: NotificationTemplateService,
+        private val characterRepository: GameCharacterRepository,
+        private val organizationRepository: OrganizationRepository,
+        private val jwtUtil: JWTUtil
 ) {
 
 
@@ -18,27 +26,46 @@ open class BalanceProceduresController(
             val from: String = "",
             val to: String = "",
             val currency: String = "",
-            val amount: Int = 0
+            val amount: Int = 0,
+            val originId: String = "",
+            val originType: TransferDestinationType = TransferDestinationType.CHARACTER,
+            val destinationId: String = "",
+            val destinationType: TransferDestinationType = TransferDestinationType.CHARACTER
     )
+
     @PostMapping("/transfer.do")
     @Transactional
     open fun transfer(
-            @RequestBody form: TransferForm
+            @RequestBody form: TransferForm,
+            @RequestHeader("Authorization") jwtToken: String
     ) {
-        val from = repository.findById(form.from).get()
-        val to = repository.findById(form.to).get()
+        service.transfer(form.from, form.to, form.currency, form.amount)
+        if (form.destinationType == TransferDestinationType.CHARACTER) {
+            notificationService.send(notificationTemplateService.transferToPlayer(
+                    userId = characterRepository.findById(form.destinationId).get().owner!!.userId,
+                    currency = form.currency,
+                    amount = form.amount,
+                    authorName = when (form.originType) {
+                        TransferDestinationType.CHARACTER -> characterRepository.findById(form.originId).get().name
+                        TransferDestinationType.ORGANIZATION -> organizationRepository.findById(form.originId).get().name
+                    }
+            ))
+        } else {
+            val organization = organizationRepository.findById(form.destinationId).get()
 
-        val amountToSubtract = from.amounts.find { it.currency!!.name == form.currency }!!
-        val amountToAdd = to.amounts.find { it.currency!!.name == form.currency }!!
-
-        amountToSubtract.amount -= form.amount
-        amountToAdd.amount += form.amount
-
-        from.apply { amounts = from.amounts.filter { it.id !== amountToSubtract.id } + amountToSubtract }
-                .also { repository.save(it) }
-
-        to.apply { amounts = from.amounts.filter { it.id !== amountToAdd.id } + amountToAdd }
-                .also { repository.save(it) }
+            organization.organizationHeads.forEach { character ->
+                notificationService.send(notificationTemplateService.transferToOrganization(
+                        userId = character.owner!!.userId,
+                        organizationName = organization.name,
+                        currency = form.currency,
+                        amount = form.amount,
+                        authorName = when (form.originType) {
+                            TransferDestinationType.CHARACTER -> characterRepository.findById(form.originId).get().name
+                            TransferDestinationType.ORGANIZATION -> organizationRepository.findById(form.originId).get().name
+                        }
+                ))
+            }
+        }
     }
 
 }

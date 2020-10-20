@@ -3,7 +3,6 @@ package ru.novemis.rpgapp.controller
 import org.springframework.data.domain.PageRequest
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.OrganizationConverter
-import ru.novemis.rpgapp.converter.PriceCombinationConverter
 import ru.novemis.rpgapp.converter.ShopConverter
 import ru.novemis.rpgapp.domain.game.organization.OrganizationType
 import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
@@ -12,11 +11,10 @@ import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationShortDto
 import ru.novemis.rpgapp.dto.game.organization.form.OrganizationForm
 import ru.novemis.rpgapp.dto.game.shop.form.ShopForm
 import ru.novemis.rpgapp.repository.game.GameRepository
+import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 import ru.novemis.rpgapp.repository.game.organization.OrganizationRepository
 import ru.novemis.rpgapp.repository.game.shop.MerchandiseRepository
 import ru.novemis.rpgapp.repository.game.shop.ShopRepository
-import ru.novemis.rpgapp.repository.useraccount.UserAccountRepository
-import ru.novemis.rpgapp.service.CalcService
 import javax.transaction.Transactional
 
 @RestController
@@ -25,11 +23,7 @@ open class OrganizationController(
         private val converter: OrganizationConverter,
 
         private val gameRepository: GameRepository,
-        private val userAccountRepository: UserAccountRepository,
-
-        private val priceCombinationConverter: PriceCombinationConverter,
-
-        private val calcService: CalcService,
+        private val gameCharacterRepository: GameCharacterRepository,
 
         private val merchandiseRepository: MerchandiseRepository,
 
@@ -80,7 +74,7 @@ open class OrganizationController(
             @PathVariable("head-id") headId: String
     ): OrganizationDto {
         return repository.findById(id).orElseThrow { IllegalArgumentException() }
-                .apply { organizationHeads += userAccountRepository.findById(headId).orElseThrow { IllegalArgumentException() } }
+                .apply { organizationHeads += gameCharacterRepository.findById(headId).get() }
                 .let { repository.save(it) }
                 .let { converter.toDto(it) }
     }

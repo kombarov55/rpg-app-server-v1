@@ -30,7 +30,7 @@ open class QuestionnaireProceduresController(
         val questionnaire = questionnaireRepository.findById(form.questionnaireId).get()
         questionnaireService.changeStatus(form.questionnaireId, QuestionnaireStatus.APPROVED)
         gameCharacterService.createCharacter(questionnaire)
-        notificationService.addNotification(notificationTemplateService.questionnaireApproved(questionnaire.author!!.userId))
+        notificationService.send(notificationTemplateService.questionnaireApproved(questionnaire.author!!.userId))
     }
 
     @PostMapping("/clarify.do")
@@ -41,7 +41,7 @@ open class QuestionnaireProceduresController(
     ) {
         val questionnaire = questionnaireRepository.findById(form.questionnaireId).get()
         questionnaireService.changeStatus(form.questionnaireId, QuestionnaireStatus.ON_CLARIFICATION)
-        notificationService.addNotification(notificationTemplateService.questionnaireClarifying(questionnaire.author!!.userId))
+        notificationService.send(notificationTemplateService.questionnaireClarifying(questionnaire.author!!.userId))
     }
 
     @PostMapping("/archive.do")
@@ -52,7 +52,7 @@ open class QuestionnaireProceduresController(
     ) {
         val questionnaire = questionnaireRepository.findById(form.questionnaireId).get()
         questionnaireService.changeStatus(form.questionnaireId, QuestionnaireStatus.ARCHIVED)
-        notificationService.addNotification(notificationTemplateService.questionnaireArchived(questionnaire.author!!.userId))
+        notificationService.send(notificationTemplateService.questionnaireArchived(questionnaire.author!!.userId))
     }
 
     data class ApproveForm(val questionnaireId: String = "")

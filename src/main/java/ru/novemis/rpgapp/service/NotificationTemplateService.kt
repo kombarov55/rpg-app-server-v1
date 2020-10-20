@@ -31,4 +31,19 @@ class NotificationTemplateService {
         )
     }
 
+    fun transferToPlayer(userId: Long, currency: String, amount: Int, authorName: String): Notification {
+        return Notification(
+                text = "На ваш счёт поступил перевод в размере $currency: $amount от $authorName.",
+                severity = NotificationSeverity.GOOD,
+                recipientId = userId
+        )
+    }
+
+    fun transferToOrganization(userId: Long, organizationName: String, currency: String, amount: Int, authorName: String): Notification {
+        return Notification(
+                text = "На счёт организации '$organizationName' поступил перевод в размере $currency: $amount от $authorName.",
+                severity = NotificationSeverity.GOOD,
+                recipientId = userId
+        )
+    }
 }

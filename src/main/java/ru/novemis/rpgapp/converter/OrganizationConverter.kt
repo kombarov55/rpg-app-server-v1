@@ -5,17 +5,17 @@ import ru.novemis.rpgapp.domain.game.common.Balance
 import ru.novemis.rpgapp.domain.game.organization.Country
 import ru.novemis.rpgapp.domain.game.organization.Organization
 import ru.novemis.rpgapp.domain.game.organization.OrganizationType
+import ru.novemis.rpgapp.dto.game.character.dto.GameCharacterShortDto
 import ru.novemis.rpgapp.dto.game.organization.dto.CountryDto
 import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationDto
 import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationShortDto
 import ru.novemis.rpgapp.dto.game.organization.form.OrganizationForm
+import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 import ru.novemis.rpgapp.repository.game.shop.ShopRepository
-import ru.novemis.rpgapp.repository.useraccount.UserAccountRepository
 
 @Component
 class OrganizationConverter(
-        private val userAccountRepository: UserAccountRepository,
-        private val userAccountConverter: UserAccountConverter,
+        private val gameCharacterRepository: GameCharacterRepository,
 
         private val priceCombinationConverter: PriceCombinationConverter,
 
@@ -33,7 +33,7 @@ class OrganizationConverter(
                     name = form.name,
                     description = form.description,
                     type = form.type!!.toDomain(),
-                    organizationHeads = form.heads.map { userAccountRepository.findById(it.id).get() },
+                    organizationHeads = form.heads.map { gameCharacterRepository.findById(it.id).get() },
                     balance = Balance(amounts = form.balance.map { price -> priceCombinationConverter.toDomain(price, gameId) }),
                     shops = form.shops.map {
                         it.id?.let { id ->
@@ -51,7 +51,7 @@ class OrganizationConverter(
                     name = form.name,
                     description = form.description,
                     type = form.type!!.toDomain(),
-                    organizationHeads = form.heads.map { userAccountRepository.findById(it.id).get() },
+                    organizationHeads = form.heads.map { gameCharacterRepository.findById(it.id).get() },
                     balance = Balance(amounts = form.balance.map { price -> priceCombinationConverter.toDomain(price, gameId) }),
                     shops = form.shops.map {
                         it.id?.let { id ->
@@ -73,7 +73,10 @@ class OrganizationConverter(
                         name = domain.name,
                         description = domain.description,
                         type = domain.type!!.toDto(),
-                        heads = domain.organizationHeads.map { userAccountConverter.toShortDto(it) },
+                        heads = domain.organizationHeads.map { GameCharacterShortDto(
+                                id = it.id,
+                                name = it.name
+                        ) },
                         balance = domain.balance!!.amounts.map { priceCombinationConverter.toDto(it) },
                         shops = domain.shops.map { shopConverter.toDto(it) },
                         ownedMerchandise = domain.ownedMerchandise.map { warehouseEntryConverter.toDto(it) },
@@ -88,7 +91,10 @@ class OrganizationConverter(
                     name = domain.name,
                     description = domain.description,
                     type = domain.type!!.toDto(),
-                    heads = domain.organizationHeads.map { userAccountConverter.toShortDto(it) },
+                    heads = domain.organizationHeads.map { GameCharacterShortDto(
+                            id = it.id,
+                            name = it.name
+                    ) },
                     balance = domain.balance!!.amounts.map { priceCombinationConverter.toDto(it) },
                     shops = domain.shops.map { shopConverter.toDto(it) },
                     ownedMerchandise = domain.ownedMerchandise.map { warehouseEntryConverter.toDto(it) }

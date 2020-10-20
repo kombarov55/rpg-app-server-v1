@@ -1,10 +1,10 @@
 package ru.novemis.rpgapp.domain.game.organization
 
 import ru.novemis.rpgapp.domain.game.Game
+import ru.novemis.rpgapp.domain.game.character.GameCharacter
 import ru.novemis.rpgapp.domain.game.common.Balance
 import ru.novemis.rpgapp.domain.game.shop.Shop
 import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
-import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import java.util.*
 import javax.persistence.*
 
@@ -22,11 +22,11 @@ open class Organization(
 
         @ManyToMany
         @JoinTable(
-                name = "organization__user_account",
+                name = "organization__game_character",
                 joinColumns = [JoinColumn(name = "organization_id")],
-                inverseJoinColumns = [JoinColumn(name = "user_account_id")]
+                inverseJoinColumns = [JoinColumn(name = "game_character_id")]
         )
-        var organizationHeads: List<UserAccount> = mutableListOf(),
+        var organizationHeads: List<GameCharacter> = mutableListOf(),
 
         @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
         @JoinColumn(name = "balance_id")

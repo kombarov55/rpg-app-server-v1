@@ -12,11 +12,11 @@ class NotificationService(
         private val converter: NotificationConverter
 ) {
 
-    fun addNotification(notification: Notification) {
+    fun send(notification: Notification) {
         repository.save(notification)
     }
 
-    fun pullNotifications(toWhom: Long): List<NotificationDto> {
+    fun pull(toWhom: Long): List<NotificationDto> {
         return repository.findByRecipientId(toWhom)
                 .onEach { repository.delete(it) }
                 .map { converter.toDto(it) }
