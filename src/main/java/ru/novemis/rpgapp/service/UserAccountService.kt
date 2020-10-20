@@ -83,7 +83,7 @@ open class UserAccountService(
                 .map { userAccountConverter.toShortDto(it) }
     }
 
-    fun setActiveCharacterForGame(userAccount: UserAccount, game: Game, character: GameCharacter) {
+    open fun setActiveCharacterForGame(userAccount: UserAccount, game: Game, character: GameCharacter) {
         val updatedEntity = userAccount.gameToActiveCharacter.find { it.game!!.id == game.id } ?: GameToActiveCharacter(
                 game = game,
                 userAccount = userAccount
