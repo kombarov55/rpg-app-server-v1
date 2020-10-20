@@ -24,6 +24,8 @@ class GameCharacterService(
         return GameCharacter().apply {
             val character = this
 
+            name = questionnaire.name
+
             balance = currencyRepository.findAllByGameId(questionnaire.game!!.id)
                     .map { currency ->
                         Price(currency = currency, amount = 0, character = character)

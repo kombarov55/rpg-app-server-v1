@@ -14,6 +14,7 @@ class GameCharacterConverter(
     fun toDto(domain: GameCharacter): GameCharacterDto {
         return GameCharacterDto(
                 id = domain.id,
+                name = domain.name,
                 fieldNameToValueList = domain.fieldToValueList.map { it.field!!.name to it.value }.toMap(),
                 balance = domain.balance.map { priceConverter.toDto(it) },
                 learnedSpells = domain.learnedSpells.map { spellConverter.toDto(it) },

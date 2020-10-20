@@ -17,6 +17,8 @@ class GameCharacter(
         @Id
         var id: String = UUID.randomUUID().toString(),
 
+        var name: String = "",
+
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "character")
         var balance: List<Price> = mutableListOf(),
 

@@ -13,6 +13,8 @@ class Questionnaire(
         @Id
         var id: String = UUID.randomUUID().toString(),
 
+        var name: String = "",
+
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "questionnaire", orphanRemoval = true)
         var fieldToValueList: List<FieldToValue> = mutableListOf(),
 
