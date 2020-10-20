@@ -30,7 +30,9 @@ class GameCharacterConverter(
                 id = domain.id,
                 name = domain.name,
                 game = gameConverter.toShortDto(domain.game!!),
-                country = organizationConverter.toShortDto(domain.country!!)
+                country = organizationConverter.toShortDto(domain.country!!),
+                status = domain.status,
+                statusChangeDate = domain.statusChangeDate.time
         )
     }
 }

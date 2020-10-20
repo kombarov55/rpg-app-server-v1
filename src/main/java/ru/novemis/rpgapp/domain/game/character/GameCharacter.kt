@@ -45,6 +45,10 @@ class GameCharacter(
 
         val creationDate: Date = Date(),
 
+        val status: GameCharacterStatus = GameCharacterStatus.ALIVE,
+
+        val statusChangeDate: Date = Date(),
+
         @ManyToOne
         @JoinColumn(name = "user_account_id")
         var owner: UserAccount? = null,
