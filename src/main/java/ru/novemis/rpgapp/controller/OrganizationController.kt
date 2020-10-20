@@ -7,7 +7,6 @@ import ru.novemis.rpgapp.converter.PriceCombinationConverter
 import ru.novemis.rpgapp.converter.ShopConverter
 import ru.novemis.rpgapp.domain.game.organization.OrganizationType
 import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
-import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationDto
 import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationShortDto
 import ru.novemis.rpgapp.dto.game.organization.form.OrganizationForm
@@ -105,21 +104,6 @@ open class OrganizationController(
     ): OrganizationDto {
         return repository.findById(id).orElseThrow { IllegalArgumentException() }
                 .also { repository.deleteById(id) }
-                .let { converter.toDto(it) }
-    }
-
-    @PostMapping("/organization/{id}/balance")
-    @Transactional
-    open fun addBalance(
-            @PathVariable("id") id: String,
-            @RequestBody amounts: List<PriceForm>
-    ): OrganizationDto {
-        return repository.findById(id).orElseThrow { IllegalArgumentException() }
-                .apply {
-                    val convertedFormAmounts = amounts.map { priceCombinationConverter.toDomain(it, this.game!!.id) }
-                    balance = calcService.sum(balance, convertedFormAmounts)
-                }
-                .let { repository.save(it) }
                 .let { converter.toDto(it) }
     }
 

@@ -1,6 +1,7 @@
 package ru.novemis.rpgapp.converter
 
 import org.springframework.stereotype.Component
+import ru.novemis.rpgapp.domain.game.common.Balance
 import ru.novemis.rpgapp.domain.game.organization.Country
 import ru.novemis.rpgapp.domain.game.organization.Organization
 import ru.novemis.rpgapp.domain.game.organization.OrganizationType
@@ -33,7 +34,7 @@ class OrganizationConverter(
                     description = form.description,
                     type = form.type!!.toDomain(),
                     organizationHeads = form.heads.map { userAccountRepository.findById(it.id).get() },
-                    balance = form.balance.map { price -> priceCombinationConverter.toDomain(price, gameId) },
+                    balance = Balance(amounts = form.balance.map { price -> priceCombinationConverter.toDomain(price, gameId) }),
                     shops = form.shops.map {
                         it.id?.let { id ->
                             shopRepository.findById(id).orElse(shopConverter.toDomain(it)
@@ -51,7 +52,7 @@ class OrganizationConverter(
                     description = form.description,
                     type = form.type!!.toDomain(),
                     organizationHeads = form.heads.map { userAccountRepository.findById(it.id).get() },
-                    balance = form.balance.map { price -> priceCombinationConverter.toDomain(price, gameId) },
+                    balance = Balance(amounts = form.balance.map { price -> priceCombinationConverter.toDomain(price, gameId) }),
                     shops = form.shops.map {
                         it.id?.let { id ->
                             shopRepository.findById(id).orElse(shopConverter.toDomain(it)
@@ -73,7 +74,7 @@ class OrganizationConverter(
                         description = domain.description,
                         type = domain.type!!.toDto(),
                         heads = domain.organizationHeads.map { userAccountConverter.toShortDto(it) },
-                        balance = domain.balance.map { priceCombinationConverter.toDto(it) },
+                        balance = domain.balance!!.amounts.map { priceCombinationConverter.toDto(it) },
                         shops = domain.shops.map { shopConverter.toDto(it) },
                         ownedMerchandise = domain.ownedMerchandise.map { warehouseEntryConverter.toDto(it) },
 
@@ -88,7 +89,7 @@ class OrganizationConverter(
                     description = domain.description,
                     type = domain.type!!.toDto(),
                     heads = domain.organizationHeads.map { userAccountConverter.toShortDto(it) },
-                    balance = domain.balance.map { priceCombinationConverter.toDto(it) },
+                    balance = domain.balance!!.amounts.map { priceCombinationConverter.toDto(it) },
                     shops = domain.shops.map { shopConverter.toDto(it) },
                     ownedMerchandise = domain.ownedMerchandise.map { warehouseEntryConverter.toDto(it) }
             )

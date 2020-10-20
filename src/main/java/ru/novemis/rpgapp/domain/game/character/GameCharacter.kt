@@ -1,7 +1,7 @@
 package ru.novemis.rpgapp.domain.game.character
 
 import ru.novemis.rpgapp.domain.game.Game
-import ru.novemis.rpgapp.domain.game.common.Price
+import ru.novemis.rpgapp.domain.game.common.Balance
 import ru.novemis.rpgapp.domain.game.organization.Organization
 import ru.novemis.rpgapp.domain.game.questionnaire.FieldToValue
 import ru.novemis.rpgapp.domain.game.questionnaire.SkillToLvl
@@ -19,8 +19,9 @@ class GameCharacter(
 
         var name: String = "",
 
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "character")
-        var balance: List<Price> = mutableListOf(),
+        @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
+        @JoinColumn(name = "balance_id")
+        var balance: Balance? = null,
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "character")
         var fieldToValueList: List<FieldToValue> = mutableListOf(),

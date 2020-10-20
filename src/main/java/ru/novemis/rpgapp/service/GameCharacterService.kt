@@ -2,6 +2,7 @@ package ru.novemis.rpgapp.service
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.character.GameCharacter
+import ru.novemis.rpgapp.domain.game.common.Balance
 import ru.novemis.rpgapp.domain.game.common.Price
 import ru.novemis.rpgapp.domain.game.questionnaire.Questionnaire
 import ru.novemis.rpgapp.repository.game.CurrencyRepository
@@ -26,10 +27,9 @@ class GameCharacterService(
 
             name = questionnaire.name
 
-            balance = currencyRepository.findAllByGameId(questionnaire.game!!.id)
-                    .map { currency ->
-                        Price(currency = currency, amount = 0, character = character)
-                    }
+            balance = Balance(amounts = currencyRepository.findAllByGameId(questionnaire.game!!.id).map { currency ->
+                Price(currency = currency, amount = 0)
+            })
             fieldToValueList = questionnaire.fieldToValueList
                     .map { fieldToValue ->
                         fieldToValue.apply { this.character = character }

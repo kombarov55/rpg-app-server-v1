@@ -1,9 +1,8 @@
 package ru.novemis.rpgapp.domain.game.organization
 
 import ru.novemis.rpgapp.domain.game.Game
-import ru.novemis.rpgapp.domain.game.common.Price
+import ru.novemis.rpgapp.domain.game.common.Balance
 import ru.novemis.rpgapp.domain.game.common.PriceCombination
-import ru.novemis.rpgapp.domain.game.shop.Merchandise
 import ru.novemis.rpgapp.domain.game.shop.Shop
 import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
@@ -20,7 +19,7 @@ open class Country(
         description: String = "",
         type: OrganizationType? = null,
         organizationHeads: List<UserAccount> = mutableListOf(),
-        balance: List<Price> = mutableListOf(),
+        balance: Balance? = null,
         shops: List<Shop> = mutableListOf(),
         ownedMerchandise: List<WarehouseEntry> = mutableListOf(),
         game: Game? = null,
