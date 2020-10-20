@@ -7,5 +7,5 @@ data class ShopDto(
         val name: String,
         val img: String,
         val type: ShopType,
-        val itemsForSale: List<ItemForSaleDto>
+        val itemsForSale: List<ItemForSaleDto> = mutableListOf()
 )

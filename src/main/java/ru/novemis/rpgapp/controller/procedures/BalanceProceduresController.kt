@@ -51,7 +51,7 @@ open class BalanceProceduresController(
         } else {
             val organization = organizationRepository.findById(form.destinationId).get()
 
-            organization.organizationHeads.forEach { character ->
+            organization.heads.forEach { character ->
                 notificationService.send(notificationTemplateService.transferToOrganization(
                         userId = character.owner!!.userId,
                         organizationName = organization.name,

@@ -27,5 +27,9 @@ class CreditOffer(
 
         val rate: Double = 0.0,
 
-        val maxDurationInDays: Int = 0
+        val maxDurationInDays: Int = 0,
+
+        @ManyToOne
+        @JoinColumn(name = "organization_id")
+        val organization: Organization? = null
 )

@@ -5,7 +5,6 @@ import ru.novemis.rpgapp.domain.game.shop.Shop
 import ru.novemis.rpgapp.dto.game.shop.dto.ShopDto
 import ru.novemis.rpgapp.dto.game.shop.form.ShopForm
 import ru.novemis.rpgapp.repository.game.GameRepository
-import java.lang.IllegalArgumentException
 
 @Component
 class ShopConverter(
@@ -28,6 +27,15 @@ class ShopConverter(
                 img = domain.img,
                 type = domain.type!!,
                 itemsForSale = domain.itemsForSale.map { itemForSaleConverter.toDto(it) }
+        )
+    }
+
+    fun toShortDto(domain: Shop): ShopDto {
+        return ShopDto(
+                id = domain.id,
+                name = domain.name,
+                img = domain.img,
+                type = domain.type!!
         )
     }
 

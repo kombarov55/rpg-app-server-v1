@@ -74,7 +74,7 @@ open class OrganizationController(
             @PathVariable("head-id") headId: String
     ): OrganizationDto {
         return repository.findById(id).orElseThrow { IllegalArgumentException() }
-                .apply { organizationHeads += gameCharacterRepository.findById(headId).get() }
+                .apply { heads += gameCharacterRepository.findById(headId).get() }
                 .let { repository.save(it) }
                 .let { converter.toDto(it) }
     }
@@ -86,7 +86,7 @@ open class OrganizationController(
             @PathVariable("head-id") headId: String
     ): OrganizationDto {
         return repository.findById(id).orElseThrow { IllegalArgumentException() }
-                .apply { organizationHeads = organizationHeads.filter { it.id != headId } }
+                .apply { heads = heads.filter { it.id != headId } }
                 .let { repository.save(it) }
                 .let { converter.toDto(it) }
     }

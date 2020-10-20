@@ -3,6 +3,7 @@ package ru.novemis.rpgapp.domain.game.organization
 import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.character.GameCharacter
 import ru.novemis.rpgapp.domain.game.common.Balance
+import ru.novemis.rpgapp.domain.game.common.PriceCombination
 import ru.novemis.rpgapp.domain.game.shop.Shop
 import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
 import java.util.*
@@ -10,7 +11,7 @@ import javax.persistence.*
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-open class Organization(
+class Organization(
         @Id
         var id: String = UUID.randomUUID().toString(),
 
@@ -18,7 +19,7 @@ open class Organization(
 
         val description: String = "",
 
-        val type: OrganizationType? = null,
+        val type: OrganizationType = OrganizationType.INSTITUTION,
 
         @ManyToMany
         @JoinTable(
@@ -26,7 +27,7 @@ open class Organization(
                 joinColumns = [JoinColumn(name = "organization_id")],
                 inverseJoinColumns = [JoinColumn(name = "game_character_id")]
         )
-        var organizationHeads: List<GameCharacter> = mutableListOf(),
+        var heads: List<GameCharacter> = mutableListOf(),
 
         @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
         @JoinColumn(name = "balance_id")
@@ -37,6 +38,14 @@ open class Organization(
 
         @OneToMany(cascade = [CascadeType.ALL])
         var ownedMerchandise: List<WarehouseEntry> = mutableListOf(),
+
+        @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
+        val entranceTax: PriceCombination? = null,
+
+        val incomeTax: Double? = null,
+
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "organization")
+        var creditOffers: List<CreditOffer> = mutableListOf(),
 
         @ManyToOne
         @JoinColumn(name = "game_id")
