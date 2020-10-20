@@ -43,7 +43,8 @@ open class GameCharacterController(
         return repository.findByGameIdAndNameStartsWith(gameId, name, PageRequest.of(0, 5)).map { character ->
             GameCharacterShortDto(
                     id = character.id,
-                    name = character.name
+                    name = character.name,
+                    balanceId = character.balance!!.id
             )
         }
     }

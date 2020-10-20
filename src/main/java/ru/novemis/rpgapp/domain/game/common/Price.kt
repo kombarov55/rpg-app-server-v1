@@ -17,7 +17,7 @@ data class Price(
         @JoinColumn(name = "currency_id")
         var currency: Currency? = null,
 
-        val amount: Int = 0,
+        var amount: Int = 0,
 
         @ManyToOne
         @JoinColumn(name = "balance_id")

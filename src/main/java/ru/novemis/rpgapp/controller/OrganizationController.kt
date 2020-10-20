@@ -195,7 +195,8 @@ open class OrganizationController(
         return repository.findByGameIdAndNameStartsWith(gameId, name, PageRequest.of(0, 5)).map { organization ->
             OrganizationShortDto(
                     id = organization.id,
-                    name = organization.name
+                    name = organization.name,
+                    balanceId = organization.balance!!.id
             )
         }
     }

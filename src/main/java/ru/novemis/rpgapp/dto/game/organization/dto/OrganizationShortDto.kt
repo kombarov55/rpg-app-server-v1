@@ -6,5 +6,6 @@ data class OrganizationShortDto(
         val id: String,
         val name: String,
         val description: String? = null,
-        val type: OrganizationType? = null
+        val type: OrganizationType? = null,
+        val balanceId: String? = null
 )

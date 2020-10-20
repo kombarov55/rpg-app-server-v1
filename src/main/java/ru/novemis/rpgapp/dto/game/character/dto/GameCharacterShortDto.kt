@@ -10,5 +10,6 @@ data class GameCharacterShortDto(
         val game: GameShortDto? = null,
         val country: OrganizationShortDto? = null,
         val status: GameCharacterStatus? = null,
-        val statusChangeDate: Long? = null
+        val statusChangeDate: Long? = null,
+        val balanceId: String? = null
 )
