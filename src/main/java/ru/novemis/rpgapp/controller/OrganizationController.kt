@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.controller
 
+import org.springframework.data.domain.PageRequest
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.OrganizationConverter
 import ru.novemis.rpgapp.converter.PriceCombinationConverter
@@ -8,6 +9,7 @@ import ru.novemis.rpgapp.domain.game.organization.OrganizationType
 import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationDto
+import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationShortDto
 import ru.novemis.rpgapp.dto.game.organization.form.OrganizationForm
 import ru.novemis.rpgapp.dto.game.shop.form.ShopForm
 import ru.novemis.rpgapp.repository.game.GameRepository
@@ -198,5 +200,19 @@ open class OrganizationController(
     ): List<OrganizationDto> {
         return repository.findAllByGameIdAndType(gameId, OrganizationType.valueOf(type))
                 .map { converter.toDto(it) }
+    }
+
+    @GetMapping("/game/{id}/organization/filterByName")
+    @Transactional
+    open fun findCharacterByName(
+            @PathVariable("id") gameId: String,
+            @RequestParam("name") name: String
+    ): List<OrganizationShortDto> {
+        return repository.findByGameIdAndNameStartsWith(gameId, name, PageRequest.of(0, 5)).map { organization ->
+            OrganizationShortDto(
+                    id = organization.id,
+                    name = organization.name
+            )
+        }
     }
 }
