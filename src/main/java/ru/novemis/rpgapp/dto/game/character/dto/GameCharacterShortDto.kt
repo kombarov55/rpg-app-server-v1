@@ -6,6 +6,6 @@ import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationShortDto
 data class GameCharacterShortDto(
         val id: String,
         val name: String,
-        val game: GameShortDto,
-        val country: OrganizationShortDto
+        val game: GameShortDto? = null,
+        val country: OrganizationShortDto? = null
 )

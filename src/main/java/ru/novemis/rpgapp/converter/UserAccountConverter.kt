@@ -7,7 +7,9 @@ import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountPreferencesDto
 import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountShortDto
 
 @Service
-class UserAccountConverter {
+class UserAccountConverter(
+        private val gameToActiveCharacterConverter: GameToActiveCharacterConverter
+) {
 
     fun toDto(userAccount: UserAccount): UserAccountDto {
         return userAccount.let {
@@ -21,7 +23,7 @@ class UserAccountConverter {
                             favAnnouncementIds = it.userAccountPreferences.favoriteAnnouncements.map { it.id },
                             respondedAnnouncementIds = it.userAccountPreferences.respondedAnnouncements.map { it.id }
                     ),
-                    gameIdToActiveCharacterId = userAccount.gameToActiveCharacter.map { it.game!!.id to it.character!!.id }.toMap()
+                    gameToActiveCharacter = userAccount.gameToActiveCharacter.map { gameToActiveCharacterConverter.toDto(it) }
             )
         }
     }
