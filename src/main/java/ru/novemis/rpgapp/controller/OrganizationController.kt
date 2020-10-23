@@ -39,6 +39,14 @@ open class OrganizationController(
         return repository.findAllByGameId(gameId).map { converter.toDto(it) }
     }
 
+    @GetMapping("/game/{game-id}/organization/short")
+    @Transactional
+    open fun getAllByGameIdShort(
+            @PathVariable("game-id") gameId: String
+    ): List<OrganizationShortDto> {
+        return repository.findAllByGameId(gameId).map { converter.toShortDto(it) }
+    }
+
     @PostMapping("/game/{game-id}/organization")
     @Transactional
     open fun save(
