@@ -47,7 +47,9 @@ class SkillConverter(
                 id = domain.id,
                 name = domain.name,
                 img = domain.img,
-                destination = domain.skillCategory!!.destination!!
+                destination = domain.skillCategory!!.destination!!,
+                prices = domain.prices.map { priceCombinationConverter.toDto(it) },
+                categoryName = domain.skillCategory!!.name
         )
     }
 
