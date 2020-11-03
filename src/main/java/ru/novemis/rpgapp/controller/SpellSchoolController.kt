@@ -2,6 +2,7 @@ package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.SpellSchoolConverter
+import ru.novemis.rpgapp.domain.game.shop.Destination
 import ru.novemis.rpgapp.dto.game.skill.dto.SpellSchoolDto
 import ru.novemis.rpgapp.dto.game.skill.form.SpellSchoolForm
 import ru.novemis.rpgapp.repository.game.skillcategory.SkillCategoryRepository
@@ -15,6 +16,16 @@ open class SpellSchoolController(
 
         private val skillCategoryRepository: SkillCategoryRepository
 ) {
+
+    @GetMapping("/game/{id}/skillCategory/findByDestination")
+    @Transactional
+    open fun findByGameIdAndDestination(
+            @PathVariable("id") gameId: String,
+            @RequestParam("destination") destination: String
+    ): List<SpellSchoolDto> {
+        return repository.findBySkillCategoryGameIdAndSkillCategoryDestination(gameId, Destination.valueOf(destination))
+                .map { converter.toDto(it) }
+    }
 
     @PostMapping("/skillCategory/{skill-category-id}/spellSchool")
     @Transactional

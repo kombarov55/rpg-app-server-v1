@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.novemis.rpgapp.domain.game.questionnaire.SkillToLvl
 import ru.novemis.rpgapp.domain.game.skill.Skill
+import ru.novemis.rpgapp.domain.game.skill.Spell
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 import ru.novemis.rpgapp.service.BalanceService
@@ -45,13 +46,27 @@ open class GameCharacterProceduresController(
 
     @PostMapping("/purchaseSkill.do")
     @Transactional
-    open fun purchaseSkill(
-            @RequestBody form: PurchaseSkillForm
-    ) {
+    open fun purchaseSkill(@RequestBody form: PurchaseSkillForm) {
         val character = repository.findById(form.characterId).get()
 
         form.chosenPrice.forEach { amount -> balanceService.subtract(character.balance!!.id, amount.name, amount.amount) }
         character.learnedSkills += SkillToLvl(skill = Skill(id = form.skillId), character = character)
+        repository.save(character)
+    }
+
+    data class PurchaseSpellForm(
+            val characterId: String = "",
+            val spellId: String = "",
+            val chosenPrice: List<PriceForm> = mutableListOf()
+    )
+
+    @PostMapping("/purchaseSpell.do")
+    @Transactional
+    open fun purchaseSpell(@RequestBody form: PurchaseSpellForm) {
+        val character = repository.findById(form.characterId).get()
+
+        form.chosenPrice.forEach { amount -> balanceService.subtract(character.balance!!.id, amount.name, amount.amount) }
+        character.learnedSpells += Spell(id = form.spellId)
         repository.save(character)
     }
 

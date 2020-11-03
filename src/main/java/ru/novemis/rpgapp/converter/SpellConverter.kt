@@ -21,7 +21,9 @@ class SpellConverter {
                 id = domain.id,
                 img = domain.img,
                 name = domain.name,
-                description = domain.description
+                description = domain.description,
+                lvl = domain.schoolLvl!!.lvl,
+                spellSchoolName = domain.schoolLvl!!.spellSchool!!.name
         )
     }
 

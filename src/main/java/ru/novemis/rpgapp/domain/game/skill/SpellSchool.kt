@@ -1,13 +1,8 @@
 package ru.novemis.rpgapp.domain.game.skill
 
 import ru.novemis.rpgapp.domain.game.common.PriceCombination
-import java.util.UUID
-import javax.persistence.CascadeType
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
-import javax.persistence.OneToMany
+import java.util.*
+import javax.persistence.*
 
 @Entity
 data class SpellSchool(
@@ -31,4 +26,8 @@ data class SpellSchool(
         @ManyToOne
         @JoinColumn(name = "skill_category_id")
         var skillCategory: SkillCategory? = null
-)
+) {
+        fun getLvl(lvl: Int): SchoolLvl? {
+                return schoolLvls.find { it.lvl == lvl }
+        }
+}

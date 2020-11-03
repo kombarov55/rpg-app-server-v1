@@ -20,5 +20,4 @@ data class SchoolLvl(
         @ManyToOne
         @JoinColumn(name = "spell_school_id")
         var spellSchool: SpellSchool? = null
-
 )

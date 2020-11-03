@@ -10,6 +10,9 @@ interface SkillCategoryRepository : CrudRepository<SkillCategory, String> {
     @Query("select s from SkillCategory s where s.game.id = :gameId")
     fun findAllByGameId(gameId: String): List<SkillCategory>
 
+    @Query("select s from SkillCategory s where s.game.id = :gameId and s.complex is true")
+    fun findAllComplexByGameId(gameId: String): List<SkillCategory>
+
     @Query("select s from SkillCategory s where s.game.id = :gameId and s.destination = :destination")
     fun findAllByGameIdAndDestination(gameId: String, destination: Destination): List<SkillCategory>
 }
