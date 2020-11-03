@@ -9,6 +9,7 @@ import ru.novemis.rpgapp.domain.game.skill.Skill
 import ru.novemis.rpgapp.domain.game.skill.Spell
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
+import ru.novemis.rpgapp.repository.game.skillcategory.SpellRepository
 import ru.novemis.rpgapp.service.BalanceService
 import javax.transaction.Transactional
 
@@ -16,7 +17,8 @@ import javax.transaction.Transactional
 @RequestMapping("/gameCharacter")
 open class GameCharacterProceduresController(
         private val repository: GameCharacterRepository,
-        private val balanceService: BalanceService
+        private val balanceService: BalanceService,
+        private val spellRepository: SpellRepository
 ) {
 
     data class UpgradeSkillForm(
@@ -54,20 +56,33 @@ open class GameCharacterProceduresController(
         repository.save(character)
     }
 
-    data class PurchaseSpellForm(
+    data class PurchaseSpellRq(
             val characterId: String = "",
             val spellId: String = "",
             val chosenPrice: List<PriceForm> = mutableListOf()
     )
 
+    data class PurchaseSpellRs(
+            val isNextLvlUnlocked: Boolean
+    )
+
     @PostMapping("/purchaseSpell.do")
     @Transactional
-    open fun purchaseSpell(@RequestBody form: PurchaseSpellForm) {
-        val character = repository.findById(form.characterId).get()
+    open fun purchaseSpell(@RequestBody rq: PurchaseSpellRq): PurchaseSpellRs {
+        val character = repository.findById(rq.characterId).get()
 
-        form.chosenPrice.forEach { amount -> balanceService.subtract(character.balance!!.id, amount.name, amount.amount) }
-        character.learnedSpells += Spell(id = form.spellId)
+        rq.chosenPrice.forEach { amount -> balanceService.subtract(character.balance!!.id, amount.name, amount.amount) }
+        character.learnedSpells += Spell(id = rq.spellId)
         repository.save(character)
+
+        val spell = spellRepository.findById(rq.spellId).get()
+        val amountOfLearnedSpells = character.learnedSpells.filter { learnedSpell -> learnedSpell.schoolLvl == spell.schoolLvl }.size
+        val minSpellCountToUpgrade = spell.schoolLvl!!.spellSchool!!.minSpellCountToUpgrade
+
+
+        return PurchaseSpellRs(
+                isNextLvlUnlocked = amountOfLearnedSpells == minSpellCountToUpgrade
+        )
     }
 
 }
