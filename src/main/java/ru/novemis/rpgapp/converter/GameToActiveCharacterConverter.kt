@@ -17,10 +17,13 @@ class GameToActiveCharacterConverter{
                         name = domain.game!!.title,
                         img = domain.game!!.imgName
                 ),
-                activeCharacter = GameCharacterShortDto(
-                        id = domain.character!!.id,
-                        name = domain.character!!.name
-                )
+                activeCharacter = domain.character?.let { character ->
+                    GameCharacterShortDto(
+                            id = character.id,
+                            name = character.name
+                    )
+                }
+
         )
     }
 

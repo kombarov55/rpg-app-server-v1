@@ -54,7 +54,8 @@ class OrganizationConverter(
                 id = domain.id,
                 name = domain.name,
                 description = domain.description,
-                type = domain.type
+                type = domain.type,
+                balanceId = domain.balance!!.id
         )
 
     }

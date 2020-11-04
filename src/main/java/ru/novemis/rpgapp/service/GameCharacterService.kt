@@ -2,6 +2,7 @@ package ru.novemis.rpgapp.service
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.character.GameCharacter
+import ru.novemis.rpgapp.domain.game.character.GameCharacterStatus
 import ru.novemis.rpgapp.domain.game.common.Balance
 import ru.novemis.rpgapp.domain.game.common.Price
 import ru.novemis.rpgapp.domain.game.questionnaire.Questionnaire
@@ -49,6 +50,14 @@ class GameCharacterService(
             game = questionnaire.game
             questionnaireTemplate = questionnaire.questionnaireTemplate
         }
+    }
+
+    fun changeStatus(characterId: String, newStatus: GameCharacterStatus) {
+        repository.findById(characterId).get()
+                .apply {
+                    status = newStatus
+                    statusChangeDate = Date()
+                }.also { repository.save(it) }
     }
 
 }

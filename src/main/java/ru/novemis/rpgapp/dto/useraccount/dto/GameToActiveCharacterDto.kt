@@ -6,5 +6,5 @@ import ru.novemis.rpgapp.dto.game.dto.GameShortDto
 data class GameToActiveCharacterDto(
         val id: String, 
         val game: GameShortDto, 
-        val activeCharacter: GameCharacterShortDto
+        val activeCharacter: GameCharacterShortDto?
 )

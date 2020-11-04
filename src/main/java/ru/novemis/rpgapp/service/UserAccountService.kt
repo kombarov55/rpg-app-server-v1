@@ -16,21 +16,21 @@ import javax.transaction.Transactional
 
 @Component
 open class UserAccountService(
+        private val repository: UserAccountRepository,
+        private val converter: UserAccountConverter,
         private val vkRequests: VkRequests,
-        private val userAccountRepository: UserAccountRepository,
-        private val announcementRepository: AnnouncementRepository,
-        private val userAccountConverter: UserAccountConverter
+        private val announcementRepository: AnnouncementRepository
 ) {
 
     @Transactional
     open fun getAccountDtoByUserId(userId: Long): UserAccountDto {
-        return userAccountConverter.toDto(getAccountByUserId(userId))
+        return converter.toDto(getAccountByUserId(userId))
     }
 
     @Transactional
     open fun getAccountByUserId(userId: Long): UserAccount {
-        return userAccountRepository.findByUserId(userId)
-                ?: userAccountRepository.save(
+        return repository.findByUserId(userId)
+                ?: repository.save(
                         vkRequests.getUserInfo(userId).apply {
                             role = UserAccountRole.VISITOR
                         }
@@ -40,7 +40,7 @@ open class UserAccountService(
 
     @Transactional
     open fun toggleFavoriteAnnouncement(userId: Long, announcementId: String): UserAccountDto {
-        val userAccount = userAccountRepository.findByUserId(userId) ?: throw IllegalArgumentException()
+        val userAccount = repository.findByUserId(userId) ?: throw IllegalArgumentException()
         val announcement = announcementRepository.findById(announcementId).orElseThrow { IllegalArgumentException() }
 
         val favs = userAccount.userAccountPreferences.favoriteAnnouncements
@@ -50,14 +50,14 @@ open class UserAccountService(
             userAccount.userAccountPreferences.favoriteAnnouncements = favs.filter { it.id != announcement.id }
         }
 
-        return userAccountConverter.toDto(
-                userAccountRepository.save(userAccount)
+        return converter.toDto(
+                repository.save(userAccount)
         )
     }
 
     @Transactional
     open fun toggleRespondAnnouncement(userId: Long, announcementId: String): UserAccountDto {
-        val userAccount = userAccountRepository.findByUserId(userId) ?: throw IllegalArgumentException()
+        val userAccount = repository.findByUserId(userId) ?: throw IllegalArgumentException()
         val announcement = announcementRepository.findById(announcementId).orElseThrow { IllegalArgumentException() }
 
         val respondedAnnouncements = userAccount.userAccountPreferences.respondedAnnouncements
@@ -67,20 +67,20 @@ open class UserAccountService(
             userAccount.userAccountPreferences.respondedAnnouncements = respondedAnnouncements.filter { it.id != announcement.id }
         }
 
-        return userAccountConverter.toDto(
-                userAccountRepository.save(userAccount)
+        return converter.toDto(
+                repository.save(userAccount)
         )
     }
 
     @Transactional
     open fun findAll(): List<UserAccountDto> {
-        return userAccountRepository.findAll()
-                .map { userAccountConverter.toDto(it) }
+        return repository.findAll()
+                .map { converter.toDto(it) }
     }
 
     open fun findAllShort(): List<UserAccountShortDto> {
-        return userAccountRepository.findAll()
-                .map { userAccountConverter.toShortDto(it) }
+        return repository.findAll()
+                .map { converter.toShortDto(it) }
     }
 
     open fun setActiveCharacterForGame(userAccount: UserAccount, game: Game, character: GameCharacter) {
@@ -91,6 +91,30 @@ open class UserAccountService(
 
         userAccount.gameToActiveCharacter = userAccount.gameToActiveCharacter.filter { it.id != updatedEntity.id } + updatedEntity
 
-        userAccountRepository.save(userAccount)
+        repository.save(userAccount)
+    }
+
+    open fun makeCharacterActive(userId: Long, characterId: String, gameId: String) {
+        val userAccount = repository.findByUserId(userId)!!
+
+        val updatedEntity = (userAccount.gameToActiveCharacter.find { it.game!!.id == gameId }
+                ?: GameToActiveCharacter(game = Game(id = gameId)))
+                .apply { character = GameCharacter(id = characterId) }
+
+        userAccount.gameToActiveCharacter = userAccount.gameToActiveCharacter.filter { it.game!!.id != gameId } + updatedEntity
+
+        repository.save(userAccount)
+    }
+
+    open fun removeActiveCharacter(userId: Long, gameId: String) {
+        val userAccount = repository.findByUserId(userId)!!
+
+        val updatedEntity = (userAccount.gameToActiveCharacter.find { it.game!!.id == gameId }
+                ?: GameToActiveCharacter(game = Game(id = gameId)))
+                .apply { character = null }
+
+        userAccount.gameToActiveCharacter = userAccount.gameToActiveCharacter.filter { it.game!!.id != gameId } + updatedEntity
+
+        repository.save(userAccount)
     }
 }

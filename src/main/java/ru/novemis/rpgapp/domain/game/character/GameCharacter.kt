@@ -32,6 +32,14 @@ class GameCharacter(
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "character")
         var ownedMerchandise: List<MerchandiseToLvl> = mutableListOf(),
 
+        @ManyToMany
+        @JoinTable(
+                name = "organization__game_character",
+                joinColumns = [JoinColumn(name = "game_character_id")],
+                inverseJoinColumns = [JoinColumn(name = "organization_id")]
+        )
+        var managingOrganizations: List<Organization> = mutableListOf(),
+
         @ManyToOne
         @JoinColumn(name = "country_id")
         var country: Organization? = null,
