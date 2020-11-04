@@ -17,8 +17,7 @@ open class QuestionnaireProceduresController(
         private val notificationService: NotificationService,
         private val notificationTemplateService: NotificationTemplateService,
         private val gameCharacterService: GameCharacterService,
-        private val questionnaireRepository: QuestionnaireRepository,
-        private val jwtUtil: JWTUtil
+        private val questionnaireRepository: QuestionnaireRepository
 ) {
 
     @PostMapping("/approve.do")

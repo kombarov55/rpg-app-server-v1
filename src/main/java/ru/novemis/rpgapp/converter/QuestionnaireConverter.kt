@@ -24,6 +24,7 @@ class QuestionnaireConverter(
 
     fun toDomain(form: QuestionnaireForm, game: Game? = null, author: UserAccount? = null, questionnaireTemplate: QuestionnaireTemplate): Questionnaire {
         return Questionnaire().apply {
+            name = form.name
             fieldToValueList = form.fieldToValueList.map { fieldToValueConverter.toDomain(it, this) }
             selectedSkillToLvlList = form.selectedSkillsToLvl.map { skillToLvlConverter.toDomain(it, this) }
             selectedSpells = form.selectedSpells.map { spellRepository.findById(it.id).get() }
@@ -37,6 +38,7 @@ class QuestionnaireConverter(
     fun toDto(domain: Questionnaire): QuestionnaireDto {
         return QuestionnaireDto(
                 id = domain.id,
+                name = domain.name,
                 template = questionnaireTemplateConverter.toShortDto(domain.questionnaireTemplate!!),
                 fieldToValueList = domain.fieldToValueList.map { fieldToValueConverter.toDto(it) },
                 selectedSkillToLvlList = domain.selectedSkillToLvlList.map { skillToLvlConverter.toDto(it) },

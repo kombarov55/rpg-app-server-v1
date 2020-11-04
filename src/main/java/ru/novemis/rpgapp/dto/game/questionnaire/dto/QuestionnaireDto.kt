@@ -8,6 +8,7 @@ import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountShortDto
 
 data class QuestionnaireDto(
         val id: String,
+        val name: String,
         val template: QuestionnaireTemplateShortDto,
         val fieldToValueList: List<FieldToValueDto>,
         val selectedSkillToLvlList: List<SkillToLvlDto>,

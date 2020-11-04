@@ -7,6 +7,7 @@ import ru.novemis.rpgapp.domain.game.common.Price
 import ru.novemis.rpgapp.domain.game.questionnaire.Questionnaire
 import ru.novemis.rpgapp.repository.game.CurrencyRepository
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
+import java.util.*
 
 @Component
 class GameCharacterService(
@@ -27,9 +28,12 @@ class GameCharacterService(
 
             name = questionnaire.name
 
-            balance = Balance(amounts = currencyRepository.findAllByGameId(questionnaire.game!!.id).map { currency ->
-                Price(currency = currency, amount = 0)
-            })
+            balance = Balance().apply {
+                amounts = currencyRepository.findAllByGameId(questionnaire.game!!.id).map { currency ->
+                    Price(currency = currency, amount = 0, balance = this)
+                }
+            }
+
             fieldToValueList = questionnaire.fieldToValueList
                     .map { fieldToValue ->
                         fieldToValue.apply { this.character = character }
