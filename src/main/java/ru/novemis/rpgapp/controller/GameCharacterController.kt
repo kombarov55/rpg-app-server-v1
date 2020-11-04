@@ -6,15 +6,18 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import ru.novemis.rpgapp.converter.GameCharacterConverter
+import ru.novemis.rpgapp.dto.game.character.dto.BalanceDto
 import ru.novemis.rpgapp.dto.game.character.dto.GameCharacterDto
 import ru.novemis.rpgapp.dto.game.character.dto.GameCharacterShortDto
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
+import ru.novemis.rpgapp.service.GameCharacterService
 import javax.transaction.Transactional
 
 @RestController
 open class GameCharacterController(
         private val repository: GameCharacterRepository,
-        private val converter: GameCharacterConverter
+        private val converter: GameCharacterConverter,
+        private val service: GameCharacterService
 ) {
 
     @GetMapping("/character/{id}")
@@ -47,6 +50,14 @@ open class GameCharacterController(
                     balanceId = character.balance!!.id
             )
         }
+    }
+
+    @GetMapping("/character/{id}/balances")
+    @Transactional
+    open fun getBalances(
+            @PathVariable("id") characterId: String
+    ): List<BalanceDto> {
+        return service.getBalances(characterId)
     }
 
 }

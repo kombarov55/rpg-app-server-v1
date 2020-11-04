@@ -12,6 +12,5 @@ data class GameCharacterDto(
         val balance: List<PriceDto>,
         val learnedSpells: List<SpellDto>,
         val learnedSkills: List<SkillToLvlDto>,
-        val balanceId: String,
-        val managingOrganizations: List<OrganizationShortDto>
+        val balanceId: String
 )

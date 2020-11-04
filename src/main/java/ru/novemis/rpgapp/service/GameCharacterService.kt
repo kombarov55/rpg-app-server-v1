@@ -6,6 +6,8 @@ import ru.novemis.rpgapp.domain.game.character.GameCharacterStatus
 import ru.novemis.rpgapp.domain.game.common.Balance
 import ru.novemis.rpgapp.domain.game.common.Price
 import ru.novemis.rpgapp.domain.game.questionnaire.Questionnaire
+import ru.novemis.rpgapp.dto.game.character.dto.BalanceDto
+import ru.novemis.rpgapp.dto.game.character.dto.BalanceType
 import ru.novemis.rpgapp.repository.game.CurrencyRepository
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 import java.util.*
@@ -58,6 +60,13 @@ class GameCharacterService(
                     status = newStatus
                     statusChangeDate = Date()
                 }.also { repository.save(it) }
+    }
+
+    fun getBalances(characterId: String): List<BalanceDto> {
+        val character = repository.findById(characterId).get()
+        return character.managingOrganizations.map { organization ->
+            BalanceDto(id = organization.balance!!.id, name = organization.name, type = BalanceType.ORGANIZATION)
+        } + BalanceDto(id = character.balance!!.id, name = character.name, type = BalanceType.CHARACTER)
     }
 
 }

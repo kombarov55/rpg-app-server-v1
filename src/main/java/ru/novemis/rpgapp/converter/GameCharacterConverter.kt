@@ -22,8 +22,7 @@ class GameCharacterConverter(
                 balance = domain.balance!!.amounts.map { priceConverter.toDto(it) },
                 learnedSpells = domain.learnedSpells.map { spellConverter.toDto(it) },
                 learnedSkills = domain.learnedSkills.map { skillToLvlConverter.toDto(it) },
-                balanceId = domain.balance!!.id,
-                managingOrganizations = domain.managingOrganizations.map { organizationConverter.toShortDto(it) }
+                balanceId = domain.balance!!.id
         )
     }
 
