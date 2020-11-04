@@ -11,6 +11,7 @@ data class Merchandise(
 
         var name: String = "",
 
+        @Column(columnDefinition = "TEXT")
         val description: String? = "",
 
         var img: String = "",

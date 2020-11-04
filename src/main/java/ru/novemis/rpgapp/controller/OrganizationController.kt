@@ -31,6 +31,12 @@ open class OrganizationController(
         private val shopConverter: ShopConverter
 ) {
 
+    @GetMapping("/organization/{id}")
+    @Transactional
+    open fun getById(@PathVariable("id") id: String): OrganizationDto {
+        return repository.findById(id).get().let { converter.toDto(it) }
+    }
+
     @GetMapping("/game/{game-id}/organization")
     @Transactional
     open fun getAllByGameId(

@@ -17,6 +17,7 @@ class Organization(
 
         val name: String = "",
 
+        @Column(columnDefinition = "TEXT")
         val description: String = "",
 
         val type: OrganizationType = OrganizationType.INSTITUTION,

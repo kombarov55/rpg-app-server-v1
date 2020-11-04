@@ -2,12 +2,7 @@ package ru.novemis.rpgapp.domain.game.skill
 
 import ru.novemis.rpgapp.domain.game.common.PriceCombination
 import java.util.UUID
-import javax.persistence.CascadeType
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
-import javax.persistence.OneToMany
+import javax.persistence.*
 
 @Entity
 data class Skill(
@@ -17,6 +12,7 @@ data class Skill(
 
         var name: String = "",
 
+        @Column(columnDefinition = "TEXT")
         var description: String = "",
 
         var img: String = "",

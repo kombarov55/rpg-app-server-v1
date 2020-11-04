@@ -1,10 +1,7 @@
 package ru.novemis.rpgapp.domain.game.skill
 
 import java.util.UUID
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
+import javax.persistence.*
 
 @Entity
 data class Spell(
@@ -13,6 +10,7 @@ data class Spell(
 
         var name: String = "",
 
+        @Column(columnDefinition = "TEXT")
         var description: String = "",
 
         var img: String = "",

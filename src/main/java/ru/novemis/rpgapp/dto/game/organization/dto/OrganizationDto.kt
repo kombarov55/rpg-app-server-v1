@@ -15,7 +15,7 @@ open class OrganizationDto(
         val balance: List<PriceDto>,
         val shops: List<ShopDto>,
         val ownedMerchandise: List<WarehouseEntryDto>,
-        val entranceTax: List<PriceDto>? = null,
+        val entranceTax: List<PriceDto>? = emptyList(),
         val incomeTax: Double? = null,
-        val creditOffers: List<CreditOfferDto>? = null
+        val creditOffers: List<CreditOfferDto>? = emptyList()
 )

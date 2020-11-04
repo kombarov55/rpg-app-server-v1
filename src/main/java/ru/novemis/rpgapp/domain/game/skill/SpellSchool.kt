@@ -11,6 +11,7 @@ data class SpellSchool(
 
         var name: String = "",
 
+        @Column(columnDefinition = "TEXT")
         var description: String = "",
 
         var img: String = "",

@@ -2,10 +2,7 @@ package ru.novemis.rpgapp.domain.game.organization
 
 import ru.novemis.rpgapp.domain.game.Currency
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
+import javax.persistence.*
 
 @Entity
 class CreditOffer(
@@ -15,6 +12,7 @@ class CreditOffer(
 
         val name: String = "",
 
+        @Column(columnDefinition = "TEXT")
         val description: String = "",
 
         @ManyToOne

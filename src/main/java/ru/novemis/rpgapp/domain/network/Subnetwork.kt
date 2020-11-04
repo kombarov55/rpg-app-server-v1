@@ -12,6 +12,7 @@ data class Subnetwork(
 
         var title: String = "",
 
+        @Column(columnDefinition = "TEXT")
         var description: String = "",
 
         var imgName: String = "",

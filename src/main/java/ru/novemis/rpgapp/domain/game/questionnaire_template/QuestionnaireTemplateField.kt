@@ -1,10 +1,7 @@
 package ru.novemis.rpgapp.domain.game.questionnaire_template
 
 import java.util.*
-import javax.persistence.Entity
-import javax.persistence.Id
-import javax.persistence.JoinColumn
-import javax.persistence.ManyToOne
+import javax.persistence.*
 
 @Entity
 class QuestionnaireTemplateField (
@@ -13,6 +10,7 @@ class QuestionnaireTemplateField (
 
         var name: String = "",
 
+        @Column(columnDefinition = "TEXT")
         var description: String? = "",
 
         var type: QuestionnaireTemplateFieldType = QuestionnaireTemplateFieldType.STRING,

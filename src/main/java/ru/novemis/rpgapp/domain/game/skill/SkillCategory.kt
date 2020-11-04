@@ -13,6 +13,7 @@ data class SkillCategory(
 
         var name: String = "",
 
+        @Column(columnDefinition = "TEXT")
         var description: String = "",
 
         var img: String = "",
