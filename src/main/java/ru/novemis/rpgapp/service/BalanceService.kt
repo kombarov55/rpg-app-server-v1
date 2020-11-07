@@ -23,7 +23,7 @@ class BalanceService(
 
         val editedAmount = balance.amounts.find { it.currency!!.name == currency }!!
         if (editedAmount.amount < amount) {
-            throw RuntimeException("Слишком мало денег на счету: $currency: ${editedAmount.amount} < $amount")
+            throw RuntimeException("Недостаточно средств.")
         }
         editedAmount.amount -= amount
 

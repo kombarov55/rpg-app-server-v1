@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.domain.game.shop
 
+import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.common.PriceCombination
 import java.util.*
 import javax.persistence.*
@@ -22,5 +23,9 @@ data class ItemForSale(
 
         @ManyToOne
         @JoinColumn(name = "shop_id")
-        var shop: Shop? = null
+        var shop: Shop? = null,
+
+        @ManyToOne
+        @JoinColumn(name = "game_id")
+        var game: Game? = null
 )

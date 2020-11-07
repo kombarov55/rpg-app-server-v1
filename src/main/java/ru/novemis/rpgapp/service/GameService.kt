@@ -8,6 +8,7 @@ import ru.novemis.rpgapp.dto.game.dto.GameShortDto
 import ru.novemis.rpgapp.dto.game.form.GameForm
 import ru.novemis.rpgapp.dto.game.shop.form.ItemForSaleForm
 import ru.novemis.rpgapp.repository.game.GameRepository
+import ru.novemis.rpgapp.repository.game.shop.ItemForSaleRepository
 import ru.novemis.rpgapp.util.appendProtocol
 import java.util.*
 import javax.transaction.Transactional
@@ -17,6 +18,7 @@ open class GameService(
         private val converter: GameConverter,
         private val repository: GameRepository,
 
+        private val itemForSaleRepository: ItemForSaleRepository,
         private val itemForSaleConverter: ItemForSaleConverter
 ) {
 
@@ -95,7 +97,9 @@ open class GameService(
     @Transactional
     open fun addItemForSale(gameId: String, form: ItemForSaleForm): GameDto {
         val game = repository.findById(gameId).get()
-        val itemForSale = itemForSaleConverter.toDomain(form, gameId)
+        val itemForSale = itemForSaleConverter.toDomain(form, gameId).apply {
+            this.game = game
+        }
 
         game.itemsForSale += itemForSale
 
@@ -105,12 +109,12 @@ open class GameService(
 
     @Transactional
     open fun removeItemForSale(gameId: String, itemForSaleId: String): GameDto {
+        itemForSaleRepository.deleteById(itemForSaleId)
+
         return repository.findById(gameId).get()
                 .apply {
                     itemsForSale = itemsForSale.filter { it.id != itemForSaleId }
                 }.let { repository.save(it) }
                 .let { converter.toDto(it) }
     }
-
-
 }
