@@ -14,6 +14,5 @@ data class GameDto(
         val currencies: List<CurrencyDto>,
         val skillCategories: List<SkillCategoryDto>,
         val maxCurrenciesCount: Int,
-        val itemsForSale: List<ItemForSaleDto>,
         val disclaimerText: String?
 )

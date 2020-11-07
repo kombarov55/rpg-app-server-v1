@@ -101,7 +101,6 @@ open class GameService(
             this.game = game
         }
 
-        game.itemsForSale += itemForSale
 
         return repository.save(game)
                 .let { converter.toDto(it) }
@@ -113,7 +112,7 @@ open class GameService(
 
         return repository.findById(gameId).get()
                 .apply {
-                    itemsForSale = itemsForSale.filter { it.id != itemForSaleId }
+//                    itemsForSale = itemsForSale.filter { it.id != itemForSaleId }
                 }.let { repository.save(it) }
                 .let { converter.toDto(it) }
     }

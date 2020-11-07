@@ -37,7 +37,6 @@ open class ShopService(
     @Transactional
     open fun transferItemFromGame(gameId: String, destinationCharacterId: String, merchandiseId: String) {
         val game = gameRepository.findById(gameId).get()
-        game.itemsForSale = game.itemsForSale.filter { it.id != merchandiseId }
         gameRepository.save(game)
 
         val character = characterRepository.findById(destinationCharacterId).get()

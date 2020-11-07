@@ -15,8 +15,7 @@ class GameConverter(
         private val networkRepository: NetworkRepository,
         private val subnetworkRepository: SubnetworkRepository,
         private val currencyConverter: CurrencyConverter,
-        private val skillCategoryConverter: SkillCategoryConverter,
-        private val itemForSaleConverter: ItemForSaleConverter
+        private val skillCategoryConverter: SkillCategoryConverter
 ) {
 
     fun toDomain(form: GameForm, gameId: String? = null, networkId: String? = null, subnetworkId: String? = null): Game {
@@ -47,7 +46,6 @@ class GameConverter(
                 currencies = game.currencies.map { currency -> currencyConverter.toDto(currency) },
                 skillCategories = game.skillCategories.map { skillCategoryConverter.toDto(it) },
                 maxCurrenciesCount = 3,
-                itemsForSale = game.itemsForSale.map { itemForSaleConverter.toDto(it) },
                 disclaimerText = game.disclaimerText
         )
     }

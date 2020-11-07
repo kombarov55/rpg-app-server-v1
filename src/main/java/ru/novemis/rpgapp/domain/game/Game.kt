@@ -2,7 +2,6 @@ package ru.novemis.rpgapp.domain.game
 
 import ru.novemis.rpgapp.domain.game.crafting.Recipe
 import ru.novemis.rpgapp.domain.game.questionnaire_template.QuestionnaireTemplate
-import ru.novemis.rpgapp.domain.game.shop.ItemForSale
 import ru.novemis.rpgapp.domain.game.skill.SkillCategory
 import ru.novemis.rpgapp.domain.network.Network
 import ru.novemis.rpgapp.domain.network.Subnetwork
@@ -33,9 +32,6 @@ data class Game(
         @ManyToOne
         @JoinColumn(name = "subnetwork_id")
         var subnetwork: Subnetwork? = null,
-
-        @OneToMany(cascade = [CascadeType.ALL])
-        var itemsForSale: List<ItemForSale> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
         var currencies: List<Currency> = mutableListOf(),
