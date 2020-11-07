@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import ru.novemis.rpgapp.converter.GameCharacterConverter
+import ru.novemis.rpgapp.converter.PriceCombinationConverter
 import ru.novemis.rpgapp.dto.game.character.dto.BalanceDto
 import ru.novemis.rpgapp.dto.game.character.dto.GameCharacterDto
 import ru.novemis.rpgapp.dto.game.character.dto.GameCharacterShortDto
@@ -17,7 +18,8 @@ import javax.transaction.Transactional
 open class GameCharacterController(
         private val repository: GameCharacterRepository,
         private val converter: GameCharacterConverter,
-        private val service: GameCharacterService
+        private val service: GameCharacterService,
+        private val priceConverter: PriceCombinationConverter
 ) {
 
     @GetMapping("/character/{id}")
@@ -47,7 +49,8 @@ open class GameCharacterController(
             GameCharacterShortDto(
                     id = character.id,
                     name = character.name,
-                    balanceId = character.balance!!.id
+                    balanceId = character.balance!!.id,
+                    balance = character.balance!!.amounts.map { priceConverter.toDto(it) }
             )
         }
     }

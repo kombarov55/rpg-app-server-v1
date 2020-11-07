@@ -33,7 +33,8 @@ class GameCharacterConverter(
                 game = gameConverter.toShortDto(domain.game!!),
                 country = organizationConverter.toShortDto(domain.country!!),
                 status = domain.status,
-                statusChangeDate = domain.statusChangeDate.time
+                statusChangeDate = domain.statusChangeDate.time,
+                balance = domain.balance!!.amounts.map { priceConverter.toDto(it) }
         )
     }
 }

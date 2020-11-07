@@ -6,6 +6,7 @@ import ru.novemis.rpgapp.domain.game.organization.Organization
 import ru.novemis.rpgapp.domain.game.questionnaire.FieldToValue
 import ru.novemis.rpgapp.domain.game.questionnaire.SkillToLvl
 import ru.novemis.rpgapp.domain.game.questionnaire_template.QuestionnaireTemplate
+import ru.novemis.rpgapp.domain.game.shop.Merchandise
 import ru.novemis.rpgapp.domain.game.shop.MerchandiseToLvl
 import ru.novemis.rpgapp.domain.game.skill.Spell
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
@@ -29,8 +30,8 @@ class GameCharacter(
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "character")
         var learnedSkills: List<SkillToLvl> = mutableListOf(),
 
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "character")
-        var ownedMerchandise: List<MerchandiseToLvl> = mutableListOf(),
+        @OneToMany(cascade = [CascadeType.ALL])
+        var ownedMerchandise: List<Merchandise> = mutableListOf(),
 
         @ManyToMany
         @JoinTable(
