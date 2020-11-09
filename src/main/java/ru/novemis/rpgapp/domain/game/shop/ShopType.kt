@@ -1,5 +1,5 @@
 package ru.novemis.rpgapp.domain.game.shop
 
 enum class ShopType {
-    PLAYERS, ORGANIZATIONS
+    PLAYERS, ORGANIZATION_HEADS
 }
