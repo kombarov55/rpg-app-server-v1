@@ -13,6 +13,7 @@ open class OrganizationDto(
         val type: OrganizationType,
         val heads: List<GameCharacterShortDto>,
         val balance: List<PriceDto>,
+        val balanceId: String,
         val shops: List<ShopDto>,
         val ownedMerchandise: List<WarehouseEntryDto>,
         val entranceTax: List<PriceDto>? = emptyList(),

@@ -32,7 +32,7 @@ open class ShopProceduresController(
     @PostMapping("/purchaseFromGameShop.do")
     @Transactional
     open fun purchase(@RequestBody rq: PurchaseRq) {
-        rq.price.forEach { amount -> balanceService.subtract(rq.buyerBalanceId, amount.name, amount.amount) }
+        rq.price.forEach { amount -> balanceService.subtract(rq.gameId, rq.buyerBalanceId, amount.name, amount.amount) }
         service.transferItemFromGame(rq.gameId, rq.buyerCharacterId, rq.merchandiseId)
     }
 

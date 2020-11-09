@@ -34,7 +34,7 @@ open class GameCharacterProceduresController(
     ) {
         val character = repository.findById(form.characterId).get()
 
-        form.chosenPrice.forEach { amount -> balanceService.subtract(character.balance!!.id, amount.name, amount.amount) }
+        form.chosenPrice.forEach { amount -> balanceService.subtract(character.game!!.id, character.balance!!.id, amount.name, amount.amount) }
 
         character.learnedSkills.find { it.skill!!.id == form.skillId }!!.amount += 1
         repository.save(character)
@@ -51,7 +51,7 @@ open class GameCharacterProceduresController(
     open fun purchaseSkill(@RequestBody form: PurchaseSkillForm) {
         val character = repository.findById(form.characterId).get()
 
-        form.chosenPrice.forEach { amount -> balanceService.subtract(character.balance!!.id, amount.name, amount.amount) }
+        form.chosenPrice.forEach { amount -> balanceService.subtract(character.game!!.id, character.balance!!.id, amount.name, amount.amount) }
         character.learnedSkills += SkillToLvl(skill = Skill(id = form.skillId), character = character)
         repository.save(character)
     }
@@ -71,7 +71,7 @@ open class GameCharacterProceduresController(
     open fun purchaseSpell(@RequestBody rq: PurchaseSpellRq): PurchaseSpellRs {
         val character = repository.findById(rq.characterId).get()
 
-        rq.chosenPrice.forEach { amount -> balanceService.subtract(character.balance!!.id, amount.name, amount.amount) }
+        rq.chosenPrice.forEach { amount -> balanceService.subtract(character.game!!.id, character.balance!!.id, amount.name, amount.amount) }
         character.learnedSpells += Spell(id = rq.spellId)
         repository.save(character)
 
