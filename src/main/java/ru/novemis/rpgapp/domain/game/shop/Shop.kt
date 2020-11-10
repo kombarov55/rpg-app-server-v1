@@ -1,5 +1,7 @@
 package ru.novemis.rpgapp.domain.game.shop
 
+import ru.novemis.rpgapp.controller.ShopController
+import ru.novemis.rpgapp.controller.ShopController.ShopPatchForm
 import ru.novemis.rpgapp.domain.game.organization.Organization
 import java.util.*
 import javax.persistence.*
@@ -18,4 +20,10 @@ data class Shop(
         @ManyToOne
         @JoinColumn(name = "organization_id")
         var organization: Organization? = null
-)
+) {
+        fun applyPatch(form: ShopPatchForm): Shop {
+                type = form.type ?: type
+
+                return this
+        }
+}
