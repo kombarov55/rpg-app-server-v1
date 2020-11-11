@@ -6,7 +6,6 @@ import java.util.*
 data class ItemForSaleDto(
         val id: String,
         val merchandise: MerchandiseDto,
-        val amount: Int,
         val price: List<PriceDto>,
         val creationDate: Date
 )

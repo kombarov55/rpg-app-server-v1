@@ -4,6 +4,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.OrganizationConverter
 import ru.novemis.rpgapp.converter.ShopConverter
+import ru.novemis.rpgapp.domain.game.organization.Organization
 import ru.novemis.rpgapp.domain.game.organization.OrganizationType
 import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
 import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationDto
@@ -158,7 +159,12 @@ open class OrganizationController(
     ): OrganizationDto {
         return repository.findById(organizationId).orElseThrow { IllegalArgumentException() }
                 .apply {
-                    val shop = shopConverter.toDomain(form).apply { this.id = id }
+                    val organization = this
+
+                    val shop = shopConverter.toDomain(form).apply {
+                        this.id = id
+                        this.organization = organization
+                    }
                     shops = shops.filter { it.id != id } + shop
                 }
                 .let { repository.save(it) }

@@ -1,18 +1,20 @@
-
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.MerchandiseConverter
 import ru.novemis.rpgapp.domain.game.shop.Destination
 import ru.novemis.rpgapp.dto.game.shop.dto.MerchandiseDto
+import ru.novemis.rpgapp.dto.game.shop.dto.MerchandiseShortDto
 import ru.novemis.rpgapp.dto.game.shop.form.MerchandiseForm
+import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 import ru.novemis.rpgapp.repository.game.shop.MerchandiseRepository
 import javax.transaction.Transactional
 
 @RestController
 open class MerchandiseController(
         private val repository: MerchandiseRepository,
-        private val converter: MerchandiseConverter
+        private val converter: MerchandiseConverter,
+        private val characterRepository: GameCharacterRepository
 ) {
 
     @GetMapping("/game/{game-id}/merchandise")
@@ -28,7 +30,7 @@ open class MerchandiseController(
     open fun save(
             @PathVariable("game-id") gameId: String,
             @RequestBody form: MerchandiseForm
-    ):MerchandiseDto = form
+    ): MerchandiseDto = form
             .let { converter.toDomain(form, gameId) }
             .let { repository.save(it) }
             .let { converter.toDto(it) }
@@ -61,5 +63,23 @@ open class MerchandiseController(
 
         return repository.findAllByGameIdAndDestination(gameId, destinations)
                 .map { converter.toDto(it) }
+    }
+
+    @GetMapping("/game/{game-id}/merchandise/filterByName")
+    @Transactional
+    open fun findByGameIdAndName(
+            @PathVariable("game-id") gameId: String,
+            @RequestParam("name") name: String
+    ): List<MerchandiseDto> {
+        return repository.findByGameIdAndNameStartsWith(gameId, name)
+                .map { converter.toDto(it) }
+    }
+
+    @GetMapping("/character/{id}/ownedMerchandise/short")
+    @Transactional
+    open fun getOwnedMerchandise(
+            @PathVariable("id") characterId: String
+    ): List<MerchandiseShortDto> {
+        return characterRepository.findById(characterId).get().ownedMerchandise.map { converter.toShortDto(it) }
     }
 }

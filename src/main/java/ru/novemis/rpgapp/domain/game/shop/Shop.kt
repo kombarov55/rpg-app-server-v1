@@ -26,4 +26,8 @@ data class Shop(
 
                 return this
         }
+
+        fun removeItemForSale(itemForSale: ItemForSale) {
+                itemsForSale = itemsForSale.filter { it.id != itemForSale.id }
+        }
 }

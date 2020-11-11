@@ -17,8 +17,6 @@ data class ItemForSale(
         @OneToOne(cascade = [CascadeType.ALL])
         var price: PriceCombination? = null,
 
-        var amount: Int = 1,
-
         var creationDate: Date = Date(),
 
         @ManyToOne
