@@ -5,15 +5,17 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
+import ru.novemis.rpgapp.repository.game.GameRepository
+import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
+import ru.novemis.rpgapp.repository.game.shop.ItemForSaleRepository
+import ru.novemis.rpgapp.service.BalanceService
 import ru.novemis.rpgapp.service.GameCharacterService
 import ru.novemis.rpgapp.service.GameService
-import javax.transaction.Transactional
 
 @RestController
 @RequestMapping("/game")
-open class GameProceduresController(
-        private val gameService: GameService,
-        private val gameCharacterService: GameCharacterService
+class GameProceduresController(
+        private val gameService: GameService
 ) {
 
     data class SetItemForSaleRq(
@@ -23,9 +25,20 @@ open class GameProceduresController(
     )
 
     @PostMapping("/setItemForSale.do")
-    @Transactional
-    open fun setItemForSale(@RequestBody rq: SetItemForSaleRq) {
+    fun setItemForSale(@RequestBody rq: SetItemForSaleRq) {
         gameService.addItemForSale(rq.gameId, rq.merchandiseId, rq.price)
+    }
+
+    data class PurchaseItemRq(
+            val itemForSaleId: String = "",
+            val gameId: String = "",
+            val characterId: String = "",
+            val balanceId: String = ""
+    )
+
+    @PostMapping("/purchaseItem.do")
+    fun purchaseItem(@RequestBody rq: PurchaseItemRq) {
+        gameService.purchaseItem(rq.itemForSaleId, rq.gameId, rq.characterId, rq.balanceId)
     }
 
 }

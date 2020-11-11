@@ -20,13 +20,13 @@ open class GameCharacterService(
         private val userAccountService: UserAccountService
 ) {
 
-    fun createCharacter(questionnaire: Questionnaire) {
+    open fun createCharacter(questionnaire: Questionnaire) {
         val gameCharacter = generateFromQuestionnaire(questionnaire)
         repository.save(gameCharacter)
         userAccountService.setActiveCharacterForGame(gameCharacter.owner!!, gameCharacter.game!!, gameCharacter)
     }
 
-    fun generateFromQuestionnaire(questionnaire: Questionnaire): GameCharacter {
+    open fun generateFromQuestionnaire(questionnaire: Questionnaire): GameCharacter {
         return GameCharacter().apply {
             val character = this
 
@@ -55,7 +55,7 @@ open class GameCharacterService(
         }
     }
 
-    fun changeStatus(characterId: String, newStatus: GameCharacterStatus) {
+    open fun changeStatus(characterId: String, newStatus: GameCharacterStatus) {
         repository.findById(characterId).get()
                 .apply {
                     status = newStatus
@@ -63,7 +63,7 @@ open class GameCharacterService(
                 }.also { repository.save(it) }
     }
 
-    fun getBalances(characterId: String): List<BalanceDto> {
+    open fun getBalances(characterId: String): List<BalanceDto> {
         val character = repository.findById(characterId).get()
         return character.managingOrganizations.map { organization ->
             BalanceDto(id = organization.balance!!.id, name = organization.name, type = BalanceType.ORGANIZATION)

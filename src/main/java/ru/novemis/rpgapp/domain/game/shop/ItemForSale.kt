@@ -26,4 +26,8 @@ data class ItemForSale(
         @ManyToOne
         @JoinColumn(name = "game_id")
         var game: Game? = null
-)
+) {
+        fun cloneMerchandise(): Merchandise {
+                return merchandise!!.copy(id = UUID.randomUUID().toString())
+        }
+}
