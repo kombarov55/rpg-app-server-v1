@@ -26,7 +26,7 @@ class ItemForSaleConverter(
     fun toDto(domain: ItemForSale): ItemForSaleDto {
         return ItemForSaleDto(
                 id = domain.id,
-                merchandise = merchandiseConverter.toDto(domain.merchandise!!),
+                merchandise = merchandiseConverter.toShortDto(domain.merchandise!!),
                 price = priceCombinationConverter.toDto(domain.price!!),
                 creationDate = domain.creationDate
         )

@@ -78,20 +78,4 @@ class GameController(
     fun delete(@PathVariable("game-id") gameId: String) {
         return gameService.delete(gameId)
     }
-
-    @PostMapping("/game/{game-id}/itemForSale")
-    fun addItemForSale(
-            @PathVariable("game-id") gameId: String,
-            @RequestBody itemForSaleForm: ItemForSaleForm
-    ): GameDto {
-        return gameService.addItemForSale(gameId, itemForSaleForm)
-    }
-
-    @DeleteMapping("/game/{game-id}/itemForSale/{id}")
-    fun removeItemForSale(
-            @PathVariable("game-id") gameId: String,
-            @PathVariable("id") id: String
-    ): GameDto {
-        return gameService.removeItemForSale(gameId, id)
-    }
 }

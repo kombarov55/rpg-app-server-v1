@@ -25,11 +25,6 @@ open class ShopProceduresController(
             val merchandiseId: String = ""
     )
 
-    data class PurchaseRs(
-            val success: Boolean = true,
-            val msg: String? = null
-    )
-
     @PostMapping("/purchaseFromGameShop.do")
     @Transactional
     open fun purchase(@RequestBody rq: PurchaseRq) {
@@ -48,7 +43,4 @@ open class ShopProceduresController(
     fun setItemForSale(@RequestBody rq: SetItemForSaleRq) {
         service.setItemForSale(rq.merchandiseId, rq.shopId, rq.publisherId, rq.price)
     }
-
-
-
 }

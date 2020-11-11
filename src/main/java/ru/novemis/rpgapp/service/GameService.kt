@@ -3,6 +3,10 @@ package ru.novemis.rpgapp.service
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.GameConverter
 import ru.novemis.rpgapp.converter.ItemForSaleConverter
+import ru.novemis.rpgapp.converter.PriceCombinationConverter
+import ru.novemis.rpgapp.domain.game.shop.ItemForSale
+import ru.novemis.rpgapp.domain.game.shop.Merchandise
+import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 import ru.novemis.rpgapp.dto.game.dto.GameDto
 import ru.novemis.rpgapp.dto.game.dto.GameShortDto
 import ru.novemis.rpgapp.dto.game.form.GameForm
@@ -17,9 +21,7 @@ import javax.transaction.Transactional
 open class GameService(
         private val converter: GameConverter,
         private val repository: GameRepository,
-
-        private val itemForSaleRepository: ItemForSaleRepository,
-        private val itemForSaleConverter: ItemForSaleConverter
+        private val priceConverter: PriceCombinationConverter
 ) {
 
     @Transactional
@@ -95,25 +97,20 @@ open class GameService(
     }
 
     @Transactional
-    open fun addItemForSale(gameId: String, form: ItemForSaleForm): GameDto {
+    open fun addItemForSale(gameId: String, merchandiseId: String, price: List<PriceForm>) {
         val game = repository.findById(gameId).get()
-        val itemForSale = itemForSaleConverter.toDomain(form, gameId).apply {
-            this.game = game
-        }
-
-
-        return repository.save(game)
-                .let { converter.toDto(it) }
+        game.itemsForSale += ItemForSale(
+                merchandise = Merchandise(merchandiseId),
+                price = priceConverter.toDomain(price, gameId),
+                game = game
+        )
+        repository.save(game)
     }
 
     @Transactional
-    open fun removeItemForSale(gameId: String, itemForSaleId: String): GameDto {
-        itemForSaleRepository.deleteById(itemForSaleId)
-
-        return repository.findById(gameId).get()
-                .apply {
-//                    itemsForSale = itemsForSale.filter { it.id != itemForSaleId }
-                }.let { repository.save(it) }
-                .let { converter.toDto(it) }
+    open fun removeItemForSale(gameId: String, itemForSaleId: String) {
+        val game = repository.findById(gameId).get()
+        game.itemsForSale = game.itemsForSale.filter { it.id != itemForSaleId }
+        repository.save(game)
     }
 }

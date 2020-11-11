@@ -11,9 +11,10 @@ import ru.novemis.rpgapp.dto.game.character.dto.BalanceType
 import ru.novemis.rpgapp.repository.game.CurrencyRepository
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 import java.util.*
+import javax.transaction.Transactional
 
 @Component
-class GameCharacterService(
+open class GameCharacterService(
         private val repository: GameCharacterRepository,
         private val currencyRepository: CurrencyRepository,
         private val userAccountService: UserAccountService
@@ -67,6 +68,13 @@ class GameCharacterService(
         return character.managingOrganizations.map { organization ->
             BalanceDto(id = organization.balance!!.id, name = organization.name, type = BalanceType.ORGANIZATION)
         } + BalanceDto(id = character.balance!!.id, name = character.name, type = BalanceType.CHARACTER)
+    }
+
+    @Transactional
+    open fun removeOwnedMerchandise(merchandiseId: String) {
+        repository.findById(merchandiseId).get().apply {
+             ownedMerchandise = ownedMerchandise.filter { it.id != merchandiseId }
+        }.let { repository.save(it) }
     }
 
 }
