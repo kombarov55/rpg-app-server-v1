@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.GameConverter
 import ru.novemis.rpgapp.converter.PriceCombinationConverter
 import ru.novemis.rpgapp.domain.game.shop.ItemForSale
+import ru.novemis.rpgapp.domain.game.shop.ItemForSaleOwner
 import ru.novemis.rpgapp.domain.game.shop.Merchandise
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 import ru.novemis.rpgapp.dto.game.dto.GameDto
@@ -104,7 +105,8 @@ open class GameService(
         game.itemsForSale += ItemForSale(
                 merchandise = Merchandise(merchandiseId),
                 price = priceConverter.toDomain(price, gameId),
-                game = game
+                game = game,
+                ownerType = ItemForSaleOwner.GAME
         )
         gameRepository.save(game)
     }

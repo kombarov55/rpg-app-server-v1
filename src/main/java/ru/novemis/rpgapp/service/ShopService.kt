@@ -4,11 +4,13 @@ import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.PriceCombinationConverter
 import ru.novemis.rpgapp.converter.ShopConverter
 import ru.novemis.rpgapp.domain.game.shop.ItemForSale
+import ru.novemis.rpgapp.domain.game.shop.ItemForSaleOwner
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 import ru.novemis.rpgapp.dto.game.shop.dto.ShopDto
 import ru.novemis.rpgapp.dto.game.shop.form.ShopForm
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
+import ru.novemis.rpgapp.repository.game.shop.ItemForSaleRepository
 import ru.novemis.rpgapp.repository.game.shop.MerchandiseRepository
 import ru.novemis.rpgapp.repository.game.shop.ShopRepository
 import javax.transaction.Transactional
@@ -20,6 +22,7 @@ open class ShopService(
         private val gameRepository: GameRepository,
         private val characterRepository: GameCharacterRepository,
         private val merchandiseRepository: MerchandiseRepository,
+        private val itemForSaleRepository: ItemForSaleRepository,
         private val balanceService: BalanceService,
         private val priceCombinationConverter: PriceCombinationConverter
 ) {
@@ -54,12 +57,31 @@ open class ShopService(
         shop.itemsForSale += ItemForSale(
                 merchandise = merchandise,
                 price = priceCombinationConverter.toDomain(price, shop.organization!!.game!!.id),
-                shop = shop
+                shop = shop,
+                ownerType = ItemForSaleOwner.CHARACTER,
+                owner = publisher
         )
         shopRepository.save(shop)
 
         publisher.ownedMerchandise.filter { it.id !== merchandiseId }
         characterRepository.save(publisher)
+    }
+
+    @Transactional
+    open fun purchase(shopId: String, buyerBalanceId: String, buyerCharacterId: String, gameId: String, itemForSaleId: String) {
+        val shop = shopRepository.findById(shopId).get()
+        val itemForSale = itemForSaleRepository.findById(itemForSaleId).get()
+        val buyer = characterRepository.findById(buyerCharacterId).get()
+
+        itemForSale.price!!.prices.forEach { amount -> balanceService.transfer(gameId, buyerBalanceId, itemForSale.owner!!.balance!!.id, amount.currency!!.name, amount.amount) }
+
+        shop.itemsForSale = shop.itemsForSale.filter {it.id != itemForSaleId }
+        itemForSale.shop = null
+        buyer.ownedMerchandise += itemForSale.merchandise!!
+
+        shopRepository.save(shop)
+        itemForSaleRepository.delete(itemForSale)
+        characterRepository.save(buyer)
     }
 
 

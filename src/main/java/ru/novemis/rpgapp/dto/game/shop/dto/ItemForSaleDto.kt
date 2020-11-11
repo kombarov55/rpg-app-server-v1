@@ -7,5 +7,7 @@ data class ItemForSaleDto(
         val id: String,
         val merchandise: MerchandiseShortDto,
         val price: List<PriceDto>,
-        val creationDate: Date
+        val creationDate: Date,
+        val ownerBalanceId: String?,
+        val ownerName: String?
 )
