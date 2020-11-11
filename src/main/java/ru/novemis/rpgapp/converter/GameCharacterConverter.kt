@@ -11,7 +11,8 @@ class GameCharacterConverter(
         private val spellConverter: SpellConverter,
         private val skillToLvlConverter: SkillToLvlConverter,
         private val organizationConverter: OrganizationConverter,
-        private val gameConverter: GameConverter
+        private val gameConverter: GameConverter,
+        private val merchandiseConverter: MerchandiseConverter
 ) {
 
     fun toDto(domain: GameCharacter): GameCharacterDto {
@@ -22,7 +23,8 @@ class GameCharacterConverter(
                 balance = domain.balance!!.amounts.map { priceConverter.toDto(it) },
                 learnedSpells = domain.learnedSpells.map { spellConverter.toDto(it) },
                 learnedSkills = domain.learnedSkills.map { skillToLvlConverter.toDto(it) },
-                balanceId = domain.balance!!.id
+                balanceId = domain.balance!!.id,
+                ownedMerchandise = domain.ownedMerchandise.map { merchandiseConverter.toDto(it) }
         )
     }
 
