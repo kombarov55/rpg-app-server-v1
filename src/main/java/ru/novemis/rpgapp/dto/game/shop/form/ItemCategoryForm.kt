@@ -1,6 +1,6 @@
 package ru.novemis.rpgapp.dto.game.shop.form
 
-data class MerchandiseCategoryForm(
+data class ItemCategoryForm(
         var id: String? = null,
         var name: String = ""
 )

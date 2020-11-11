@@ -70,11 +70,4 @@ open class GameCharacterService(
         } + BalanceDto(id = character.balance!!.id, name = character.name, type = BalanceType.CHARACTER)
     }
 
-    @Transactional
-    open fun removeOwnedMerchandise(merchandiseId: String) {
-        repository.findById(merchandiseId).get().apply {
-             ownedMerchandise = ownedMerchandise.filter { it.id != merchandiseId }
-        }.let { repository.save(it) }
-    }
-
 }

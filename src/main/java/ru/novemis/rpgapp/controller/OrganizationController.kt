@@ -4,9 +4,7 @@ import org.springframework.data.domain.PageRequest
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.OrganizationConverter
 import ru.novemis.rpgapp.converter.ShopConverter
-import ru.novemis.rpgapp.domain.game.organization.Organization
 import ru.novemis.rpgapp.domain.game.organization.OrganizationType
-import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
 import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationDto
 import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationShortDto
 import ru.novemis.rpgapp.dto.game.organization.form.OrganizationForm
@@ -14,7 +12,7 @@ import ru.novemis.rpgapp.dto.game.shop.form.ShopForm
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 import ru.novemis.rpgapp.repository.game.organization.OrganizationRepository
-import ru.novemis.rpgapp.repository.game.shop.MerchandiseRepository
+import ru.novemis.rpgapp.repository.game.shop.ItemTemplateRepository
 import ru.novemis.rpgapp.repository.game.shop.ShopRepository
 import javax.transaction.Transactional
 
@@ -26,7 +24,7 @@ open class OrganizationController(
         private val gameRepository: GameRepository,
         private val gameCharacterRepository: GameCharacterRepository,
 
-        private val merchandiseRepository: MerchandiseRepository,
+        private val itemTemplateRepository: ItemTemplateRepository,
 
         private val shopRepository: ShopRepository,
         private val shopConverter: ShopConverter
@@ -113,25 +111,6 @@ open class OrganizationController(
     ): OrganizationDto {
         return repository.findById(id).orElseThrow { IllegalArgumentException() }
                 .also { repository.deleteById(id) }
-                .let { converter.toDto(it) }
-    }
-
-    @PostMapping("/organization/{id}/ownedMerchandise/{merchandise-id}")
-    @Transactional
-    open fun addOwnedMerchandise(
-            @PathVariable("id") id: String,
-            @PathVariable("merchandise-id") merchandiseId: String,
-            @RequestParam("amount") amount: Int
-    ): OrganizationDto {
-        val organization = repository.findById(id).orElseThrow { IllegalArgumentException() }
-        val merchandise = merchandiseRepository.findById(merchandiseId).orElseThrow { IllegalArgumentException() }
-
-        organization.ownedMerchandise += WarehouseEntry(
-                merchandise = merchandise,
-                amount = amount
-        )
-
-        return repository.save(organization)
                 .let { converter.toDto(it) }
     }
 

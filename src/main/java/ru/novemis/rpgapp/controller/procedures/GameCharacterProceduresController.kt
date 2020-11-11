@@ -84,18 +84,4 @@ open class GameCharacterProceduresController(
                 isNextLvlUnlocked = amountOfLearnedSpells == minSpellCountToUpgrade
         )
     }
-
-    data class DisposeMerchandiseRq(
-            val merchandiseId: String = "",
-            val characterId: String = ""
-    )
-
-    @PostMapping("/disposeMerchandise.do")
-    @Transactional
-    open fun disposeMerchandise(@RequestBody rq: DisposeMerchandiseRq) {
-        val character = repository.findById(rq.characterId).get()
-        character.ownedMerchandise = character.ownedMerchandise.filter { it.id != rq.merchandiseId }
-        repository.save(character)
-    }
-
 }

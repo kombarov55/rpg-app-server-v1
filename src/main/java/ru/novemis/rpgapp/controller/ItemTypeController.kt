@@ -7,43 +7,43 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
-import ru.novemis.rpgapp.converter.MerchandiseTypeConverter
-import ru.novemis.rpgapp.dto.game.shop.dto.MerchandiseTypeDto
-import ru.novemis.rpgapp.dto.game.shop.form.MerchandiseTypeForm
-import ru.novemis.rpgapp.repository.game.shop.MerchandiseTypeRepository
+import ru.novemis.rpgapp.converter.ItemTypeConverter
+import ru.novemis.rpgapp.dto.game.shop.dto.ItemTypeDto
+import ru.novemis.rpgapp.dto.game.shop.form.ItemTypeForm
+import ru.novemis.rpgapp.repository.game.shop.ItemTypeRepository
 
 @RestController
-class MerchandiseTypeController(
-        private val repository: MerchandiseTypeRepository,
-        private val converter: MerchandiseTypeConverter
+class ItemTypeController(
+        private val repository: ItemTypeRepository,
+        private val converter: ItemTypeConverter
 ) {
 
-    @GetMapping("/game/{game-id}/merchandiseType")
+    @GetMapping("/game/{game-id}/itemType")
     fun findByGameId(
             @PathVariable("game-id") gameId: String
-    ): List<MerchandiseTypeDto> = repository.findByGameId(gameId).map { converter.toDto(it) }
+    ): List<ItemTypeDto> = repository.findByGameId(gameId).map { converter.toDto(it) }
 
-    @PostMapping("/game/{game-id}/merchandiseType")
+    @PostMapping("/game/{game-id}/itemType")
     fun save(
             @PathVariable("game-id") gameId: String,
-            @RequestBody form: MerchandiseTypeForm
-    ): MerchandiseTypeDto = form
+            @RequestBody form: ItemTypeForm
+    ): ItemTypeDto = form
             .let { converter.toDomain(it, gameId) }
             .let { repository.save(it) }
             .let { converter.toDto(it) }
 
-    @PutMapping("/game/{game-id}/merchandiseType/{id}")
+    @PutMapping("/game/{game-id}/itemType/{id}")
     fun update(
             @PathVariable("game-id") gameId: String,
             @PathVariable("id") id: String,
-            @RequestBody form: MerchandiseTypeForm
-    ): MerchandiseTypeDto = form
+            @RequestBody form: ItemTypeForm
+    ): ItemTypeDto = form
             .let { converter.toDomain(it, gameId) }
             .also { it.id = id }
             .let { repository.save(it) }
             .let { converter.toDto(it) }
 
-    @DeleteMapping("/game/{game-id}/merchandiseType/{id}")
+    @DeleteMapping("/game/{game-id}/itemType/{id}")
     fun delete(
             @PathVariable("game-id") gameId: String,
             @PathVariable("id") id: String

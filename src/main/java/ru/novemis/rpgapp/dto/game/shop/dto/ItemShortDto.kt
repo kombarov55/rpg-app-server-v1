@@ -1,6 +1,6 @@
 package ru.novemis.rpgapp.dto.game.shop.dto
 
-data class MerchandiseShortDto(
+data class ItemShortDto(
         val id: String,
         val name: String,
         val img: String,

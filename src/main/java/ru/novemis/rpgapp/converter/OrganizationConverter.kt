@@ -16,8 +16,8 @@ class OrganizationConverter(
         private val priceCombinationConverter: PriceCombinationConverter,
         private val shopConverter: ShopConverter,
         private val creditOfferConverter: CreditOfferConverter,
-        private val warehouseEntryConverter: WarehouseEntryConverter,
-        private val currencyRepository: CurrencyRepository
+        private val currencyRepository: CurrencyRepository,
+        private val itemConverter: ItemConverter
 ) {
 
     fun toDomain(form: OrganizationForm, gameId: String): Organization {
@@ -43,7 +43,7 @@ class OrganizationConverter(
                 balance = domain.balance!!.amounts.map { priceCombinationConverter.toDto(it) },
                 balanceId = domain.balance!!.id,
                 shops = domain.shops.map { shopConverter.toShortDto(it) },
-                ownedMerchandise = domain.ownedMerchandise.map { warehouseEntryConverter.toDto(it) },
+                items = domain.items.map { itemConverter.toDto(it) },
                 entranceTax = domain.entranceTax?.let { priceCombinationConverter.toDto(it) },
                 incomeTax = domain.incomeTax,
                 creditOffers = domain.creditOffers.map { creditOfferConverter.toDto(it) }

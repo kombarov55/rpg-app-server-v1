@@ -2,13 +2,13 @@ package ru.novemis.rpgapp.dto.game.shop.dto
 
 import ru.novemis.rpgapp.domain.game.shop.Destination
 
-data class MerchandiseDto(
+data class ItemTemplateDto(
         val id: String,
         val name: String,
         val img: String,
         val description: String,
-        val category: MerchandiseCategoryDto,
-        val type: MerchandiseTypeDto,
+        val category: ItemCategoryDto,
+        val type: ItemTypeDto,
         val slots: Int,
         val skillInfluences: List<SkillInfluenceDto>,
         val destination: Destination,
@@ -16,6 +16,5 @@ data class MerchandiseDto(
         val canBeUsedInCraft: Boolean,
         val canBeCrafted: Boolean,
         val upgradable: Boolean,
-        val lvl: Int,
-        val upgrades: List<MerchandiseUpgradeDto>
+        val upgrades: List<ItemUpgradeDto>
 )

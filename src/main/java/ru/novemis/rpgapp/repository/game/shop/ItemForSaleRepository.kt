@@ -7,7 +7,7 @@ import ru.novemis.rpgapp.domain.game.shop.ItemForSale
 
 interface ItemForSaleRepository : CrudRepository<ItemForSale, String> {
 
-    @Query("select ifs from ItemForSale ifs where ifs.merchandise.game.id = :gameId and ifs.merchandise.destination = :destination")
+    @Query("select ifs from ItemForSale ifs where ifs.itemTemplate.game.id = :gameId and ifs.itemTemplate.destination = :destination")
     fun findByGameIdAndDesination(gameId: String, destination: Destination): List<ItemForSale>
 
 }

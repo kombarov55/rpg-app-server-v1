@@ -8,7 +8,7 @@ import javax.persistence.Id
 import javax.persistence.OneToMany
 
 @Entity
-class MerchandiseUpgrade(
+class ItemUpgrade(
 
         @Id
         var id: String = UUID.randomUUID().toString(),

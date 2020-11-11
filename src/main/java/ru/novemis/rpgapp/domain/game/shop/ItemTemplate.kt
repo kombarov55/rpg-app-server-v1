@@ -5,7 +5,7 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-data class Merchandise(
+data class ItemTemplate(
         @Id
         var id: String = UUID.randomUUID().toString(),
 
@@ -17,10 +17,10 @@ data class Merchandise(
         var img: String = "",
 
         @ManyToOne
-        var category: MerchandiseCategory? = null,
+        var category: ItemCategory? = null,
 
         @ManyToOne
-        var type: MerchandiseType? = null,
+        var type: ItemType? = null,
 
         var slots: Int = 0,
 
@@ -32,9 +32,7 @@ data class Merchandise(
         var upgradable: Boolean = false,
 
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-        var upgrades: List<MerchandiseUpgrade> = mutableListOf(),
-
-        var lvl: Int = 0,
+        var upgrades: List<ItemUpgrade> = mutableListOf(),
 
         var canBeEquipped: Boolean = false,
 

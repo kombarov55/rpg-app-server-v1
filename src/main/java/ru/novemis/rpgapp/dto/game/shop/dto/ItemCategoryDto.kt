@@ -1,6 +1,6 @@
 package ru.novemis.rpgapp.dto.game.shop.dto
 
-data class MerchandiseCategoryDto(
+data class ItemCategoryDto(
         val id: String?,
         val name: String
 )

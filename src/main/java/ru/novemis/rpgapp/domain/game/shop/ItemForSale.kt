@@ -2,9 +2,7 @@ package ru.novemis.rpgapp.domain.game.shop
 
 import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.character.GameCharacter
-import ru.novemis.rpgapp.domain.game.common.Balance
 import ru.novemis.rpgapp.domain.game.common.PriceCombination
-import ru.novemis.rpgapp.domain.game.organization.Organization
 import java.util.*
 import javax.persistence.*
 
@@ -14,8 +12,8 @@ data class ItemForSale(
         var id: String = UUID.randomUUID().toString(),
 
         @OneToOne
-        @JoinColumn(name = "merchandise_id")
-        var merchandise: Merchandise? = null,
+        @JoinColumn(name = "item_template_id")
+        var itemTemplate: ItemTemplate? = null,
 
         @OneToOne(cascade = [CascadeType.ALL])
         var price: PriceCombination? = null,
@@ -36,8 +34,4 @@ data class ItemForSale(
         @JoinColumn(name = "owner_character_id")
         var owner: GameCharacter? = null
 
-) {
-        fun cloneMerchandise(): Merchandise {
-                return merchandise!!.copy(id = UUID.randomUUID().toString())
-        }
-}
+)

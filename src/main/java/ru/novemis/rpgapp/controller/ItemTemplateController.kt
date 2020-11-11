@@ -1,85 +1,75 @@
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
-import ru.novemis.rpgapp.converter.MerchandiseConverter
+import ru.novemis.rpgapp.converter.ItemTemplateConverter
 import ru.novemis.rpgapp.domain.game.shop.Destination
-import ru.novemis.rpgapp.dto.game.shop.dto.MerchandiseDto
-import ru.novemis.rpgapp.dto.game.shop.dto.MerchandiseShortDto
-import ru.novemis.rpgapp.dto.game.shop.form.MerchandiseForm
+import ru.novemis.rpgapp.dto.game.shop.dto.ItemTemplateDto
+import ru.novemis.rpgapp.dto.game.shop.form.ItemTemplateForm
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
-import ru.novemis.rpgapp.repository.game.shop.MerchandiseRepository
+import ru.novemis.rpgapp.repository.game.shop.ItemTemplateRepository
 import javax.transaction.Transactional
 
 @RestController
-open class MerchandiseController(
-        private val repository: MerchandiseRepository,
-        private val converter: MerchandiseConverter,
-        private val characterRepository: GameCharacterRepository
+open class ItemTemplateController(
+        private val repository: ItemTemplateRepository,
+        private val converter: ItemTemplateConverter
 ) {
 
-    @GetMapping("/game/{game-id}/merchandise")
+    @GetMapping("/game/{game-id}/itemTemplate")
     @Transactional
     open fun getAll(
             @PathVariable("game-id") gameId: String
-    ): List<MerchandiseDto> {
+    ): List<ItemTemplateDto> {
         return repository.findAllByGameId(gameId).map { converter.toDto(it) }
     }
 
-    @PostMapping("/game/{game-id}/merchandise")
+    @PostMapping("/game/{game-id}/itemTemplate")
     @Transactional
     open fun save(
             @PathVariable("game-id") gameId: String,
-            @RequestBody form: MerchandiseForm
-    ): MerchandiseDto = form
+            @RequestBody form: ItemTemplateForm
+    ): ItemTemplateDto = form
             .let { converter.toDomain(form, gameId) }
             .let { repository.save(it) }
             .let { converter.toDto(it) }
 
-    @PutMapping("/game/{game-id}/merchandise/{id}")
+    @PutMapping("/game/{game-id}/itemTemplate/{id}")
     @Transactional
     open fun update(
             @PathVariable("game-id") gameId: String,
             @PathVariable("id") id: String,
-            @RequestBody form: MerchandiseForm
-    ): MerchandiseDto = form
+            @RequestBody form: ItemTemplateForm
+    ): ItemTemplateDto = form
             .let { converter.toDomain(form, gameId) }
             .also { it.id = id }
             .let { repository.save(it) }
             .let { converter.toDto(it) }
 
-    @DeleteMapping("/game/{game-id}/merchandise/{id}")
+    @DeleteMapping("/game/{game-id}/itemTemplate/{id}")
     @Transactional
     open fun delete(
             @PathVariable("id") id: String
     ) = repository.deleteById(id)
 
-    @GetMapping("/game/{game-id}/merchandise/filter")
+    @GetMapping("/game/{game-id}/itemTemplate/filter")
     @Transactional
     open fun findByGameIdAndDestination(
             @PathVariable("game-id") gameId: String,
             @RequestParam("destination") destinationsDelimited: String
-    ): List<MerchandiseDto> {
+    ): List<ItemTemplateDto> {
         val destinations = destinationsDelimited.split(",").map { Destination.valueOf(it) }
 
         return repository.findAllByGameIdAndDestination(gameId, destinations)
                 .map { converter.toDto(it) }
     }
 
-    @GetMapping("/game/{game-id}/merchandise/filterByName")
+    @GetMapping("/game/{game-id}/itemTemplate/filterByName")
     @Transactional
     open fun findByGameIdAndName(
             @PathVariable("game-id") gameId: String,
             @RequestParam("name") name: String
-    ): List<MerchandiseDto> {
+    ): List<ItemTemplateDto> {
         return repository.findByGameIdAndNameStartsWith(gameId, name)
                 .map { converter.toDto(it) }
-    }
-
-    @GetMapping("/character/{id}/ownedMerchandise/short")
-    @Transactional
-    open fun getOwnedMerchandise(
-            @PathVariable("id") characterId: String
-    ): List<MerchandiseShortDto> {
-        return characterRepository.findById(characterId).get().ownedMerchandise.map { converter.toShortDto(it) }
     }
 }

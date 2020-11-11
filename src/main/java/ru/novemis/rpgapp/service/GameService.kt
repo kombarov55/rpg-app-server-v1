@@ -5,7 +5,7 @@ import ru.novemis.rpgapp.converter.GameConverter
 import ru.novemis.rpgapp.converter.PriceCombinationConverter
 import ru.novemis.rpgapp.domain.game.shop.ItemForSale
 import ru.novemis.rpgapp.domain.game.shop.ItemForSaleOwner
-import ru.novemis.rpgapp.domain.game.shop.Merchandise
+import ru.novemis.rpgapp.domain.game.shop.ItemTemplate
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 import ru.novemis.rpgapp.dto.game.dto.GameDto
 import ru.novemis.rpgapp.dto.game.dto.GameShortDto
@@ -100,10 +100,10 @@ open class GameService(
     }
 
     @Transactional
-    open fun addItemForSale(gameId: String, merchandiseId: String, price: List<PriceForm>) {
+    open fun addItemForSale(gameId: String, itemTemplateId: String, price: List<PriceForm>) {
         val game = gameRepository.findById(gameId).get()
         game.itemsForSale += ItemForSale(
-                merchandise = Merchandise(merchandiseId),
+                itemTemplate = ItemTemplate(itemTemplateId),
                 price = priceConverter.toDomain(price, gameId),
                 game = game,
                 ownerType = ItemForSaleOwner.GAME
@@ -121,7 +121,8 @@ open class GameService(
         itemForSale.game = null
 
         game.itemsForSale = game.itemsForSale.filter { it.id != itemForSaleId }
-        character.ownedMerchandise += itemForSale.cloneMerchandise()
+        //TODO:
+//        character.ownedMerchandise += itemForSale.cloneMerchandise()
 
         gameRepository.save(game)
         characterRepository.save(character)

@@ -11,7 +11,7 @@ import ru.novemis.rpgapp.dto.game.shop.form.ShopForm
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 import ru.novemis.rpgapp.repository.game.shop.ItemForSaleRepository
-import ru.novemis.rpgapp.repository.game.shop.MerchandiseRepository
+import ru.novemis.rpgapp.repository.game.shop.ItemTemplateRepository
 import ru.novemis.rpgapp.repository.game.shop.ShopRepository
 import javax.transaction.Transactional
 
@@ -21,7 +21,7 @@ open class ShopService(
         private val converter: ShopConverter,
         private val gameRepository: GameRepository,
         private val characterRepository: GameCharacterRepository,
-        private val merchandiseRepository: MerchandiseRepository,
+        private val itemTemplateRepository: ItemTemplateRepository,
         private val itemForSaleRepository: ItemForSaleRepository,
         private val balanceService: BalanceService,
         private val priceCombinationConverter: PriceCombinationConverter
@@ -38,24 +38,24 @@ open class ShopService(
 
 
     @Transactional
-    open fun transferItemFromGame(gameId: String, destinationCharacterId: String, merchandiseId: String) {
+    open fun transferItemFromGame(gameId: String, destinationCharacterId: String, itemTemplateId: String) {
         val game = gameRepository.findById(gameId).get()
         gameRepository.save(game)
 
         val character = characterRepository.findById(destinationCharacterId).get()
-        val merchandise = merchandiseRepository.findById(merchandiseId).get()
-        character.ownedMerchandise = character.ownedMerchandise + merchandise
+        val itemTemplate = itemTemplateRepository.findById(itemTemplateId).get()
+//        character.ownedMerchandise = character.ownedMerchandise + merchandise
         characterRepository.save(character)
     }
 
     @Transactional
-    open fun setItemForSale(merchandiseId: String, shopId: String, publisherId: String, price: List<PriceForm>) {
-        val merchandise = merchandiseRepository.findById(merchandiseId).get()
+    open fun setItemForSale(itemTemplateId: String, shopId: String, publisherId: String, price: List<PriceForm>) {
+        val itemTemplate = itemTemplateRepository.findById(itemTemplateId).get()
         val shop = shopRepository.findById(shopId).get()
         val publisher = characterRepository.findById(publisherId).get()
 
         shop.itemsForSale += ItemForSale(
-                merchandise = merchandise,
+                itemTemplate = itemTemplate,
                 price = priceCombinationConverter.toDomain(price, shop.organization!!.game!!.id),
                 shop = shop,
                 ownerType = ItemForSaleOwner.CHARACTER,
@@ -63,7 +63,7 @@ open class ShopService(
         )
         shopRepository.save(shop)
 
-        publisher.ownedMerchandise.filter { it.id !== merchandiseId }
+//        publisher.ownedMerchandise.filter { it.id !== merchandiseId }
         characterRepository.save(publisher)
     }
 
@@ -77,7 +77,7 @@ open class ShopService(
 
         shop.itemsForSale = shop.itemsForSale.filter {it.id != itemForSaleId }
         itemForSale.shop = null
-        buyer.ownedMerchandise += itemForSale.merchandise!!
+//        buyer.ownedMerchandise += itemForSale.merchandise!!
 
         shopRepository.save(shop)
         itemForSaleRepository.delete(itemForSale)

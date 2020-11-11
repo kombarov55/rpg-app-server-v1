@@ -4,6 +4,7 @@ import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.character.GameCharacter
 import ru.novemis.rpgapp.domain.game.common.Balance
 import ru.novemis.rpgapp.domain.game.common.PriceCombination
+import ru.novemis.rpgapp.domain.game.shop.Item
 import ru.novemis.rpgapp.domain.game.shop.Shop
 import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
 import java.util.*
@@ -38,7 +39,7 @@ class Organization(
         var shops: List<Shop> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL])
-        var ownedMerchandise: List<WarehouseEntry> = mutableListOf(),
+        var items: List<Item> = mutableListOf(),
 
         @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
         val entranceTax: PriceCombination? = null,

@@ -5,11 +5,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
-import ru.novemis.rpgapp.repository.game.GameRepository
-import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
-import ru.novemis.rpgapp.repository.game.shop.ItemForSaleRepository
-import ru.novemis.rpgapp.service.BalanceService
-import ru.novemis.rpgapp.service.GameCharacterService
 import ru.novemis.rpgapp.service.GameService
 
 @RestController
@@ -19,14 +14,14 @@ class GameProceduresController(
 ) {
 
     data class SetItemForSaleRq(
-            val merchandiseId: String = "",
+            val itemTemplateId: String = "",
             val price: List<PriceForm> = emptyList(),
             val gameId: String = ""
     )
 
     @PostMapping("/setItemForSale.do")
     fun setItemForSale(@RequestBody rq: SetItemForSaleRq) {
-        gameService.addItemForSale(rq.gameId, rq.merchandiseId, rq.price)
+        gameService.addItemForSale(rq.gameId, rq.itemTemplateId, rq.price)
     }
 
     data class PurchaseItemRq(

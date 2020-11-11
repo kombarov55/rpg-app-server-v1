@@ -2,7 +2,7 @@ package ru.novemis.rpgapp.dto.game.shop.dto
 
 import ru.novemis.rpgapp.dto.game.common.dto.PriceDto
 
-data class MerchandiseUpgradeDto(
+data class ItemUpgradeDto(
         val id: String,
         val lvlNum: Int,
         val skillInfluences: List<SkillInfluenceDto>,

@@ -4,18 +4,17 @@ import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
 import ru.novemis.rpgapp.dto.game.shop.dto.WarehouseEntryDto
 import ru.novemis.rpgapp.dto.game.shop.form.WarehouseEntryForm
-import ru.novemis.rpgapp.repository.game.shop.MerchandiseRepository
-import ru.novemis.rpgapp.repository.game.shop.ShopRepository
+import ru.novemis.rpgapp.repository.game.shop.ItemTemplateRepository
 
 @Component
 class WarehouseEntryConverter(
-        private val merchandiseRepository: MerchandiseRepository,
-        private val merchandiseConverter: MerchandiseConverter
+        private val itemTemplateRepository: ItemTemplateRepository,
+        private val itemTemplateConverter: ItemTemplateConverter
 ) {
 
     fun toDomain(form: WarehouseEntryForm): WarehouseEntry {
         return WarehouseEntry(
-                merchandise = merchandiseRepository.findById(form.merchandise!!.id!!).orElseThrow { IllegalArgumentException() },
+                itemTemplate = itemTemplateRepository.findById(form.itemTemplate!!.id!!).orElseThrow { IllegalArgumentException() },
                 amount = form.amount
         )
     }
@@ -23,7 +22,7 @@ class WarehouseEntryConverter(
     fun toDto(domain: WarehouseEntry): WarehouseEntryDto {
         return WarehouseEntryDto(
                 id = domain.id,
-                merchandise = merchandiseConverter.toDto(domain.merchandise!!),
+                itemTemplate = itemTemplateConverter.toDto(domain.itemTemplate!!),
                 amount = domain.amount
         )
     }

@@ -1,67 +1,65 @@
 package ru.novemis.rpgapp.converter
 
 import org.springframework.stereotype.Component
-import ru.novemis.rpgapp.domain.game.shop.Merchandise
-import ru.novemis.rpgapp.dto.game.shop.dto.MerchandiseCategoryDto
-import ru.novemis.rpgapp.dto.game.shop.dto.MerchandiseDto
-import ru.novemis.rpgapp.dto.game.shop.dto.MerchandiseShortDto
-import ru.novemis.rpgapp.dto.game.shop.dto.MerchandiseTypeDto
-import ru.novemis.rpgapp.dto.game.shop.form.MerchandiseForm
+import ru.novemis.rpgapp.domain.game.shop.ItemTemplate
+import ru.novemis.rpgapp.dto.game.shop.dto.ItemCategoryDto
+import ru.novemis.rpgapp.dto.game.shop.dto.ItemTemplateDto
+import ru.novemis.rpgapp.dto.game.shop.dto.ItemShortDto
+import ru.novemis.rpgapp.dto.game.shop.dto.ItemTypeDto
+import ru.novemis.rpgapp.dto.game.shop.form.ItemTemplateForm
 import ru.novemis.rpgapp.repository.game.GameRepository
-import ru.novemis.rpgapp.repository.game.shop.MerchandiseCategoryRepository
-import ru.novemis.rpgapp.repository.game.shop.MerchandiseTypeRepository
+import ru.novemis.rpgapp.repository.game.shop.ItemCategoryRepository
+import ru.novemis.rpgapp.repository.game.shop.ItemTypeRepository
 
 @Component
-class MerchandiseConverter(
-        private val merchandiseCategoryRepository: MerchandiseCategoryRepository,
-        private val merchandiseTypeRepository: MerchandiseTypeRepository,
+class ItemTemplateConverter(
+        private val itemCategoryRepository: ItemCategoryRepository,
+        private val itemTypeRepository: ItemTypeRepository,
         private val skillInfluenceConverter: SkillInfluenceConverter,
-        private val merchandiseUpgradeConverter: MerchandiseUpgradeConverter,
+        private val itemUpgradeConverter: ItemUpgradeConverter,
         private val gameRepository: GameRepository
 ) {
 
-    fun toDomain(form: MerchandiseForm, gameId: String): Merchandise {
-        return Merchandise(
+    fun toDomain(form: ItemTemplateForm, gameId: String): ItemTemplate {
+        return ItemTemplate(
                 name = form.name,
                 img = form.img,
                 description = form.description,
-                category = merchandiseCategoryRepository.findById(form.category!!.id!!).orElseThrow { IllegalArgumentException("categoryId is invalid") },
-                type = merchandiseTypeRepository.findById(form.type!!.id!!).orElseThrow { IllegalArgumentException("typeId is invalid") },
+                category = itemCategoryRepository.findById(form.category!!.id!!).orElseThrow { IllegalArgumentException("categoryId is invalid") },
+                type = itemTypeRepository.findById(form.type!!.id!!).orElseThrow { IllegalArgumentException("typeId is invalid") },
                 slots = form.slots,
                 skillInfluences = form.skillInfluences.map { skillInfluenceConverter.toDomain(it) },
                 game = gameRepository.findById(gameId).orElseThrow { IllegalArgumentException("gameId is invalid") },
                 destination = form.destination,
                 upgradable = form.upgradable,
-                upgrades = form.upgrades.map { merchandiseUpgradeConverter.toDomain(it, gameId) },
-                lvl = form.lvl,
+                upgrades = form.upgrades.map { itemUpgradeConverter.toDomain(it, gameId) },
                 canBeEquipped = form.canBeEquipped,
                 canBeCrafted = form.canBeCrafted,
                 canBeUsedInCraft = form.canBeUsedInCraft
         )
     }
 
-    fun toDto(domain: Merchandise): MerchandiseDto {
-        return MerchandiseDto(
+    fun toDto(domain: ItemTemplate): ItemTemplateDto {
+        return ItemTemplateDto(
                 id = domain.id,
                 name = domain.name,
                 img = domain.img,
                 description = domain.description ?: "",
-                category = domain.category!!.let { MerchandiseCategoryDto(it.id, it.name) },
-                type = domain.type!!.let { MerchandiseTypeDto(it.id, it.name) },
+                category = domain.category!!.let { ItemCategoryDto(it.id, it.name) },
+                type = domain.type!!.let { ItemTypeDto(it.id, it.name) },
                 slots = domain.slots,
                 skillInfluences = domain.skillInfluences.map { skillInfluenceConverter.toDto(it) },
                 destination = domain.destination!!,
                 upgradable = domain.upgradable,
-                upgrades = domain.upgrades.map { merchandiseUpgradeConverter.toDto(it) },
-                lvl = domain.lvl,
+                upgrades = domain.upgrades.map { itemUpgradeConverter.toDto(it) },
                 canBeEquipped = domain.canBeEquipped,
                 canBeUsedInCraft = domain.canBeUsedInCraft,
                 canBeCrafted = domain.canBeCrafted
         )
     }
 
-    fun toShortDto(domain: Merchandise): MerchandiseShortDto {
-        return MerchandiseShortDto(
+    fun toShortDto(domain: ItemTemplate): ItemShortDto {
+        return ItemShortDto(
                 id = domain.id,
                 name = domain.name,
                 img = domain.img,

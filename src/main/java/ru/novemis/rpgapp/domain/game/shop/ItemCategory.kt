@@ -8,7 +8,7 @@ import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 
 @Entity
-data class MerchandiseType(
+data class ItemCategory(
         @Id
         var id: String = UUID.randomUUID().toString(),
 
