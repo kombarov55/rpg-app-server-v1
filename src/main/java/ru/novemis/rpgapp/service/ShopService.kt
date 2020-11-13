@@ -11,6 +11,7 @@ import ru.novemis.rpgapp.dto.game.shop.form.ShopForm
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 import ru.novemis.rpgapp.repository.game.shop.ItemForSaleRepository
+import ru.novemis.rpgapp.repository.game.shop.ItemRepository
 import ru.novemis.rpgapp.repository.game.shop.ItemTemplateRepository
 import ru.novemis.rpgapp.repository.game.shop.ShopRepository
 import javax.transaction.Transactional
@@ -18,6 +19,7 @@ import javax.transaction.Transactional
 @Component
 open class ShopService(
         private val shopRepository: ShopRepository,
+        private val itemRepository: ItemRepository,
         private val converter: ShopConverter,
         private val gameRepository: GameRepository,
         private val characterRepository: GameCharacterRepository,
@@ -36,26 +38,14 @@ open class ShopService(
                 .let { converter.toDto(it) }
     }
 
-
     @Transactional
-    open fun transferItemFromGame(gameId: String, destinationCharacterId: String, itemTemplateId: String) {
-        val game = gameRepository.findById(gameId).get()
-        gameRepository.save(game)
-
-        val character = characterRepository.findById(destinationCharacterId).get()
-        val itemTemplate = itemTemplateRepository.findById(itemTemplateId).get()
-//        character.ownedMerchandise = character.ownedMerchandise + merchandise
-        characterRepository.save(character)
-    }
-
-    @Transactional
-    open fun setItemForSale(itemTemplateId: String, shopId: String, publisherId: String, price: List<PriceForm>) {
-        val itemTemplate = itemTemplateRepository.findById(itemTemplateId).get()
+    open fun setItemForSale(itemId: String, shopId: String, publisherId: String, price: List<PriceForm>) {
+        val item = itemRepository.findById(itemId).get()
         val shop = shopRepository.findById(shopId).get()
         val publisher = characterRepository.findById(publisherId).get()
 
         shop.itemsForSale += ItemForSale(
-                itemTemplate = itemTemplate,
+                item = item,
                 price = priceCombinationConverter.toDomain(price, shop.organization!!.game!!.id),
                 shop = shop,
                 ownerType = ItemForSaleOwner.CHARACTER,
@@ -63,7 +53,7 @@ open class ShopService(
         )
         shopRepository.save(shop)
 
-//        publisher.ownedMerchandise.filter { it.id !== merchandiseId }
+        publisher.items.filter { it.id !== itemId }
         characterRepository.save(publisher)
     }
 
@@ -76,8 +66,9 @@ open class ShopService(
         itemForSale.price!!.prices.forEach { amount -> balanceService.transfer(gameId, buyerBalanceId, itemForSale.owner!!.balance!!.id, amount.currency!!.name, amount.amount) }
 
         shop.itemsForSale = shop.itemsForSale.filter {it.id != itemForSaleId }
-        itemForSale.shop = null
-//        buyer.ownedMerchandise += itemForSale.merchandise!!
+        itemForSaleRepository.delete(itemForSale)
+
+        buyer.items += itemForSale.item!!
 
         shopRepository.save(shop)
         itemForSaleRepository.delete(itemForSale)

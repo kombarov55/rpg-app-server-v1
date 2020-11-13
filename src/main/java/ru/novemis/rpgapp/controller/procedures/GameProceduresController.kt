@@ -19,7 +19,7 @@ class GameProceduresController(
             val gameId: String = ""
     )
 
-    @PostMapping("/setItemForSale.do")
+    @PostMapping("/addItemForSale.do")
     fun setItemForSale(@RequestBody rq: SetItemForSaleRq) {
         gameService.addItemForSale(rq.gameId, rq.itemTemplateId, rq.price)
     }

@@ -2,6 +2,7 @@ package ru.novemis.rpgapp.domain.game
 
 import ru.novemis.rpgapp.domain.game.crafting.Recipe
 import ru.novemis.rpgapp.domain.game.questionnaire_template.QuestionnaireTemplate
+import ru.novemis.rpgapp.domain.game.shop.Item
 import ru.novemis.rpgapp.domain.game.shop.ItemForSale
 import ru.novemis.rpgapp.domain.game.skill.SkillCategory
 import ru.novemis.rpgapp.domain.network.Network
@@ -48,6 +49,9 @@ data class Game(
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
         var itemsForSale: List<ItemForSale> = emptyList(),
+
+        @OneToMany(cascade = [CascadeType.ALL])
+        var itemsSale: List<Item> = emptyList(),
 
         var disclaimerText: String? = null,
 

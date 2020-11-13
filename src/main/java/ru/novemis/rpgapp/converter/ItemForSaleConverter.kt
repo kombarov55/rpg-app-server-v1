@@ -7,14 +7,14 @@ import ru.novemis.rpgapp.dto.game.shop.dto.ItemForSaleDto
 
 @Component
 class ItemForSaleConverter(
-        private val itemTemplateConverter: ItemTemplateConverter,
+        private val itemConverter: ItemConverter,
         private val priceCombinationConverter: PriceCombinationConverter
 ) {
 
     fun toDto(domain: ItemForSale): ItemForSaleDto {
         return ItemForSaleDto(
                 id = domain.id,
-                itemTemplate = itemTemplateConverter.toShortDto(domain.itemTemplate!!),
+                item = itemConverter.toShortDto(domain.item!!),
                 price = priceCombinationConverter.toDto(domain.price!!),
                 creationDate = domain.creationDate,
                 ownerBalanceId = if (domain.ownerType == ItemForSaleOwner.CHARACTER) domain.owner!!.balance!!.id else null,

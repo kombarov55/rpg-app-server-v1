@@ -43,4 +43,10 @@ data class ItemTemplate(
         @ManyToOne
         @JoinColumn(name = "game_id")
         var game: Game? = null
-)
+) {
+        fun generateItem(): Item {
+                return Item(
+                        itemTemplate = this
+                )
+        }
+}

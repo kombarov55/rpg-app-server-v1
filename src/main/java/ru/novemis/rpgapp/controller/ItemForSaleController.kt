@@ -22,7 +22,8 @@ open class ItemForSaleController(
             @PathVariable("game-id") gameId: String,
             @RequestParam("destination") destination: String
     ): List<ItemForSaleDto> {
-        return repository.findByGameIdAndDesination(gameId, Destination.valueOf(destination))
+        return repository.findByGameId(gameId)
+                .filter { it.item!!.itemTemplate!!.destination!!.name == destination }
                 .map { converter.toDto(it) }
     }
 

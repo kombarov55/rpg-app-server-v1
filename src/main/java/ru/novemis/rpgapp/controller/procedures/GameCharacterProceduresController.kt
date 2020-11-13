@@ -9,6 +9,7 @@ import ru.novemis.rpgapp.domain.game.skill.Skill
 import ru.novemis.rpgapp.domain.game.skill.Spell
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
+import ru.novemis.rpgapp.repository.game.shop.ItemRepository
 import ru.novemis.rpgapp.repository.game.skillcategory.SpellRepository
 import ru.novemis.rpgapp.service.BalanceService
 import javax.transaction.Transactional
@@ -18,7 +19,8 @@ import javax.transaction.Transactional
 open class GameCharacterProceduresController(
         private val repository: GameCharacterRepository,
         private val balanceService: BalanceService,
-        private val spellRepository: SpellRepository
+        private val spellRepository: SpellRepository,
+        private val itemRepository: ItemRepository
 ) {
 
     data class UpgradeSkillForm(
@@ -83,5 +85,20 @@ open class GameCharacterProceduresController(
         return PurchaseSpellRs(
                 isNextLvlUnlocked = amountOfLearnedSpells == minSpellCountToUpgrade
         )
+    }
+
+    data class DisposeItemRq(
+            val characterId: String = "",
+            val itemId: String = ""
+    )
+
+    @PostMapping("/disposeItem.do")
+    @Transactional
+    open fun disposeItem(@RequestBody rq: DisposeItemRq) {
+        repository.findById(rq.characterId).get().apply {
+            items = items.filter { it.id != rq.itemId }
+        }.let { repository.save(it) }
+
+        itemRepository.deleteById(rq.itemId)
     }
 }

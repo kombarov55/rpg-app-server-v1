@@ -12,8 +12,8 @@ data class ItemForSale(
         var id: String = UUID.randomUUID().toString(),
 
         @OneToOne
-        @JoinColumn(name = "item_template_id")
-        var itemTemplate: ItemTemplate? = null,
+        @JoinColumn(name = "item_id")
+        var item: Item? = null,
 
         @OneToOne(cascade = [CascadeType.ALL])
         var price: PriceCombination? = null,

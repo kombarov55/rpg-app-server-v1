@@ -13,6 +13,8 @@ import ru.novemis.rpgapp.dto.game.form.GameForm
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 import ru.novemis.rpgapp.repository.game.shop.ItemForSaleRepository
+import ru.novemis.rpgapp.repository.game.shop.ItemRepository
+import ru.novemis.rpgapp.repository.game.shop.ItemTemplateRepository
 import ru.novemis.rpgapp.util.appendProtocol
 import java.util.*
 import javax.transaction.Transactional
@@ -23,8 +25,10 @@ open class GameService(
         private val gameRepository: GameRepository,
         private val priceConverter: PriceCombinationConverter,
         private val itemForSaleRepository: ItemForSaleRepository,
+        private val itemRepository: ItemRepository,
         private val characterRepository: GameCharacterRepository,
-        private val balanceService: BalanceService
+        private val balanceService: BalanceService,
+        private val itemTemplateRepository: ItemTemplateRepository
 ) {
 
     @Transactional
@@ -102,8 +106,11 @@ open class GameService(
     @Transactional
     open fun addItemForSale(gameId: String, itemTemplateId: String, price: List<PriceForm>) {
         val game = gameRepository.findById(gameId).get()
+        val itemTemplate = itemTemplateRepository.findById(itemTemplateId).get()
+        val item = itemRepository.save(itemTemplate.generateItem())
+
         game.itemsForSale += ItemForSale(
-                itemTemplate = ItemTemplate(itemTemplateId),
+                item = item,
                 price = priceConverter.toDomain(price, gameId),
                 game = game,
                 ownerType = ItemForSaleOwner.GAME
@@ -118,11 +125,11 @@ open class GameService(
         val game = gameRepository.findById(gameId).get()
 
         itemForSale.price!!.prices.forEach { amount -> balanceService.subtract(game.id, balanceId, amount.currency!!.name, amount.amount) }
-        itemForSale.game = null
 
+        itemForSaleRepository.delete(itemForSale)
         game.itemsForSale = game.itemsForSale.filter { it.id != itemForSaleId }
-        //TODO:
-//        character.ownedMerchandise += itemForSale.cloneMerchandise()
+
+        character.items += itemForSale.item!!
 
         gameRepository.save(game)
         characterRepository.save(character)
