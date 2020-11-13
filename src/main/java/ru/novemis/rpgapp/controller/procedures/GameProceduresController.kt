@@ -4,13 +4,17 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import ru.novemis.rpgapp.domain.game.common.TransferDestinationType
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 import ru.novemis.rpgapp.service.GameService
+import ru.novemis.rpgapp.service.ItemService
+import javax.transaction.Transactional
 
 @RestController
 @RequestMapping("/game")
 class GameProceduresController(
-        private val gameService: GameService
+        private val gameService: GameService,
+        private val itemService: ItemService
 ) {
 
     data class SetItemForSaleRq(
@@ -34,6 +38,19 @@ class GameProceduresController(
     @PostMapping("/purchaseItem.do")
     fun purchaseItem(@RequestBody rq: PurchaseItemRq) {
         gameService.purchaseItem(rq.itemForSaleId, rq.gameId, rq.characterId, rq.balanceId)
+    }
+
+    data class TransferItemRq(
+            val itemId: String = "",
+            val fromType: TransferDestinationType = TransferDestinationType.CHARACTER,
+            val fromId: String = "",
+            val toType: TransferDestinationType = TransferDestinationType.CHARACTER,
+            val toId: String = ""
+    )
+
+    @PostMapping("/transferItem.do")
+    fun transferItem(@RequestBody rq: TransferItemRq) {
+        itemService.transferItem(rq.itemId, rq.fromType, rq.fromId, rq.toType, rq.toId)
     }
 
 }
