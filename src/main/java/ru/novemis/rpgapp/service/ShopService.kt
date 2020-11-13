@@ -53,7 +53,7 @@ open class ShopService(
         )
         shopRepository.save(shop)
 
-        publisher.items.filter { it.id !== itemId }
+        publisher.items = publisher.items.filter { it.id != itemId }
         characterRepository.save(publisher)
     }
 
@@ -71,7 +71,6 @@ open class ShopService(
         buyer.items += itemForSale.item!!
 
         shopRepository.save(shop)
-        itemForSaleRepository.delete(itemForSale)
         characterRepository.save(buyer)
     }
 

@@ -6,10 +6,12 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import ru.novemis.rpgapp.converter.GameCharacterConverter
+import ru.novemis.rpgapp.converter.ItemConverter
 import ru.novemis.rpgapp.converter.PriceCombinationConverter
 import ru.novemis.rpgapp.dto.game.character.dto.BalanceDto
 import ru.novemis.rpgapp.dto.game.character.dto.GameCharacterDto
 import ru.novemis.rpgapp.dto.game.character.dto.GameCharacterShortDto
+import ru.novemis.rpgapp.dto.game.shop.dto.ItemShortDto
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 import ru.novemis.rpgapp.service.GameCharacterService
 import javax.transaction.Transactional
@@ -19,7 +21,8 @@ open class GameCharacterController(
         private val repository: GameCharacterRepository,
         private val converter: GameCharacterConverter,
         private val service: GameCharacterService,
-        private val priceConverter: PriceCombinationConverter
+        private val priceConverter: PriceCombinationConverter,
+        private val itemConverter: ItemConverter
 ) {
 
     @GetMapping("/character/{id}")
@@ -61,6 +64,14 @@ open class GameCharacterController(
             @PathVariable("id") characterId: String
     ): List<BalanceDto> {
         return service.getBalances(characterId)
+    }
+
+    @GetMapping("/character/{id}/items/short")
+    @Transactional
+    open fun getItemsShort(
+            @PathVariable("id") id: String
+    ): List<ItemShortDto> {
+        return repository.findById(id).get().items.map { itemConverter.toShortDto(it) }
     }
 
 }

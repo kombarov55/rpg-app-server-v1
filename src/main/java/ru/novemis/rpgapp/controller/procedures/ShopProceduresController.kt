@@ -29,7 +29,7 @@ open class ShopProceduresController(
     }
 
     data class SetItemForSaleRq(
-            val itemTemplateId: String = "",
+            val itemId: String = "",
             val shopId: String = "",
             val publisherId: String = "",
             val price: List<PriceForm> = emptyList()
@@ -37,6 +37,6 @@ open class ShopProceduresController(
 
     @PostMapping("/setItemForSale.do")
     open fun setItemForSale(@RequestBody rq: SetItemForSaleRq) {
-        shopService.setItemForSale(rq.itemTemplateId, rq.shopId, rq.publisherId, rq.price)
+        shopService.setItemForSale(rq.itemId, rq.shopId, rq.publisherId, rq.price)
     }
 }
