@@ -62,8 +62,14 @@ open class ShopService(
         val shop = shopRepository.findById(shopId).get()
         val itemForSale = itemForSaleRepository.findById(itemForSaleId).get()
         val buyer = characterRepository.findById(buyerCharacterId).get()
+        val country = buyer.country!!
 
-        itemForSale.price!!.prices.forEach { amount -> balanceService.transfer(gameId, buyerBalanceId, itemForSale.owner!!.balance!!.id, amount.currency!!.name, amount.amount) }
+        itemForSale.price!!.prices.forEach { amount ->
+            val taxAmount = (amount.amount * country.incomeTax / 100).toInt()
+
+            balanceService.transfer(gameId, buyerBalanceId, itemForSale.owner!!.balance!!.id, amount.currency!!.name, amount.amount - taxAmount)
+            balanceService.add(gameId, country.balance!!.id, amount.currency!!.name, taxAmount)
+        }
 
         shop.itemsForSale = shop.itemsForSale.filter {it.id != itemForSaleId }
         itemForSaleRepository.delete(itemForSale)

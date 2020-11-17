@@ -46,4 +46,20 @@ class NotificationTemplateService {
                 recipientId = userId
         )
     }
+
+    fun itemBought(itemName: String, userId: Long): Notification {
+        return Notification(
+                text = "На ваш предмет $itemName нашлся покупатель!",
+                severity = NotificationSeverity.GOOD,
+                recipientId = userId
+        )
+    }
+
+    fun onItemTransfered(senderName: String, itemName: String, userId: Long): Notification {
+        return Notification(
+                text = "$senderName передал вам предмет $itemName",
+                severity = NotificationSeverity.NORMAL,
+                recipientId = userId
+        )
+    }
 }

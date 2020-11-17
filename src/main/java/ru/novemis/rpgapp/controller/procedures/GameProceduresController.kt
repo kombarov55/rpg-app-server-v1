@@ -8,13 +8,15 @@ import ru.novemis.rpgapp.domain.game.common.TransferDestinationType
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
 import ru.novemis.rpgapp.service.GameService
 import ru.novemis.rpgapp.service.ItemService
+import ru.novemis.rpgapp.service.NotificationService
 import javax.transaction.Transactional
 
 @RestController
 @RequestMapping("/game")
 class GameProceduresController(
         private val gameService: GameService,
-        private val itemService: ItemService
+        private val itemService: ItemService,
+        private val notificationService: NotificationService
 ) {
 
     data class SetItemForSaleRq(
@@ -51,6 +53,7 @@ class GameProceduresController(
     @PostMapping("/transferItem.do")
     fun transferItem(@RequestBody rq: TransferItemRq) {
         itemService.transferItem(rq.itemId, rq.fromType, rq.fromId, rq.toType, rq.toId)
+        notificationService.onItemTransfered(rq.itemId, rq.fromId, rq.fromType, rq.toId, rq.toType)
     }
 
 }

@@ -7,6 +7,8 @@ import ru.novemis.rpgapp.domain.procedure.Notification
 import ru.novemis.rpgapp.dto.procedure.dto.NotificationDto
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 import ru.novemis.rpgapp.repository.game.organization.OrganizationRepository
+import ru.novemis.rpgapp.repository.game.shop.ItemForSaleRepository
+import ru.novemis.rpgapp.repository.game.shop.ItemRepository
 import ru.novemis.rpgapp.repository.procedure.NotificationRepository
 
 @Component
@@ -15,7 +17,9 @@ class NotificationService(
         private val converter: NotificationConverter,
         private val notificationTemplateService: NotificationTemplateService,
         private val characterRepository: GameCharacterRepository,
-        private val organizationRepository: OrganizationRepository
+        private val organizationRepository: OrganizationRepository,
+        private val itemForSaleRepository: ItemForSaleRepository,
+        private val itemRepository: ItemRepository
 ) {
 
     fun send(notification: Notification) {
@@ -63,6 +67,31 @@ class NotificationService(
                         }
                 ))
             }
+        }
+    }
+
+    fun sendItemBoughtNotification(itemForSaleId: String) {
+        val itemForSale = itemForSaleRepository.findById(itemForSaleId).get()
+        val userId = itemForSale.owner!!.owner!!.userId
+
+        send(notificationTemplateService.itemBought(itemForSale.item!!.itemTemplate!!.name, userId))
+    }
+
+    fun onItemTransfered(itemId: String, fromId: String, fromType: TransferDestinationType, toId: String, toType: TransferDestinationType) {
+        val itemName = itemRepository.findById(itemId).get().itemTemplate!!.name
+        val senderName = when(fromType) {
+            TransferDestinationType.CHARACTER -> characterRepository.findById(fromId).get().name
+            TransferDestinationType.ORGANIZATION -> organizationRepository.findById(fromId).get().name
+            TransferDestinationType.ADMIN -> "Администратор"
+        }
+        val recipientIds = when(toType) {
+            TransferDestinationType.CHARACTER -> listOf(characterRepository.findById(fromId).get().owner!!.userId)
+            TransferDestinationType.ORGANIZATION -> organizationRepository.findById(fromId).get().heads.map { character -> character.owner!!.userId }
+            TransferDestinationType.ADMIN -> throw RuntimeException("Impossible")
+        }
+
+        recipientIds.forEach { recipientId ->
+            send(notificationTemplateService.onItemTransfered(senderName, itemName, recipientId))
         }
     }
 
