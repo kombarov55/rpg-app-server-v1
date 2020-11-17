@@ -5,7 +5,7 @@ import java.util.*
 
 data class ItemForSaleDto(
         val id: String,
-        val item: ItemShortDto,
+        val item: ItemDto,
         val price: List<PriceDto>,
         val creationDate: Date,
         val ownerBalanceId: String?,

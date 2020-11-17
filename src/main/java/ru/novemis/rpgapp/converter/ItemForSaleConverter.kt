@@ -14,7 +14,7 @@ class ItemForSaleConverter(
     fun toDto(domain: ItemForSale): ItemForSaleDto {
         return ItemForSaleDto(
                 id = domain.id,
-                item = itemConverter.toShortDto(domain.item!!),
+                item = itemConverter.toDto(domain.item!!),
                 price = priceCombinationConverter.toDto(domain.price!!),
                 creationDate = domain.creationDate,
                 ownerBalanceId = if (domain.ownerType == ItemForSaleOwner.CHARACTER) domain.owner!!.balance!!.id else null,
