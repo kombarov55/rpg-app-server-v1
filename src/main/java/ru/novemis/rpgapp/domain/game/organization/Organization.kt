@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.domain.game.organization
 
+import ru.novemis.rpgapp.controller.OrganizationController
 import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.character.GameCharacter
 import ru.novemis.rpgapp.domain.game.common.Balance
@@ -41,10 +42,7 @@ class Organization(
         @OneToMany(cascade = [CascadeType.ALL])
         var items: List<Item> = mutableListOf(),
 
-        @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
-        val entranceTax: PriceCombination? = null,
-
-        val incomeTax: Double? = null,
+        var incomeTax: Double = 0.0,
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "organization")
         var creditOffers: List<CreditOffer> = mutableListOf(),
@@ -52,4 +50,10 @@ class Organization(
         @ManyToOne
         @JoinColumn(name = "game_id")
         var game: Game? = null
-)
+) {
+        fun applyPatch(patch: OrganizationController.OrganizationPatch): Organization {
+                this.incomeTax = patch.incomeTax ?: this.incomeTax
+
+                return this
+        }
+}

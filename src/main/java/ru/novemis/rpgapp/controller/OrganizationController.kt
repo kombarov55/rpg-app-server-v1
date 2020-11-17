@@ -193,4 +193,19 @@ open class OrganizationController(
             )
         }
     }
+
+    data class OrganizationPatch(
+            val incomeTax: Double? = null
+    )
+
+    @PatchMapping("/organization/{id}")
+    @Transactional
+    open fun patch(
+            @PathVariable("id") id: String,
+            @RequestBody patch: OrganizationPatch): OrganizationDto {
+        return repository.findById(id).get()
+                .applyPatch(patch)
+                .let { repository.save(it) }
+                .let { converter.toDto(it) }
+    }
 }

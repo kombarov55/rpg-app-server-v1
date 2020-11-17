@@ -44,7 +44,6 @@ class OrganizationConverter(
                 balanceId = domain.balance!!.id,
                 shops = domain.shops.map { shopConverter.toShortDto(it) },
                 items = domain.items.map { itemConverter.toDto(it) },
-                entranceTax = domain.entranceTax?.let { priceCombinationConverter.toDto(it) },
                 incomeTax = domain.incomeTax,
                 creditOffers = domain.creditOffers.map { creditOfferConverter.toDto(it) }
         )
