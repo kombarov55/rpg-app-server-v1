@@ -2,11 +2,13 @@ package ru.novemis.rpgapp.controller
 
 import org.springframework.data.domain.PageRequest
 import org.springframework.web.bind.annotation.*
+import ru.novemis.rpgapp.converter.CreditOfferConverter
 import ru.novemis.rpgapp.converter.OrganizationConverter
 import ru.novemis.rpgapp.converter.ShopConverter
 import ru.novemis.rpgapp.domain.game.organization.OrganizationType
 import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationDto
 import ru.novemis.rpgapp.dto.game.organization.dto.OrganizationShortDto
+import ru.novemis.rpgapp.dto.game.organization.form.CreditOfferForm
 import ru.novemis.rpgapp.dto.game.organization.form.OrganizationForm
 import ru.novemis.rpgapp.dto.game.shop.form.ShopForm
 import ru.novemis.rpgapp.repository.game.GameRepository
@@ -24,10 +26,10 @@ open class OrganizationController(
         private val gameRepository: GameRepository,
         private val gameCharacterRepository: GameCharacterRepository,
 
-        private val itemTemplateRepository: ItemTemplateRepository,
-
         private val shopRepository: ShopRepository,
-        private val shopConverter: ShopConverter
+        private val shopConverter: ShopConverter,
+
+        private val creditOfferConverter: CreditOfferConverter
 ) {
 
     @GetMapping("/organization/{id}")
@@ -207,5 +209,43 @@ open class OrganizationController(
                 .applyPatch(patch)
                 .let { repository.save(it) }
                 .let { converter.toDto(it) }
+    }
+
+    @PostMapping("/organization/{id}/credit-offer")
+    @Transactional
+    open fun saveCreditOffer(
+            @PathVariable("id") organizationId: String,
+            @RequestBody form: CreditOfferForm
+    ): OrganizationDto {
+        return repository.findById(organizationId).get().apply {
+            creditOffers += creditOfferConverter.toDomain(form)
+        }.let { repository.save(it) }
+                .let { converter.toDto(it) }
+    }
+
+    @PutMapping("/organization/{organization-id}/credit-offer/{id}")
+    @Transactional
+    open fun saveCreditOffer(
+            @PathVariable("organization-id") organizationId: String,
+            @PathVariable("id") creditOfferId: String,
+            @RequestBody form: CreditOfferForm
+    ): OrganizationDto {
+        return repository.findById(organizationId).get().apply {
+            creditOffers = creditOffers.filter { it.id != creditOfferId }
+            creditOffers += creditOfferConverter.toDomain(form).apply { id = creditOfferId }
+        }.let { repository.save(it) }
+         .let { converter.toDto(it) }
+    }
+
+    @DeleteMapping("/organization/{organization-id}/credit-offer/{id}")
+    @Transactional
+    open fun deleteCreditOffer(
+            @PathVariable("organization-id") organizationId: String,
+            @PathVariable("id") creditOfferId: String
+    ): OrganizationDto {
+        return repository.findById(organizationId).get().apply {
+            creditOffers = creditOffers.filter { it.id != creditOfferId }
+        }.let { repository.save(it) }
+         .let { converter.toDto(it) }
     }
 }
