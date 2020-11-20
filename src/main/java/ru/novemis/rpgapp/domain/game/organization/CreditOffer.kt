@@ -29,5 +29,5 @@ class CreditOffer(
 
         @ManyToOne
         @JoinColumn(name = "organization_id")
-        val organization: Organization? = null
+        var organization: Organization? = null
 )
