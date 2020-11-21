@@ -8,6 +8,7 @@ data class CreditRequestDto(
         val duration: Int,
         val amount: Int,
         val currencyName: String,
+        val rate: Double,
         val purpose: String,
         val status: CreditRequestStatus,
         val requester: GameCharacterShortDto

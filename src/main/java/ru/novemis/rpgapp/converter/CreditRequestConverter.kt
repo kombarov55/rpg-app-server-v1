@@ -13,6 +13,7 @@ class CreditRequestConverter {
                 duration = domain.duration,
                 amount = domain.amount,
                 currencyName = domain.currency!!.name,
+                rate = domain.creditOffer!!.rate,
                 purpose = domain.purpose,
                 status = domain.status,
                 requester = GameCharacterShortDto(

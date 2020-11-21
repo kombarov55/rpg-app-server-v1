@@ -11,6 +11,10 @@ data class CreditRequest (
         @Id
         val id: String = UUID.randomUUID().toString(),
 
+        @ManyToOne
+        @JoinColumn(name = "credit_offer_id")
+        val creditOffer: CreditOffer? = null,
+
         val duration: Int = 0,
 
         val amount: Int = 0,
@@ -30,5 +34,7 @@ data class CreditRequest (
         @JoinColumn(name = "character_id")
         val requester: GameCharacter? = null,
 
-        val status: CreditRequestStatus = CreditRequestStatus.PENDING
+        var status: CreditRequestStatus = CreditRequestStatus.PENDING,
+
+        var statusChangeDate: Date = Date()
 )

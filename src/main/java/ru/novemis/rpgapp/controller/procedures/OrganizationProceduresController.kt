@@ -6,13 +6,12 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.novemis.rpgapp.domain.game.organization.CreditRequest
 import ru.novemis.rpgapp.domain.game.organization.CreditRequestStatus
-import ru.novemis.rpgapp.repository.game.CurrencyRepository
-import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 import ru.novemis.rpgapp.repository.game.organization.CreditOfferRepository
 import ru.novemis.rpgapp.repository.game.organization.CreditRequestRepository
 import ru.novemis.rpgapp.repository.game.organization.OrganizationRepository
 import ru.novemis.rpgapp.repository.game.shop.ItemRepository
+import ru.novemis.rpgapp.service.CreditService
 import ru.novemis.rpgapp.service.ItemService
 import javax.transaction.Transactional
 
@@ -22,10 +21,10 @@ open class OrganizationProceduresController(
         private val itemService: ItemService,
         private val itemRepository: ItemRepository,
         private val creditRequestRepository: CreditRequestRepository,
-        private val currencyRepository: CurrencyRepository,
         private val organizationRepository: OrganizationRepository,
         private val gameCharacterRepository: GameCharacterRepository,
-        private val creditOfferRepository: CreditOfferRepository
+        private val creditOfferRepository: CreditOfferRepository,
+        private val creditService: CreditService
 ) {
 
     data class DisposeItemRq(
@@ -53,18 +52,36 @@ open class OrganizationProceduresController(
     @Transactional
     open fun submitCreditRequest(@RequestBody rq: CreditRequestRq) {
         val organization = organizationRepository.findById(rq.organizationId).get()
-        val currency = creditOfferRepository.findById(rq.creditOfferId).get().currency
+        val creditOffer = creditOfferRepository.findById(rq.creditOfferId).get()
         creditRequestRepository.save(
                 CreditRequest(
+                        creditOffer = creditOffer,
                         duration = rq.duration,
                         amount = rq.amount,
-                        currency = currency,
+                        currency = creditOffer.currency,
                         purpose = rq.purpose,
                         organization = organization,
                         requester = gameCharacterRepository.findById(rq.requesterId).get(),
                         status = CreditRequestStatus.PENDING
                 )
         )
+    }
+
+    data class ApproveCreditRequestRq(val creditRequestId: String = "")
+
+    @PostMapping("/approveCreditRequest.do")
+    @Transactional
+    open fun approveCreditRequest(@RequestBody rq: ApproveCreditRequestRq) {
+        creditService.changeRequestStatus(rq.creditRequestId, CreditRequestStatus.APPROVED)
+        creditService.generateCredit(rq.creditRequestId)
+    }
+
+    data class RejectCreditRequestRq(val creditRequestId: String = "")
+
+    @PostMapping("/rejectCreditRequest.do")
+    @Transactional
+    open fun rejectCreditRequest(@RequestBody rq: RejectCreditRequestRq) {
+        creditService.changeRequestStatus(rq.creditRequestId, CreditRequestStatus.REJECTED)
     }
 
 }
