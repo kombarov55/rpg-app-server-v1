@@ -10,5 +10,6 @@ data class CreditOfferDto(
         val minAmount: Int,
         val maxAmount: Int,
         val rate: Double,
+        val minDurationInDays: Int,
         val maxDurationInDays: Int
 )

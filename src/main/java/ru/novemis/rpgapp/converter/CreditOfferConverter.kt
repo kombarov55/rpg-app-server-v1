@@ -20,6 +20,7 @@ class CreditOfferConverter(
                 minAmount = form.minAmount,
                 maxAmount = form.maxAmount,
                 rate = form.rate,
+                minDurationInDays = form.minDurationInDays,
                 maxDurationInDays = form.maxDurationInDays
         )
     }
@@ -33,6 +34,7 @@ class CreditOfferConverter(
                 minAmount = domain.minAmount,
                 maxAmount = domain.maxAmount,
                 rate = domain.rate,
+                minDurationInDays = domain.minDurationInDays,
                 maxDurationInDays = domain.maxDurationInDays
         )
     }

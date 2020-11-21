@@ -9,5 +9,6 @@ data class CreditOfferForm(
         val minAmount: Int = 0,
         val maxAmount: Int = 0,
         val rate: Double = 0.0,
+        val minDurationInDays: Int = 0,
         val maxDurationInDays: Int = 0
 )
