@@ -8,7 +8,6 @@ import ru.novemis.rpgapp.converter.CreditRequestConverter
 import ru.novemis.rpgapp.domain.game.organization.CreditRequestStatus
 import ru.novemis.rpgapp.dto.game.organization.form.CreditRequestDto
 import ru.novemis.rpgapp.repository.game.organization.CreditRequestRepository
-import java.lang.RuntimeException
 import javax.transaction.Transactional
 
 @RestController
