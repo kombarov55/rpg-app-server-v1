@@ -62,4 +62,20 @@ class NotificationTemplateService {
                 recipientId = userId
         )
     }
+
+    fun onCreditAprooved(userId: Long): Notification {
+        return Notification(
+                text = "Вам одобрили кредит!",
+                severity = NotificationSeverity.NORMAL,
+                recipientId = userId
+        )
+    }
+
+    fun onCreditRejected(userId: Long): Notification {
+        return Notification(
+                text = "Вам отказали в кредите.",
+                severity = NotificationSeverity.NORMAL,
+                recipientId = userId
+        )
+    }
 }

@@ -6,6 +6,7 @@ import ru.novemis.rpgapp.domain.game.common.TransferDestinationType
 import ru.novemis.rpgapp.domain.procedure.Notification
 import ru.novemis.rpgapp.dto.procedure.dto.NotificationDto
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
+import ru.novemis.rpgapp.repository.game.organization.CreditRequestRepository
 import ru.novemis.rpgapp.repository.game.organization.OrganizationRepository
 import ru.novemis.rpgapp.repository.game.shop.ItemForSaleRepository
 import ru.novemis.rpgapp.repository.game.shop.ItemRepository
@@ -19,7 +20,8 @@ class NotificationService(
         private val characterRepository: GameCharacterRepository,
         private val organizationRepository: OrganizationRepository,
         private val itemForSaleRepository: ItemForSaleRepository,
-        private val itemRepository: ItemRepository
+        private val itemRepository: ItemRepository,
+        private val creditRequestRepository: CreditRequestRepository
 ) {
 
     fun send(notification: Notification) {
@@ -93,6 +95,14 @@ class NotificationService(
         recipientIds.forEach { recipientId ->
             send(notificationTemplateService.onItemTransfered(senderName, itemName, recipientId))
         }
+    }
+
+    fun onCreditAprooved(creditRequestId: String) {
+        notificationTemplateService.onCreditAprooved(creditRequestRepository.findById(creditRequestId).get().requester!!.owner!!.userId)
+    }
+
+    fun onCreditRejected(creditRequestId: String) {
+        notificationTemplateService.onCreditRejected(creditRequestRepository.findById(creditRequestId).get().requester!!.owner!!.userId)
     }
 
 }

@@ -13,6 +13,7 @@ import ru.novemis.rpgapp.repository.game.organization.OrganizationRepository
 import ru.novemis.rpgapp.repository.game.shop.ItemRepository
 import ru.novemis.rpgapp.service.CreditService
 import ru.novemis.rpgapp.service.ItemService
+import ru.novemis.rpgapp.service.NotificationService
 import javax.transaction.Transactional
 
 @RestController
@@ -24,7 +25,8 @@ open class OrganizationProceduresController(
         private val organizationRepository: OrganizationRepository,
         private val gameCharacterRepository: GameCharacterRepository,
         private val creditOfferRepository: CreditOfferRepository,
-        private val creditService: CreditService
+        private val creditService: CreditService,
+        private val notificationService: NotificationService
 ) {
 
     data class DisposeItemRq(
@@ -74,6 +76,7 @@ open class OrganizationProceduresController(
     open fun approveCreditRequest(@RequestBody rq: ApproveCreditRequestRq) {
         creditService.changeRequestStatus(rq.creditRequestId, CreditRequestStatus.APPROVED)
         creditService.generateCredit(rq.creditRequestId)
+        notificationService.onCreditAprooved(rq.creditRequestId)
     }
 
     data class RejectCreditRequestRq(val creditRequestId: String = "")
@@ -82,6 +85,7 @@ open class OrganizationProceduresController(
     @Transactional
     open fun rejectCreditRequest(@RequestBody rq: RejectCreditRequestRq) {
         creditService.changeRequestStatus(rq.creditRequestId, CreditRequestStatus.REJECTED)
+        notificationService.onCreditRejected(rq.creditRequestId)
     }
 
 }
