@@ -17,15 +17,16 @@ class CreditConverter {
                 id = domain.id,
                 currencyName = domain.currency!!.name,
                 amount = domain.amount,
+                debtAmount = domain.debtAmount,
                 payedAmount = domain.payedAmount,
                 openingDate = domain.openingDate.time,
                 endingDate = endingDate.toEpochMilli(),
                 durationInDays = domain.durationInDays,
                 remainingDays = Duration.between(ofEpochMilli(domain.openingDate.time), endingDate).toDays().toInt(),
-                minimalPayment = domain.minimalPayment,
                 lastPaymentDate = domain.lastPaymentDate?.time,
                 organizationName = domain.organization!!.name,
-                isOverdue = domain.isOverdue
+                isOverdue = domain.isOverdue,
+                isPaid = domain.isPaid
         )
     }
 

@@ -1,7 +1,6 @@
 package ru.novemis.rpgapp.domain.game.organization
 
 import ru.novemis.rpgapp.domain.game.Currency
-import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.character.GameCharacter
 import java.util.*
 import javax.persistence.*

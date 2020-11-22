@@ -78,4 +78,12 @@ class NotificationTemplateService {
                 recipientId = userId
         )
     }
+
+    fun onCreditPaid(userId: Long): Notification {
+        return Notification(
+                text = "Кредит погашен!",
+                severity = NotificationSeverity.GOOD,
+                recipientId = userId
+        )
+    }
 }

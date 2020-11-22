@@ -11,7 +11,8 @@ import java.util.*
 open class CreditService(
         private val creditRequestRepository: CreditRequestRepository,
         private val creditRepository: CreditRepository,
-        private val balanceService: BalanceService
+        private val balanceService: BalanceService,
+        private val notificationService: NotificationService
 ) {
 
     open fun changeRequestStatus(creditRequestId: String, newStatus: CreditRequestStatus) {
@@ -23,14 +24,17 @@ open class CreditService(
 
     open fun generateCredit(creditRequestId: String) {
         val creditRequest = creditRequestRepository.findById(creditRequestId).get()
+
         creditRepository.save(Credit(
                 currency = creditRequest.currency,
                 amount = creditRequest.amount,
                 rate = creditRequest.creditOffer!!.rate,
+                debtAmount = (
+                        creditRequest.amount.toDouble() *
+                                (1.0 + (creditRequest.creditOffer.rate / 100.0))
+                        ).toInt(),
                 durationInDays = creditRequest.duration,
                 openingDate = Date(),
-                lastPaymentDate = null,
-                minimalPayment = (creditRequest.amount.toDouble() / creditRequest.duration.toDouble()).toInt(),
                 organization = creditRequest.organization,
                 owner = creditRequest.requester
         ))
@@ -55,15 +59,29 @@ open class CreditService(
     open fun makeCreditPayment(creditId: String, amount: Int) {
         val credit = creditRepository.findById(creditId).get()
 
+        if (credit.debtAmount < amount) {
+            throw RuntimeException("Сумма слишком велика")
+        }
+
+        transferCreditPayment(credit, amount)
+        credit.lastPaymentDate = Date()
+        credit.payedAmount += amount
+        credit.debtAmount -= amount
+
+        if (credit.debtAmount == 0) {
+            credit.isPaid = true
+            notificationService.onCreditPaid(credit)
+        }
+
+        creditRepository.save(credit)
+    }
+
+    private fun transferCreditPayment(credit: Credit, amount: Int) {
         val gameId = credit.owner!!.game!!.id
         val characterBalanceId = credit.owner.balance!!.id
         val organiationBalanceId = credit.organization!!.balance!!.id
         val currencyName = credit.currency!!.name
 
         balanceService.transfer(gameId, characterBalanceId, organiationBalanceId, currencyName, amount)
-
-        credit.lastPaymentDate = Date()
-        credit.payedAmount += amount
     }
-
 }

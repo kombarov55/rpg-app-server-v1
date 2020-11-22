@@ -3,6 +3,7 @@ package ru.novemis.rpgapp.service
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.converter.NotificationConverter
 import ru.novemis.rpgapp.domain.game.common.TransferDestinationType
+import ru.novemis.rpgapp.domain.game.organization.Credit
 import ru.novemis.rpgapp.domain.procedure.Notification
 import ru.novemis.rpgapp.dto.procedure.dto.NotificationDto
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
@@ -98,11 +99,15 @@ class NotificationService(
     }
 
     fun onCreditAprooved(creditRequestId: String) {
-        notificationTemplateService.onCreditAprooved(creditRequestRepository.findById(creditRequestId).get().requester!!.owner!!.userId)
+        send(notificationTemplateService.onCreditAprooved(creditRequestRepository.findById(creditRequestId).get().requester!!.owner!!.userId))
     }
 
     fun onCreditRejected(creditRequestId: String) {
-        notificationTemplateService.onCreditRejected(creditRequestRepository.findById(creditRequestId).get().requester!!.owner!!.userId)
+        send(notificationTemplateService.onCreditRejected(creditRequestRepository.findById(creditRequestId).get().requester!!.owner!!.userId))
+    }
+
+    fun onCreditPaid(credit: Credit) {
+        send(notificationTemplateService.onCreditPaid(credit.owner!!.owner!!.userId))
     }
 
 }
