@@ -4,4 +4,7 @@ import org.springframework.data.repository.CrudRepository
 import ru.novemis.rpgapp.domain.game.organization.Credit
 
 interface CreditRepository : CrudRepository<Credit, String> {
+
+    fun findAllByOwnerId(characterId: String): List<Credit>
+
 }

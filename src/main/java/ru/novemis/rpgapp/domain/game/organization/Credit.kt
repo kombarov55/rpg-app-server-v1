@@ -19,6 +19,8 @@ class Credit(
 
         val amount: Int = 0,
 
+        val payedAmount: Int = 0,
+
         val rate: Double = 0.0,
 
         val durationInDays: Int = 0,

@@ -2,6 +2,7 @@ package ru.novemis.rpgapp.domain.game.character
 
 import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.common.Balance
+import ru.novemis.rpgapp.domain.game.organization.Credit
 import ru.novemis.rpgapp.domain.game.organization.Organization
 import ru.novemis.rpgapp.domain.game.questionnaire.FieldToValue
 import ru.novemis.rpgapp.domain.game.questionnaire.SkillToLvl
@@ -68,5 +69,8 @@ class GameCharacter(
 
         @ManyToOne
         @JoinColumn(name = "questionniare_template_id")
-        var questionnaireTemplate: QuestionnaireTemplate? = null
+        var questionnaireTemplate: QuestionnaireTemplate? = null,
+
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "owner")
+        val credits: List<Credit> = mutableListOf()
 )
