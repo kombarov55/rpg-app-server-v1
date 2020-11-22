@@ -5,6 +5,8 @@ import ru.novemis.rpgapp.domain.game.organization.Credit
 import ru.novemis.rpgapp.domain.game.organization.CreditRequestStatus
 import ru.novemis.rpgapp.repository.game.organization.CreditRepository
 import ru.novemis.rpgapp.repository.game.organization.CreditRequestRepository
+import java.time.Instant
+import java.time.temporal.ChronoUnit
 import java.util.*
 
 @Service
@@ -76,6 +78,19 @@ open class CreditService(
         creditRepository.save(credit)
     }
 
+    open fun makeForcedPayments() {
+        findAllOverdueCredits().forEach { credit ->
+            try {
+                makeCreditPayment(credit.id, credit.debtAmount)
+            } catch (e: Exception) {
+                credit.isOverdue = true
+                notificationService.onCreditOverdue(credit)
+            }
+
+            creditRepository.save(credit)
+        }
+    }
+
     private fun transferCreditPayment(credit: Credit, amount: Int) {
         val gameId = credit.owner!!.game!!.id
         val characterBalanceId = credit.owner.balance!!.id
@@ -83,5 +98,14 @@ open class CreditService(
         val currencyName = credit.currency!!.name
 
         balanceService.transfer(gameId, characterBalanceId, organiationBalanceId, currencyName, amount)
+    }
+
+    private fun findAllOverdueCredits(): List<Credit> {
+        return creditRepository.findAll().filter { credit ->
+            val paymentDate = Instant.ofEpochMilli(credit.openingDate.time)
+                    .plus(credit.durationInDays.toLong(), ChronoUnit.DAYS)
+
+            !credit.isPaid && paymentDate.isBefore(Instant.now())
+        }
     }
 }

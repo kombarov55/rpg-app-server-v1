@@ -110,4 +110,8 @@ class NotificationService(
         send(notificationTemplateService.onCreditPaid(credit.owner!!.owner!!.userId))
     }
 
+    fun onCreditOverdue(credit: Credit) {
+        send(notificationTemplateService.onCreditOverdue(credit.debtAmount, credit.currency!!.name, credit.owner!!.owner!!.userId))
+    }
+
 }

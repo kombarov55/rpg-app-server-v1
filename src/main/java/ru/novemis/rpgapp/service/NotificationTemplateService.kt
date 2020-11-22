@@ -86,4 +86,12 @@ class NotificationTemplateService {
                 recipientId = userId
         )
     }
+
+    fun onCreditOverdue(amount: Int, currencyName: String, userId: Long): Notification {
+        return Notification(
+                text = "Вы просрочили платёж по кредиту. Внесите $amount $currencyName в разделе 'Кабинет' как можно скорее.",
+                severity = NotificationSeverity.BAD,
+                recipientId = userId
+        )
+    }
 }

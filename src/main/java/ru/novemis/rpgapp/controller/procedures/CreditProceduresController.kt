@@ -84,4 +84,10 @@ open class CreditProceduresController(
         creditService.makeCreditPayment(rq.creditId, rq.amount)
     }
 
+    @PostMapping("/forcePayments.do")
+    @Transactional
+    open fun forceCreditPayments() {
+        creditService.makeForcedPayments()
+    }
+
 }
