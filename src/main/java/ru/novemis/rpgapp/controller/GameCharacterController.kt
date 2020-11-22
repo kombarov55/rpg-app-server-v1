@@ -39,7 +39,7 @@ open class GameCharacterController(
     open fun getCharacters(
             @PathVariable("user-id") userId: Long
     ): List<GameCharacterShortDto> {
-        return repository.findByUserId(userId).map { converter.toShortDto(it) }
+        return repository.findByOwnerUserId(userId).map { converter.toShortDto(it) }
     }
 
     @GetMapping("/game/{id}/character/filter")
@@ -72,6 +72,14 @@ open class GameCharacterController(
             @PathVariable("id") id: String
     ): List<ItemShortDto> {
         return repository.findById(id).get().items.map { itemConverter.toShortDto(it) }
+    }
+
+    @GetMapping("/userAccount/{user-id}game/{game-id}/characters")
+    open fun getCharactersByGameIdAndUserId(
+            @PathVariable("user-id") userId: Long,
+            @PathVariable("game-id") gameId: String
+    ): List<GameCharacterShortDto> {
+        return repository.findByGameIdAndOwnerUserId(gameId, userId).map { converter.toShortDto(it) }
     }
 
 }
