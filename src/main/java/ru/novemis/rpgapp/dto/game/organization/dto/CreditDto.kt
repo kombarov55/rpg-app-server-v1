@@ -9,6 +9,9 @@ data class CreditDto(
         val endingDate: Long,
         val durationInDays: Int,
         val remainingDays: Int,
+        val lastPaymentDate: Long?,
+        val isOverdue: Boolean,
+        val minimalPayment: Int,
         val organizationName: String
 
 )

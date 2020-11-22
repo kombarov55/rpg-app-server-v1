@@ -15,7 +15,6 @@ import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 import ru.novemis.rpgapp.repository.game.organization.CreditOfferRepository
 import ru.novemis.rpgapp.repository.game.organization.OrganizationRepository
-import ru.novemis.rpgapp.repository.game.shop.ItemTemplateRepository
 import ru.novemis.rpgapp.repository.game.shop.ShopRepository
 import javax.transaction.Transactional
 
@@ -211,30 +210,5 @@ open class OrganizationController(
                 .applyPatch(patch)
                 .let { repository.save(it) }
                 .let { converter.toDto(it) }
-    }
-
-    @PostMapping("/organization/{id}/credit-offer")
-    @Transactional
-    open fun saveCreditOffer(
-            @PathVariable("id") organizationId: String,
-            @RequestBody form: CreditOfferForm
-    ): OrganizationDto {
-        return repository.findById(organizationId).get().apply {
-            val organization = this
-            creditOffers += creditOfferConverter.toDomain(form).apply { this.organization = organization }
-        }.let { repository.save(it) }
-                .let { converter.toDto(it) }
-    }
-
-    @DeleteMapping("/organization/{organization-id}/credit-offer/{id}")
-    @Transactional
-    open fun deleteCreditOffer(
-            @PathVariable("organization-id") organizationId: String,
-            @PathVariable("id") creditOfferId: String
-    ): OrganizationDto {
-        return repository.findById(organizationId).get().apply {
-            creditOffers = creditOffers.filter { it.id != creditOfferId }
-        }.let { repository.save(it) }
-         .let { converter.toDto(it) }
     }
 }

@@ -19,13 +19,21 @@ class Credit(
 
         val amount: Int = 0,
 
-        val payedAmount: Int = 0,
+        val debtAmount: Int = 0,
+
+        var payedAmount: Int = 0,
 
         val rate: Double = 0.0,
 
         val durationInDays: Int = 0,
 
         val openingDate: Date = Date(),
+
+        var lastPaymentDate: Date? = null,
+
+        val minimalPayment: Int = 0,
+
+        val isOverdue: Boolean = false,
 
         @ManyToOne
         @JoinColumn(name = "organization_id")

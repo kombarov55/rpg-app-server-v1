@@ -25,6 +25,8 @@ class CreditOffer(
 
         val rate: Double = 0.0,
 
+        val paymentPeriodInDays: Int = 0,
+
         val minDurationInDays: Int = 0,
 
         val maxDurationInDays: Int = 0,

@@ -22,7 +22,10 @@ class CreditConverter {
                 endingDate = endingDate.toEpochMilli(),
                 durationInDays = domain.durationInDays,
                 remainingDays = Duration.between(ofEpochMilli(domain.openingDate.time), endingDate).toDays().toInt(),
-                organizationName = domain.organization!!.name
+                minimalPayment = domain.minimalPayment,
+                lastPaymentDate = domain.lastPaymentDate?.time,
+                organizationName = domain.organization!!.name,
+                isOverdue = domain.isOverdue
         )
     }
 
