@@ -1,57 +1,73 @@
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
+import ru.novemis.rpgapp.converter.SkillCategoryConverter
 import ru.novemis.rpgapp.domain.game.shop.Destination
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryShortDto
 import ru.novemis.rpgapp.dto.game.skill.form.SkillCategoryForm
-import ru.novemis.rpgapp.service.SkillCategoryService
+import ru.novemis.rpgapp.repository.game.skillcategory.SkillCategoryRepository
 import javax.transaction.Transactional
 
 @RestController
 open class SkillCategoryController(
-        private val service: SkillCategoryService
+        private val repository: SkillCategoryRepository,
+        private val converter: SkillCategoryConverter
 ) {
 
     @GetMapping("/game/{id}/skillCategory")
     @Transactional
-    open fun getAllByGameId(@PathVariable("id") gameId: String): List<SkillCategoryDto> =
-            service.findAllByGameId(gameId)
+    open fun getAllByGameId(
+            @PathVariable("id") gameId: String
+    ): List<SkillCategoryDto> =
+            repository.findAllByGameId(gameId).map { converter.toDto(it) }
 
     @GetMapping("/game/{id}/skillCategory/short")
     @Transactional
-    open fun getAllShortByGameId(@PathVariable("id") gameId: String): List<SkillCategoryShortDto> =
-            service.findAllShortByGameId(gameId)
+    open fun getAllShortByGameId(
+            @PathVariable("id") gameId: String
+    ): List<SkillCategoryShortDto> =
+            repository.findAllByGameId(gameId).map { converter.toShortDto(it) }
 
     @GetMapping("/game/{id}/skillCategory/filter")
+    @Transactional
     open fun getAllByGameIdAndDestination(
             @PathVariable("id") gameId: String,
             @RequestParam("destination") destination: String
-    ): List<SkillCategoryDto> {
-        return service.findAllByGameIdAndDestination(gameId, Destination.valueOf(destination))
-    }
+    ): List<SkillCategoryDto> = repository.findAllByGameIdAndDestination(gameId, Destination.valueOf(destination)).map { converter.toDto(it) }
 
     @PostMapping("/game/{game-id}/skillCategory")
     @Transactional
     open fun save(
-            @RequestBody skillCategoryForm: SkillCategoryForm,
+            @RequestBody form: SkillCategoryForm,
             @PathVariable("game-id") gameId: String
-    ): SkillCategoryDto =
-            service.save(skillCategoryForm, gameId)
+    ): SkillCategoryDto = converter.toDomain(form)
+            .let { repository.save(it) }
+            .let { converter.toDto(it) }
 
     @GetMapping("/skillCategory/{id}")
-    fun getById(@PathVariable("id") id: String): SkillCategoryDto = service.findById(id)
+    @Transactional
+    open fun getById(
+            @PathVariable("id") id: String
+    ): SkillCategoryDto = repository.findById(id).get().let { converter.toDto(it) }
 
     @PutMapping("/skillCategory/{id}")
     @Transactional
     open fun update(
             @PathVariable("id") id: String,
             @RequestBody body: SkillCategoryForm
-    ): SkillCategoryDto = service.update(id, body)
+    ): SkillCategoryDto = repository.findById(id).get().apply {
+                name = body.name
+                img = body.img
+                description = body.description
+            }.let { repository.save(it) }
+             .let { converter.toDto(it) }
 
     @DeleteMapping("/skillCategory/{id}")
     @Transactional
-    open fun delete(@PathVariable("id") id: String): SkillCategoryDto = service.deleteById(id)
-
-
+    open fun delete(
+            @PathVariable("id") id: String
+    ): SkillCategoryDto = repository.findById(id).get()
+            .also { repository.delete(it) }
+            .let { converter.toDto(it) }
 }
