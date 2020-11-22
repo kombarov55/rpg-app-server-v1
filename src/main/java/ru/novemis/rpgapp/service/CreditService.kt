@@ -72,6 +72,7 @@ open class CreditService(
 
         if (credit.debtAmount == 0) {
             credit.isPaid = true
+            credit.isOverdue = false
             notificationService.onCreditPaid(credit)
         }
 
