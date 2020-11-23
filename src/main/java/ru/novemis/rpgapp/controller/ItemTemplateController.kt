@@ -67,9 +67,13 @@ open class ItemTemplateController(
     @Transactional
     open fun findByGameIdAndName(
             @PathVariable("game-id") gameId: String,
-            @RequestParam("name") name: String
+            @RequestParam("name") name: String,
+            @RequestParam(name = "canBeUsedInCraft", required = false) canBeUsedInCraft: Boolean?,
+            @RequestParam(name = "canBeCrafted", required = false) canBeCrafted: Boolean?
     ): List<ItemTemplateDto> {
         return repository.findByGameIdAndNameStartsWith(gameId, name)
+                .filter { if (canBeUsedInCraft != null) it.canBeUsedInCraft == canBeUsedInCraft else true }
+                .filter { if (canBeCrafted != null) it.canBeCrafted == canBeCrafted else true }
                 .map { converter.toDto(it) }
     }
 }

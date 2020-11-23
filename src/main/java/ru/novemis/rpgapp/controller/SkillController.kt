@@ -131,4 +131,13 @@ open class SkillController(
                 .map { converter.toShortDto(it) }
     }
 
+    @GetMapping("/game/{game-id}/skill/findByName")
+    @Transactional
+    open fun findShortByGameIdAndName(
+            @PathVariable("game-id") gameId: String,
+            @RequestParam("name") name: String
+    ): List<SkillShortDto> {
+        return repository.findBySkillCategoryGameIdAndNameStartingWith(gameId, name)
+                .map { converter.toShortDto(it) }
+    }
 }
