@@ -82,6 +82,19 @@ open class BalanceProceduresController(
         notificationService.sendTransferNotification(form.amount, form.currency, form.destinationType, form.destinationId, ADMIN)
     }
 
+    data class ConversionRq(
+            val currency1Id: String = "",
+            val currency2Id: String = "",
+            val amount: Int = 0,
+            val characterId: String = ""
+    )
+
+    @PostMapping("/convert.do")
+    @Transactional
+    open fun convert(@RequestBody rq: ConversionRq) {
+        service.convert(rq.currency1Id, rq.currency2Id, rq.amount, rq.characterId)
+    }
+
     private fun getGameId(destination: String, destinationType: TransferDestinationType): String {
         return when (destinationType) {
             CHARACTER -> characterRepository.findById(destination).get().game!!.id
