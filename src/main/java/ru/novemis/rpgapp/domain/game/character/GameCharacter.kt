@@ -72,5 +72,7 @@ class GameCharacter(
         var questionnaireTemplate: QuestionnaireTemplate? = null,
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "owner")
-        val credits: List<Credit> = mutableListOf()
+        val credits: List<Credit> = mutableListOf(),
+
+        var activityPoints: Int = 0
 )

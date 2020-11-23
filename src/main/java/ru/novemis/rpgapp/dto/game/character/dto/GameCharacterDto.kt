@@ -15,5 +15,6 @@ data class GameCharacterDto(
         val learnedSkills: List<SkillToLvlDto>,
         val balanceId: String,
         val items: List<ItemDto>,
-        val credits: List<CreditDto>
+        val credits: List<CreditDto>,
+        val activityPoints: Int
 )
