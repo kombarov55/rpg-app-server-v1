@@ -1,6 +1,7 @@
 package ru.novemis.rpgapp.domain.game
 
 import ru.novemis.rpgapp.domain.game.crafting.Recipe
+import ru.novemis.rpgapp.domain.game.organization.Organization
 import ru.novemis.rpgapp.domain.game.questionnaire_template.QuestionnaireTemplate
 import ru.novemis.rpgapp.domain.game.shop.Item
 import ru.novemis.rpgapp.domain.game.shop.ItemForSale
@@ -60,5 +61,8 @@ data class Game(
 
         var deleted: Boolean = false,
 
-        var deletionDate: Date? = null
+        var deletionDate: Date? = null,
+
+        @OneToMany(mappedBy = "game", cascade = [CascadeType.ALL])
+        var organizations: List<Organization> = emptyList()
 )

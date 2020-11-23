@@ -17,10 +17,10 @@ class Organization(
         @Id
         var id: String = UUID.randomUUID().toString(),
 
-        val name: String = "",
+        var name: String = "",
 
         @Column(columnDefinition = "TEXT")
-        val description: String = "",
+        var description: String = "",
 
         val type: OrganizationType = OrganizationType.INSTITUTION,
 

@@ -16,7 +16,10 @@ class GameConverter(
         private val subnetworkRepository: SubnetworkRepository,
         private val currencyConverter: CurrencyConverter,
         private val skillCategoryConverter: SkillCategoryConverter,
-        private val itemForSaleConverter: ItemForSaleConverter
+        private val itemForSaleConverter: ItemForSaleConverter,
+        private val organizationConverter: OrganizationConverter,
+        private val recipeConverter: RecipeConverter,
+        private val questionnaireTemplateConverter: QuestionnaireTemplateConverter
 ) {
 
     fun toDomain(form: GameForm, gameId: String? = null, networkId: String? = null, subnetworkId: String? = null): Game {
@@ -36,19 +39,22 @@ class GameConverter(
         }
     }
 
-    fun toDto(game: Game): GameDto {
+    fun toDto(domain: Game): GameDto {
         return GameDto(
-                id = game.id,
-                title = game.title,
-                description = game.description,
-                imgSrc = game.imgName,
-                backgroundImgSrc = game.backgroundName,
-                groupLink = game.groupLink,
-                currencies = game.currencies.map { currency -> currencyConverter.toDto(currency) },
-                skillCategories = game.skillCategories.map { skillCategoryConverter.toDto(it) },
+                id = domain.id,
+                title = domain.title,
+                description = domain.description,
+                imgSrc = domain.imgName,
+                backgroundImgSrc = domain.backgroundName,
+                groupLink = domain.groupLink,
+                currencies = domain.currencies.map { currency -> currencyConverter.toDto(currency) },
+                skillCategories = domain.skillCategories.map { skillCategoryConverter.toDto(it) },
                 maxCurrenciesCount = 3,
-                disclaimerText = game.disclaimerText,
-                itemsForSale = game.itemsForSale.map { itemForSaleConverter.toDto(it) }
+                disclaimerText = domain.disclaimerText,
+                itemsForSale = domain.itemsForSale.map { itemForSaleConverter.toDto(it) },
+                organizations = domain.organizations.map { organizationConverter.toShortDto(it) },
+                recipes = domain.recipes.map { recipeConverter.toDto(it) },
+                questionnaireTemplates = domain.questionnaireTemplates.map { questionnaireTemplateConverter.toShortDto(it) }
         )
     }
 

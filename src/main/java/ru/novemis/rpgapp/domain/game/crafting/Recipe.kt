@@ -17,7 +17,7 @@ data class Recipe (
         var target: ItemTemplate? = null,
 
         @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-        var ingredients: List<WarehouseEntry> = mutableListOf(),
+        var ingredients: List<ItemTemplate> = mutableListOf(),
 
         @ManyToOne
         var dependantSkill: Skill? = null,

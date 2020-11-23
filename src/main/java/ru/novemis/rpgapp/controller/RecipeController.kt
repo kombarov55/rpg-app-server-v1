@@ -30,18 +30,6 @@ open class RecipeController(
                 .let { converter.toDto(it) }
     }
 
-    @PostMapping("/game/{game-id}/recipe/{id}")
-    @Transactional
-    open fun edit(
-            @PathVariable("game-id") gameId: String,
-            @PathVariable("id") id: String,
-            @RequestBody form: RecipeForm
-    ): RecipeDto {
-        return converter.toDomain(form, gameId).apply { this.id = id }
-                .let { repository.save(it) }
-                .let { converter.toDto(it) }
-    }
-
     @DeleteMapping("/recipe/{id}")
     @Transactional
     open fun delete(

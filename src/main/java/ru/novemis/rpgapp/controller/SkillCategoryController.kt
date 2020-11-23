@@ -2,6 +2,7 @@ package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.SkillCategoryConverter
+import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.shop.Destination
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryDto
 import ru.novemis.rpgapp.dto.game.skill.dto.SkillCategoryShortDto
@@ -41,7 +42,7 @@ open class SkillCategoryController(
     open fun save(
             @RequestBody form: SkillCategoryForm,
             @PathVariable("game-id") gameId: String
-    ): SkillCategoryDto = converter.toDomain(form)
+    ): SkillCategoryDto = converter.toDomain(form).apply { game = Game(gameId) }
             .let { repository.save(it) }
             .let { converter.toDto(it) }
 

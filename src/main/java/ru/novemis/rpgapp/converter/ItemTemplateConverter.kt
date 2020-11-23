@@ -2,10 +2,7 @@ package ru.novemis.rpgapp.converter
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.shop.ItemTemplate
-import ru.novemis.rpgapp.dto.game.shop.dto.ItemCategoryDto
-import ru.novemis.rpgapp.dto.game.shop.dto.ItemTemplateDto
-import ru.novemis.rpgapp.dto.game.shop.dto.ItemShortDto
-import ru.novemis.rpgapp.dto.game.shop.dto.ItemTypeDto
+import ru.novemis.rpgapp.dto.game.shop.dto.*
 import ru.novemis.rpgapp.dto.game.shop.form.ItemTemplateForm
 import ru.novemis.rpgapp.repository.game.GameRepository
 import ru.novemis.rpgapp.repository.game.shop.ItemCategoryRepository
@@ -58,15 +55,12 @@ class ItemTemplateConverter(
         )
     }
 
-    fun toShortDto(domain: ItemTemplate): ItemShortDto {
-        return ItemShortDto(
+    fun toShortDto(domain: ItemTemplate): ItemTemplateShortDto {
+        return ItemTemplateShortDto(
                 id = domain.id,
                 name = domain.name,
                 img = domain.img,
-                description = domain.description,
-                canBeEquipped = domain.canBeEquipped,
-                canBeCrafted = domain.canBeCrafted,
-                canBeUsedInCraft = domain.canBeUsedInCraft
+                description = domain.description
         )
     }
 
