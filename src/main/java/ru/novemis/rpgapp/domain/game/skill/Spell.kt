@@ -17,5 +17,8 @@ data class Spell(
 
         @ManyToOne
         @JoinColumn(name = "school_lvl_id")
-        var schoolLvl: SchoolLvl? = null
+        var schoolLvl: SchoolLvl? = null,
+
+        @ManyToMany
+        var requiredSpells: List<Spell> = mutableListOf()
 )

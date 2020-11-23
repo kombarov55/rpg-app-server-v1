@@ -12,7 +12,8 @@ class SpellConverter {
         return Spell(
                 name = form.name,
                 img = form.img,
-                description = form.description
+                description = form.description,
+                requiredSpells = form.requiredSpells.map { toDomain(it) }
         )
     }
 
@@ -23,7 +24,13 @@ class SpellConverter {
                 name = domain.name,
                 description = domain.description,
                 lvl = domain.schoolLvl!!.lvl,
-                spellSchoolName = domain.schoolLvl!!.spellSchool!!.name
+                spellSchoolName = domain.schoolLvl!!.spellSchool!!.name,
+                requiredSpells = domain.requiredSpells.map {
+                    SpellDto(
+                            id = it.id,
+                            name = it.name
+                    )
+                }
         )
     }
 

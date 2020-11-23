@@ -7,5 +7,4 @@ import ru.novemis.rpgapp.domain.game.skill.SpellSchool
 interface SpellSchoolRepository : CrudRepository<SpellSchool, String> {
 
     fun findBySkillCategoryGameIdAndSkillCategoryDestination(gameId: String, destination: Destination): List<SpellSchool>
-
 }

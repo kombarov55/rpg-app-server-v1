@@ -3,6 +3,7 @@ package ru.novemis.rpgapp.controller
 import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.PriceCombinationConverter
 import ru.novemis.rpgapp.converter.SpellConverter
+import ru.novemis.rpgapp.domain.game.skill.Spell
 import ru.novemis.rpgapp.dto.game.skill.dto.SpellDto
 import ru.novemis.rpgapp.dto.game.skill.form.SpellForm
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
@@ -20,7 +21,6 @@ open class SpellController(
         private val service: SpellService,
         private val characterRepository: GameCharacterRepository,
         private val schoolLvlRepository: SchoolLvlRepository,
-        private val skillCategoryRepository: SkillCategoryRepository,
         private val priceCombinationConverter: PriceCombinationConverter,
         private val skillCategoryService: SkillCategoryService
 ) {
@@ -44,11 +44,11 @@ open class SpellController(
             @PathVariable("id") id: String,
             @RequestBody form: SpellForm
     ): SpellDto {
-        val savedEntity = repository.findById(id).get()
-
-        return converter.toDomain(form).apply {
-            this.id = savedEntity.id
-            schoolLvl = savedEntity.schoolLvl
+        return repository.findById(id).get().apply {
+            name = form.name
+            description = form.description
+            img = form.img
+            requiredSpells = form.requiredSpells.map { requiredSpell -> repository.findById(requiredSpell.id!!).get() }
         }.let { repository.save(it) }.let { converter.toDto(it) }
     }
 
@@ -75,5 +75,16 @@ open class SpellController(
                 prices = skillCategoryService.getPricesForSpell(spell, character.learnedSpells).map { priceCombinationConverter.toDto(it) }
             }
         }
+    }
+
+    @GetMapping("/spellSchool/{spell-school-id}/spell/findByName")
+    @Transactional
+    open fun findByName(
+            @PathVariable("spell-school-id") spellSchoolId: String,
+            @RequestParam("name") name: String
+    ): List<SpellDto> {
+        return repository.findByNameStartingWith(name)
+                .filter { it.schoolLvl!!.spellSchool!!.id == spellSchoolId }
+                .map { converter.toDto(it) }
     }
 }

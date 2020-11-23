@@ -4,5 +4,6 @@ data class SpellForm(
         var id: String? = null,
         var name: String = "",
         var img: String = "",
-        var description: String = ""
+        var description: String = "",
+        var requiredSpells: List<SpellForm> = mutableListOf()
 )
