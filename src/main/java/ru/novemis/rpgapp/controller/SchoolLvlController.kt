@@ -1,9 +1,6 @@
 package ru.novemis.rpgapp.controller
 
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.SchoolLvlConverter
 import ru.novemis.rpgapp.domain.game.skill.SchoolLvl
 import ru.novemis.rpgapp.dto.game.skill.dto.SchoolLvlDto
@@ -19,6 +16,12 @@ open class SchoolLvlController(
 
         private val spellSchoolRepository: SpellSchoolRepository
 ) {
+
+    @GetMapping("/schoolLvl/{id}")
+    @Transactional
+    open fun getById(
+            @PathVariable("id") id: String
+    ): SchoolLvlDto = repository.findById(id).get().let { converter.toDto(it) }
 
     @PostMapping("/spellSchool/{id}/schoolLvl")
     @Transactional

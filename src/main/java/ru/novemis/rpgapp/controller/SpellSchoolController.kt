@@ -17,6 +17,12 @@ open class SpellSchoolController(
         private val skillCategoryRepository: SkillCategoryRepository
 ) {
 
+    @GetMapping("/spellSchool/{id}")
+    @Transactional
+    open fun findById(
+            @PathVariable("id") id: String
+    ): SpellSchoolDto = repository.findById(id).get().let { converter.toDto(it) }
+
     @GetMapping("/game/{id}/skillCategory/findByDestination")
     @Transactional
     open fun findByGameIdAndDestination(
