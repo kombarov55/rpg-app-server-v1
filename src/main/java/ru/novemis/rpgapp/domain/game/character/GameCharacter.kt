@@ -8,6 +8,7 @@ import ru.novemis.rpgapp.domain.game.questionnaire.FieldToValue
 import ru.novemis.rpgapp.domain.game.questionnaire.SkillToLvl
 import ru.novemis.rpgapp.domain.game.questionnaire_template.QuestionnaireTemplate
 import ru.novemis.rpgapp.domain.game.shop.Item
+import ru.novemis.rpgapp.domain.game.shop.ItemTemplate
 import ru.novemis.rpgapp.domain.game.skill.Spell
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import java.util.*
@@ -75,4 +76,12 @@ class GameCharacter(
         val credits: List<Credit> = mutableListOf(),
 
         var activityPoints: Int = 0
-)
+) {
+        fun removeItem(itemTemplate: ItemTemplate) {
+                items = items.filter { it.itemTemplate!!.id != itemTemplate.id }
+        }
+
+        fun addItem(itemTemplate: ItemTemplate) {
+                items += itemTemplate.generateItem()
+        }
+}
