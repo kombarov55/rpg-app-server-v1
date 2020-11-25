@@ -37,7 +37,8 @@ class RecipeConverter(
     fun toDto(domain: Recipe): RecipeDto {
         return RecipeDto(
                 id = domain.id,
-                target = itemTemplateConverter.toDto(domain.target!!),
+                name = domain.target!!.name,
+                target = itemTemplateConverter.toShortDto(domain.target!!),
                 ingredients = domain.ingredients.map { itemTemplateAmountConverter.toDto(it) },
                 dependantSkill = skillConverter.toShortDto(domain.dependantSkill!!),
                 minSkillLvl = domain.minSkillLvl,

@@ -27,7 +27,8 @@ class ItemConverter(
                 canBeEquipped = domain.itemTemplate.canBeEquipped,
                 canBeUsedInCraft = domain.itemTemplate.canBeUsedInCraft,
                 canBeCrafted = domain.itemTemplate.canBeCrafted,
-                lvl = domain.lvl
+                lvl = domain.lvl,
+                templateId = domain.itemTemplate.id
         )
     }
 

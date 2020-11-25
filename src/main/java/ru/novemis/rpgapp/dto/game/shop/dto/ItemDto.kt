@@ -17,5 +17,6 @@ class ItemDto(
         val canBeCrafted: Boolean,
         val upgradable: Boolean,
         val lvl: Int,
-        val upgrades: List<ItemUpgradeDto>
+        val upgrades: List<ItemUpgradeDto>,
+        val templateId: String
 )
