@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.domain.game.crafting
 
+import ru.novemis.rpgapp.domain.game.shop.ItemTemplate
 import java.util.*
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -7,15 +8,15 @@ import javax.persistence.JoinColumn
 import javax.persistence.ManyToOne
 
 @Entity
-data class SuccessChanceDependency(
+class ItemTemplateAmount(
         @Id
         var id: String = UUID.randomUUID().toString(),
 
-        var min: Int = 0,
+        @ManyToOne
+        @JoinColumn(name = "item_template_id")
+        var itemTemplate: ItemTemplate? = null,
 
-        var max: Int? = null,
-
-        var percent: Int = 0,
+        var amount: Int = 1,
 
         @ManyToOne
         @JoinColumn(name = "recipe_id")

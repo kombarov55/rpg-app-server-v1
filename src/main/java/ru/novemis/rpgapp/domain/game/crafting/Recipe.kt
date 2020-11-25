@@ -14,17 +14,19 @@ data class Recipe (
         var id: String = UUID.randomUUID().toString(),
 
         @ManyToOne
+        @JoinColumn(name = "target_id")
         var target: ItemTemplate? = null,
 
-        @OneToMany(cascade = [CascadeType.ALL], orphanRemoval = true)
-        var ingredients: List<ItemTemplate> = mutableListOf(),
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "recipe")
+        var ingredients: List<ItemTemplateAmount> = mutableListOf(),
 
         @ManyToOne
+        @JoinColumn(name = "dependant_skill_id")
         var dependantSkill: Skill? = null,
 
         var minSkillLvl: Int = 0,
 
-        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "recipe", orphanRemoval = true)
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "recipe")
         var successChanceDependencies: List<SuccessChanceDependency> = mutableListOf(),
 
         @ManyToOne
