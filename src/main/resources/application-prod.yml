@@ -14,3 +14,13 @@ spring:
         temp:
           use_jdbc_metadata_defaults: false
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
+
+security:
+  require-ssl: true
+
+server:
+  ssl:
+    key-store: /etc/letsencrypt/live/www.novemis.ru/keystore.p12
+    key-store-password: 939388536
+    keyStoreType: PKCS12
+    keyAlias: tomcat
