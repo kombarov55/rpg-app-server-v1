@@ -1,9 +1,11 @@
 spring:
   datasource:
-    url: jdbc:h2:file:/var/h2/rpg
-    username: sa
-    password: password
-    driver-class-name: org.h2.Driver
+    url: jdbc:postgresql://localhost:5432/rpg
+    username: rpg
+    password: rpg
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
 
 server:
   ssl:
