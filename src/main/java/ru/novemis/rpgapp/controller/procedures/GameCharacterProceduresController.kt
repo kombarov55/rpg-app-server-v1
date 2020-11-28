@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.novemis.rpgapp.domain.game.questionnaire.SkillToLvl
-import ru.novemis.rpgapp.domain.game.shop.Item
 import ru.novemis.rpgapp.domain.game.skill.Skill
 import ru.novemis.rpgapp.domain.game.skill.Spell
 import ru.novemis.rpgapp.dto.game.common.form.PriceForm
@@ -18,7 +17,7 @@ import javax.transaction.Transactional
 @RestController
 @RequestMapping("/gameCharacter")
 open class GameCharacterProceduresController(
-        private val repository: GameCharacterRepository,
+        private val gameCharacterRepository: GameCharacterRepository,
         private val balanceService: BalanceService,
         private val spellRepository: SpellRepository,
         private val itemRepository: ItemRepository
@@ -35,12 +34,12 @@ open class GameCharacterProceduresController(
     open fun upgradeSkill(
             @RequestBody form: UpgradeSkillForm
     ) {
-        val character = repository.findById(form.characterId).get()
+        val character = gameCharacterRepository.findById(form.characterId).get()
 
         form.chosenPrice.forEach { amount -> balanceService.subtract(character.game!!.id, character.balance!!.id, amount.name, amount.amount) }
 
         character.learnedSkills.find { it.skill!!.id == form.skillId }!!.amount += 1
-        repository.save(character)
+        gameCharacterRepository.save(character)
     }
 
     data class PurchaseSkillForm(
@@ -52,11 +51,11 @@ open class GameCharacterProceduresController(
     @PostMapping("/purchaseSkill.do")
     @Transactional
     open fun purchaseSkill(@RequestBody form: PurchaseSkillForm) {
-        val character = repository.findById(form.characterId).get()
+        val character = gameCharacterRepository.findById(form.characterId).get()
 
         form.chosenPrice.forEach { amount -> balanceService.subtract(character.game!!.id, character.balance!!.id, amount.name, amount.amount) }
         character.learnedSkills += SkillToLvl(skill = Skill(id = form.skillId), character = character)
-        repository.save(character)
+        gameCharacterRepository.save(character)
     }
 
     data class PurchaseSpellRq(
@@ -72,11 +71,11 @@ open class GameCharacterProceduresController(
     @PostMapping("/purchaseSpell.do")
     @Transactional
     open fun purchaseSpell(@RequestBody rq: PurchaseSpellRq): PurchaseSpellRs {
-        val character = repository.findById(rq.characterId).get()
+        val character = gameCharacterRepository.findById(rq.characterId).get()
 
         rq.chosenPrice.forEach { amount -> balanceService.subtract(character.game!!.id, character.balance!!.id, amount.name, amount.amount) }
         character.learnedSpells += Spell(id = rq.spellId)
-        repository.save(character)
+        gameCharacterRepository.save(character)
 
         val spell = spellRepository.findById(rq.spellId).get()
         val amountOfLearnedSpells = character.learnedSpells.filter { learnedSpell -> learnedSpell.schoolLvl == spell.schoolLvl }.size
@@ -96,10 +95,40 @@ open class GameCharacterProceduresController(
     @PostMapping("/disposeItem.do")
     @Transactional
     open fun disposeItem(@RequestBody rq: DisposeItemRq) {
-        repository.findById(rq.characterId).get()
+        gameCharacterRepository.findById(rq.characterId).get()
                 .removeItem(rq.itemId)
-                .let { repository.save(it) }
+                .let { gameCharacterRepository.save(it) }
 
         itemRepository.deleteById(rq.itemId)
+    }
+
+    data class EquipItemRq(
+            val characterId: String = "",
+            val itemId: String = ""
+    )
+
+    @PostMapping("/equipItem.do")
+    @Transactional
+    open fun equipItem(@RequestBody rq: EquipItemRq) {
+        val character = gameCharacterRepository.findById(rq.characterId).get()
+        val item = itemRepository.findById(rq.itemId).get()
+
+        character.equipItem(item)
+        gameCharacterRepository.save(character)
+    }
+    
+    data class UnequipItemRq(
+            val characterId: String = "", 
+            val itemId: String = ""
+    )
+    
+    @PostMapping("/unequipItem.do")
+    @Transactional
+    open fun unequipItem(@RequestBody rq: UnequipItemRq) {
+        val character = gameCharacterRepository.findById(rq.characterId).get()
+        val item = itemRepository.findById(rq.itemId).get()
+
+        character.unequipItem(item)
+        gameCharacterRepository.save(character)
     }
 }

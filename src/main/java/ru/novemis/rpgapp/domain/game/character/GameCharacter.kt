@@ -103,4 +103,36 @@ class GameCharacter(
     }
 
     fun addItem(itemTemplate: ItemTemplate) = addItem(itemTemplate.generateItem())
+
+    fun equipItem(item: Item): GameCharacter {
+        if (!item.itemTemplate!!.canBeEquipped) {
+            throw RuntimeException("Невозможно одеть предмет.")
+        }
+
+        val maxAmount = game!!.settings.maxEquippedAmounts.find {
+            item.itemTemplate!!.category!!.id == it.itemCategory!!.id
+        }?.amount ?: throw RuntimeException("Невозможно одеть предмет.")
+
+        val equipppedAmount = equippedItems.filter {
+            it.itemTemplate!!.category!!.id == item.itemTemplate!!.category!!.id
+        }.size
+
+        val itemAmount = item.itemTemplate!!.slots
+
+        if (equipppedAmount + itemAmount > maxAmount) {
+            throw RuntimeException("Невозможно одеть предмет.")
+        }
+
+        equippedItems += item
+        removeItem(item)
+
+        return this
+    }
+
+    fun unequipItem(item: Item): GameCharacter {
+        equippedItems = equippedItems.filter { it.id != item.id }
+        addItem(item)
+
+        return this
+    }
 }
