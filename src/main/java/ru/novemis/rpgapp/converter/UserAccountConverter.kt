@@ -2,6 +2,8 @@ package ru.novemis.rpgapp.converter
 
 import org.springframework.stereotype.Service
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
+import ru.novemis.rpgapp.dto.game.character.dto.GameCharacterShortDto
+import ru.novemis.rpgapp.dto.game.dto.GameShortDto
 import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountDto
 import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountPreferencesDto
 import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountShortDto
@@ -23,7 +25,14 @@ class UserAccountConverter(
                             favAnnouncementIds = it.userAccountPreferences.favoriteAnnouncements.map { it.id },
                             respondedAnnouncementIds = it.userAccountPreferences.respondedAnnouncements.map { it.id }
                     ),
-                    gameToActiveCharacter = userAccount.gameToActiveCharacter.map { gameToActiveCharacterConverter.toDto(it) }
+                    gameToActiveCharacter = userAccount.gameToActiveCharacter.map { gameToActiveCharacterConverter.toDto(it) },
+                    characters = userAccount.characters.map {
+                        GameCharacterShortDto(
+                                id = it.id,
+                                name = it.name,
+                                game = GameShortDto(id = it.game!!.id)
+                        )
+                    }
             )
         }
     }

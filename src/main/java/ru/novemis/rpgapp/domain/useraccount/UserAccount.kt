@@ -1,6 +1,7 @@
 package ru.novemis.rpgapp.domain.useraccount
 
 import ru.novemis.rpgapp.domain.announcement.Announcement
+import ru.novemis.rpgapp.domain.game.character.GameCharacter
 import java.util.*
 import javax.persistence.*
 
@@ -30,5 +31,8 @@ data class UserAccount(
         var activityPoints: List<ActivityPoints> = emptyList(),
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "userAccount")
-        var gameToActiveCharacter: List<GameToActiveCharacter> = mutableListOf()
+        var gameToActiveCharacter: List<GameToActiveCharacter> = mutableListOf(),
+
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "owner")
+        var characters: List<GameCharacter> = emptyList()
 )
