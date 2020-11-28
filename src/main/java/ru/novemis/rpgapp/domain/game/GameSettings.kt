@@ -27,7 +27,7 @@ class GameSettings(
                 return apply {
                         disclaimerText = patch.disclaimerText ?: disclaimerText
                         isCharImgUploadable = patch.charImgUploadable ?: isCharImgUploadable
-                        maxEquippedAmounts = patch.maxEquippedAmounts?.map { it.toDomain() } ?: maxEquippedAmounts
+                        maxEquippedAmounts = patch.maxEquippedAmounts?.map { it.toDomain(gameSettings = this) } ?: maxEquippedAmounts
                         inventorySize = patch.inventorySize ?: inventorySize
                 }
         }
