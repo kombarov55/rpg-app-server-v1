@@ -96,9 +96,9 @@ open class GameCharacterProceduresController(
     @PostMapping("/disposeItem.do")
     @Transactional
     open fun disposeItem(@RequestBody rq: DisposeItemRq) {
-        repository.findById(rq.characterId).get().apply {
-            items = items.filter { it.id != rq.itemId }
-        }.let { repository.save(it) }
+        repository.findById(rq.characterId).get()
+                .removeItem(rq.itemId)
+                .let { repository.save(it) }
 
         itemRepository.deleteById(rq.itemId)
     }

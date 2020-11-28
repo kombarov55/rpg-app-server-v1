@@ -77,11 +77,27 @@ class GameCharacter(
 
         var activityPoints: Int = 0
 ) {
-        fun removeItem(itemTemplate: ItemTemplate) {
-                items = items.filter { it.itemTemplate!!.id != itemTemplate.id }
-        }
+    fun removeItem(itemTemplate: ItemTemplate) {
+        items = items.filter { it.itemTemplate!!.id != itemTemplate.id }
+    }
 
-        fun addItem(itemTemplate: ItemTemplate) {
-                items += itemTemplate.generateItem()
+    fun removeItem(itemId: String): GameCharacter = apply {
+        items = items.filter { it.id != itemId }
+    }
+
+    fun removeItem(item: Item): GameCharacter = apply {
+        items = items.filter { it.id != item.id }
+    }
+
+    fun addItem(item: Item): GameCharacter {
+        if (items.size + 1 <= game!!.settings.inventorySize) {
+            items += item
+
+            return this
+        } else {
+            throw RuntimeException("Инвентарь переполнен.")
         }
+    }
+
+    fun addItem(itemTemplate: ItemTemplate) = addItem(itemTemplate.generateItem())
 }

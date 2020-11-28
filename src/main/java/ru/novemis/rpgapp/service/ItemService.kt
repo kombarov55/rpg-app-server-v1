@@ -31,15 +31,13 @@ open class ItemService(
     }
 
     open fun removeItemFromCharacter(characterId: String, item: Item) {
-        characterRepository.findById(characterId).get().apply {
-            items = items.filter { it.id != item.id }
-        }.also { characterRepository.save(it) }
+        characterRepository.findById(characterId).get()
+                .removeItem(item)
+                .also { characterRepository.save(it) }
     }
 
     open fun addItemToCharacter(characterId: String, item: Item) {
-        characterRepository.findById(characterId).get().apply {
-            items += item
-        }.also { characterRepository.save(it) }
+        characterRepository.findById(characterId).get().addItem(item).also { characterRepository.save(it) }
     }
 
     open fun removeItemFromOrganization(organizationId: String, item: Item) {

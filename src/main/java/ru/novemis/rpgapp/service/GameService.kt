@@ -128,7 +128,7 @@ open class GameService(
         itemForSaleRepository.delete(itemForSale)
         game.itemsForSale = game.itemsForSale.filter { it.id != itemForSaleId }
 
-        character.items += itemForSale.item!!
+        character.addItem(itemForSale.item!!)
 
         gameRepository.save(game)
         characterRepository.save(character)
