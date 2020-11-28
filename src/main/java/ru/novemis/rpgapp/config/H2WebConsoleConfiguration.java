@@ -1,9 +1,11 @@
 package ru.novemis.rpgapp.config;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 @Component
+@Profile("dev")
 public class H2WebConsoleConfiguration {
 
     private org.h2.tools.Server webServer;
