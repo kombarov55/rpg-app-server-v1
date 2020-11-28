@@ -5,12 +5,14 @@ import ru.novemis.rpgapp.converter.GameSettingsConverter
 import ru.novemis.rpgapp.dto.game.dto.GameSettingsDto
 import ru.novemis.rpgapp.dto.game.dto.MaxEquippedAmountDto
 import ru.novemis.rpgapp.repository.game.GameSettingsRepository
+import ru.novemis.rpgapp.repository.game.MaxEquippedAmountRepository
 import javax.transaction.Transactional
 
 @RestController
 open class GameSettingsController(
         private val repository: GameSettingsRepository,
-        private val converter: GameSettingsConverter
+        private val converter: GameSettingsConverter,
+        private val maxEquipmentAmountRepository: MaxEquippedAmountRepository
 ) {
 
     data class GameSettingsPatch(
@@ -27,7 +29,7 @@ open class GameSettingsController(
             @RequestBody patch: GameSettingsPatch
     ): GameSettingsDto {
         return repository.findByGameId(gameId)
-                .applyPatch(patch)
+                .applyPatch(patch, maxEquipmentAmountRepository)
                 .let { repository.save(it) }
                 .let { converter.toDto(it) }
     }
@@ -38,5 +40,6 @@ open class GameSettingsController(
             @PathVariable("id") gameId: String
     ): GameSettingsDto {
         return repository.findByGameId(gameId).let { converter.toDto(it) }
+
     }
 }
