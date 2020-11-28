@@ -54,8 +54,6 @@ data class Game(
         @OneToMany(cascade = [CascadeType.ALL])
         var itemsSale: List<Item> = emptyList(),
 
-        var disclaimerText: String? = null,
-
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game", orphanRemoval = true)
         var questionnaireTemplates: List<QuestionnaireTemplate> = mutableListOf(),
 
@@ -64,5 +62,8 @@ data class Game(
         var deletionDate: Date? = null,
 
         @OneToMany(mappedBy = "game", cascade = [CascadeType.ALL])
-        var organizations: List<Organization> = emptyList()
+        var organizations: List<Organization> = emptyList(),
+
+        @OneToOne(cascade = [CascadeType.ALL], mappedBy = "game")
+        var settings: GameSettings = GameSettings()
 )

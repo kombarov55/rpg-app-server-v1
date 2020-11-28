@@ -18,8 +18,8 @@ data class GameDto(
         val skillCategories: List<SkillCategoryDto>,
         val organizations: List<OrganizationShortDto>,
         val maxCurrenciesCount: Int,
-        val disclaimerText: String?,
         val itemsForSale: List<ItemForSaleDto>,
         val recipes: List<RecipeDto>,
-        val questionnaireTemplates: List<QuestionnaireTemplateShortDto>
+        val questionnaireTemplates: List<QuestionnaireTemplateShortDto>,
+        val settings: GameSettingsDto
 )

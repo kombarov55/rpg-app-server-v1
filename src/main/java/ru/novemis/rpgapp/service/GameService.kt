@@ -64,7 +64,6 @@ open class GameService(
             imgName = form.img
             backgroundName = form.background
             groupLink = appendProtocol(form.groupLink)
-            disclaimerText = form.disclaimerText
         }.let { gameRepository.save(it) }.let { converter.toDto(it) }
     }
 

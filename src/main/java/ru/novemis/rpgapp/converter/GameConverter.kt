@@ -19,7 +19,8 @@ class GameConverter(
         private val itemForSaleConverter: ItemForSaleConverter,
         private val organizationConverter: OrganizationConverter,
         private val recipeConverter: RecipeConverter,
-        private val questionnaireTemplateConverter: QuestionnaireTemplateConverter
+        private val questionnaireTemplateConverter: QuestionnaireTemplateConverter,
+        private val gameSettingsConverter: GameSettingsConverter
 ) {
 
     fun toDomain(form: GameForm, gameId: String? = null, networkId: String? = null, subnetworkId: String? = null): Game {
@@ -35,7 +36,6 @@ class GameConverter(
             network = networkId?.let { networkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             subnetwork = subnetworkId?.let { subnetworkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             currencies = form.currencies.map { currencyForm -> currencyConverter.toDomainOrExisting(thatGame, currencyForm) }
-            disclaimerText = form.disclaimerText
         }
     }
 
@@ -50,11 +50,11 @@ class GameConverter(
                 currencies = domain.currencies.map { currency -> currencyConverter.toDto(currency) },
                 skillCategories = domain.skillCategories.map { skillCategoryConverter.toDto(it) },
                 maxCurrenciesCount = 3,
-                disclaimerText = domain.disclaimerText,
                 itemsForSale = domain.itemsForSale.map { itemForSaleConverter.toDto(it) },
                 organizations = domain.organizations.map { organizationConverter.toShortDto(it) },
                 recipes = domain.recipes.map { recipeConverter.toDto(it) },
-                questionnaireTemplates = domain.questionnaireTemplates.map { questionnaireTemplateConverter.toShortDto(it) }
+                questionnaireTemplates = domain.questionnaireTemplates.map { questionnaireTemplateConverter.toShortDto(it) },
+                settings = gameSettingsConverter.toDto(domain.settings)
         )
     }
 
