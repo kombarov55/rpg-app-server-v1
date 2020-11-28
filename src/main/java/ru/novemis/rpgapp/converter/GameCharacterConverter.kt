@@ -26,6 +26,7 @@ class GameCharacterConverter(
                 learnedSkills = domain.learnedSkills.map { skillToLvlConverter.toDto(it) },
                 balanceId = domain.balance!!.id,
                 items = domain.items.map { itemConverter.toDto(it) },
+                equippedItems = domain.equippedItems.map { itemConverter.toDto(it) },
                 credits = domain.credits.filter {!it.isPaid }.map { creditConverter.toDto(it) },
                 activityPoints = domain.activityPoints
         )

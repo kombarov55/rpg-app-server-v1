@@ -34,6 +34,9 @@ class GameCharacter(
         @OneToMany(cascade = [CascadeType.ALL])
         var items: List<Item> = mutableListOf(),
 
+        @OneToMany(cascade = [CascadeType.ALL])
+        var equippedItems: List<Item> = emptyList(),
+
         @ManyToMany
         @JoinTable(
                 name = "organization__game_character",
