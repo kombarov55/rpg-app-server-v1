@@ -10,7 +10,7 @@ public class H2WebConsoleConfiguration {
 
     @EventListener(org.springframework.context.event.ContextRefreshedEvent.class)
     public void start() throws java.sql.SQLException {
-        this.webServer = org.h2.tools.Server.createWebServer("-webPort", "8082", "-tcpAllowOthers").start();
+        this.webServer = org.h2.tools.Server.createWebServer("-webPort", "8082", "-tcpAllowOthers", "-webAllowOthers").start();
     }
 
     @EventListener(org.springframework.context.event.ContextClosedEvent.class)
