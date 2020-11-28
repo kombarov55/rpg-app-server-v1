@@ -1,9 +1,6 @@
 package ru.novemis.rpgapp.controller
 
-import org.springframework.web.bind.annotation.PatchMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.converter.GameSettingsConverter
 import ru.novemis.rpgapp.dto.game.dto.GameSettingsDto
 import ru.novemis.rpgapp.dto.game.dto.MaxEquippedAmountDto
@@ -33,5 +30,13 @@ open class GameSettingsController(
                 .applyPatch(patch)
                 .let { repository.save(it) }
                 .let { converter.toDto(it) }
+    }
+
+    @Transactional
+    @GetMapping("/game/{id}/settings")
+    open fun getByGameId(
+            @PathVariable("id") gameId: String
+    ): GameSettingsDto {
+        return repository.findByGameId(gameId).let { converter.toDto(it) }
     }
 }
