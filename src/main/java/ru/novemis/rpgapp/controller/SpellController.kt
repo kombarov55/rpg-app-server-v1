@@ -33,7 +33,7 @@ open class SpellController(
 
     ): SpellDto {
         val schoolLvl = schoolLvlRepository.findById(schoolLvlId).get()
-        val spell = converter.toDomain(form).apply { this.schoolLvl = schoolLvl }
+        val spell = converter.toDomain(form, schoolLvl)
 
         return repository.save(spell).let { converter.toDto(it) }
     }
