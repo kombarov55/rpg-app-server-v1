@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.domain.game.shop
 
+import ru.novemis.rpgapp.dto.game.character.dto.SkillStatsDto
 import java.util.*
 import javax.persistence.Entity
 import javax.persistence.Id
@@ -28,4 +29,21 @@ class Item(
             if (lvl == 0)
                 itemTemplate!!.skillInfluences else
                 itemTemplate!!.upgrades.find { it.lvlNum == lvl }!!.skillInfluences
+
+    fun calculateSkillStats(): List<SkillStatsDto> {
+        val skillInfluences = calculateSkillInfluence()
+        val skills = skillInfluences.map { it.skill!! }.toSet()
+
+        return skills.map { skill ->
+            val finalAmount = skillInfluences.filter { it.skill!!.id == skill.id }
+                                             .fold(0) { acc, skillInfluence ->
+                                                 skillInfluence.modifier!!.calculate(acc, skillInfluence.amount)
+                                             }
+            SkillStatsDto(
+                    skillName = skill.name,
+                    initialAmount = 0,
+                    bonusAmount = finalAmount
+            )
+        }
+    }
 }

@@ -20,7 +20,7 @@ class ItemConverter(
                 category = domain.itemTemplate.category!!.name,
                 type = domain.itemTemplate.type!!.name,
                 slots = domain.itemTemplate.slots,
-                skillInfluences = domain.itemTemplate.skillInfluences.map { skillInfluenceConverter.toDto(it) },
+                skillInfluences = domain.calculateSkillStats(),
                 destination = domain.itemTemplate.destination!!,
                 upgradable = domain.itemTemplate.upgradable,
                 upgrades = domain.itemTemplate.upgrades.map { itemUpgradeConverter.toDto(it) },
