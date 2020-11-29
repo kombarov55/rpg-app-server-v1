@@ -6,7 +6,7 @@ data class SkillForm(
         var id: String = "",
         var name: String = "",
         var img: String = "",
-        var description: String = "",
+        var description: String? = "",
         var prices: List<List<PriceForm>> = mutableListOf(),
         var upgradable: Boolean = false
 )
