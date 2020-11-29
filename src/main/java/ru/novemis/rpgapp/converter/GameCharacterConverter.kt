@@ -22,6 +22,7 @@ class GameCharacterConverter(
                 name = domain.name,
                 img = domain.img,
                 fieldNameToValueList = domain.fieldToValueList.map { it.field!!.name to it.value }.toMap(),
+                skillStats = domain.calculateStats(),
                 balance = domain.balance!!.amounts.map { priceConverter.toDto(it) },
                 learnedSpells = domain.learnedSpells.map { spellConverter.toDto(it) },
                 learnedSkills = domain.learnedSkills.map { skillToLvlConverter.toDto(it) },

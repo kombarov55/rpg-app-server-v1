@@ -12,6 +12,7 @@ import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
 import ru.novemis.rpgapp.repository.game.shop.ItemRepository
 import ru.novemis.rpgapp.repository.game.skillcategory.SpellRepository
 import ru.novemis.rpgapp.service.BalanceService
+import ru.novemis.rpgapp.service.ItemService
 import javax.transaction.Transactional
 
 @RestController
@@ -20,7 +21,8 @@ open class GameCharacterProceduresController(
         private val gameCharacterRepository: GameCharacterRepository,
         private val balanceService: BalanceService,
         private val spellRepository: SpellRepository,
-        private val itemRepository: ItemRepository
+        private val itemRepository: ItemRepository,
+        private val itemService: ItemService
 ) {
 
     data class UpgradeSkillForm(
@@ -116,12 +118,12 @@ open class GameCharacterProceduresController(
         character.equipItem(item)
         gameCharacterRepository.save(character)
     }
-    
+
     data class UnequipItemRq(
-            val characterId: String = "", 
+            val characterId: String = "",
             val itemId: String = ""
     )
-    
+
     @PostMapping("/unequipItem.do")
     @Transactional
     open fun unequipItem(@RequestBody rq: UnequipItemRq) {
@@ -130,5 +132,25 @@ open class GameCharacterProceduresController(
 
         character.unequipItem(item)
         gameCharacterRepository.save(character)
+    }
+
+    data class UpgradeItemRq(
+            val characterId: String = "",
+            val itemId: String = "",
+            val amounts: List<PriceForm> = emptyList()
+    )
+
+    @PostMapping("/upgradeItem.do")
+    @Transactional
+    open fun upgradeItem(@RequestBody rq: UpgradeItemRq) {
+        val character = gameCharacterRepository.findById(rq.characterId).get()
+
+        rq.amounts.forEach { amount ->
+            balanceService.subtract(character.game!!.id, character.balance!!.id, amount.name, amount.amount)
+        }
+
+        itemRepository.findById(rq.itemId).get()
+                .upgrade()
+                .also { itemRepository.save(it) }
     }
 }

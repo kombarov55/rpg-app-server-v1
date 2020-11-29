@@ -15,5 +15,17 @@ class Item(
         @JoinColumn(name = "item_template_id")
         val itemTemplate: ItemTemplate? = null,
 
-        val lvl: Int = 0
-)
+        var lvl: Int = 0
+) {
+    fun upgrade(): Item = apply {
+        lvl += 1
+    }
+
+    fun getCurrentLvl(): ItemUpgrade = itemTemplate!!.upgrades.find { it.lvlNum == lvl }!!
+    fun getNextLvl(): ItemUpgrade? = itemTemplate!!.upgrades.find { it.lvlNum == lvl + 1 }
+
+    fun calculateSkillInfluence(): List<SkillInfluence> =
+            if (lvl == 0)
+                itemTemplate!!.skillInfluences else
+                itemTemplate!!.upgrades.find { it.lvlNum == lvl }!!.skillInfluences
+}

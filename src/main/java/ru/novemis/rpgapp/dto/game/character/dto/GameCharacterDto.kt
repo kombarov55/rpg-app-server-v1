@@ -11,6 +11,7 @@ data class GameCharacterDto(
         val name: String,
         val img: String,
         val fieldNameToValueList: Map<String, String>,
+        val skillStats: List<SkillStatsDto>,
         val balance: List<PriceDto>,
         val learnedSpells: List<SpellDto>,
         val learnedSkills: List<SkillToLvlDto>,

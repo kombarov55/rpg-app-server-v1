@@ -12,6 +12,13 @@ enum class ArithmeticModifier {
             },
             value = this.name
     )
+
+    fun calculate(initialAmount: Int, amount: Int): Int = when (this) {
+        PLUS -> initialAmount + amount
+        MINUS -> initialAmount - amount
+        MULTIPLY -> initialAmount * amount
+        DIVIDE -> initialAmount / amount
+    }
 }
 
 data class ArithmeticModifierDto(

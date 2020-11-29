@@ -11,6 +11,7 @@ import ru.novemis.rpgapp.domain.game.shop.Item
 import ru.novemis.rpgapp.domain.game.shop.ItemTemplate
 import ru.novemis.rpgapp.domain.game.skill.Spell
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
+import ru.novemis.rpgapp.dto.game.character.dto.SkillStatsDto
 import java.util.*
 import javax.persistence.*
 
@@ -136,5 +137,31 @@ class GameCharacter(
         addItem(item)
 
         return this
+    }
+
+    fun calculateStats(): List<SkillStatsDto> {
+        val itemSkillInfluences = equippedItems.flatMap { it.calculateSkillInfluence() }
+
+        val usedSkills = game!!.skillCategories
+                .filter { !it.complex }
+                .flatMap { it.skills }
+                .filter { skill ->
+                    learnedSkills.any { it.skill!!.id == skill.id } ||
+                    itemSkillInfluences.any { it.skill!!.id == skill.id }
+                }
+
+        return usedSkills.map { skill ->
+            val initialAmount = learnedSkills.find { it.skill!!.id == skill.id }?.amount ?: 0
+            val finalAmount = itemSkillInfluences.filter { it.skill!!.id == skill.id }
+                                                 .fold(initialAmount) { acc, skillInfluence ->
+                                                     skillInfluence.modifier!!.calculate(acc, skillInfluence.amount)
+                                                 }
+
+            SkillStatsDto(
+                    skillName = skill.name,
+                    initialAmount = initialAmount,
+                    bonusAmount = finalAmount - initialAmount
+            )
+        }
     }
 }
