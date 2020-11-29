@@ -54,7 +54,7 @@ open class CreditService(
         try {
             balanceService.transfer(gameId, organizationBalanceId, characterBalanceId, currencyName, amount)
         } catch (e: RuntimeException) {
-            throw RuntimeException("Что то пошло не так:)", e)
+            throw RuntimeException("У организации недостаточно средств", e)
         }
     }
 
