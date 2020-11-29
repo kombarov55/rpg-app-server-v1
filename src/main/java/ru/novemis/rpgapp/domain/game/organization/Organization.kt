@@ -55,9 +55,29 @@ class Organization(
         @JoinColumn(name = "game_id")
         var game: Game? = null
 ) {
-        fun applyPatch(patch: OrganizationController.OrganizationPatch): Organization {
-                this.incomeTax = patch.incomeTax ?: this.incomeTax
+    fun applyPatch(patch: OrganizationController.OrganizationPatch): Organization = apply {
+        this.incomeTax = patch.incomeTax ?: this.incomeTax
+    }
 
-                return this
-        }
+    fun equipItem(itemId: String): Organization = apply {
+        val item = items.find { it.id == itemId }!!
+        removeItem(itemId)
+        (equippedItems as MutableList).add(item)
+    }
+
+    fun unequipItem(itemId: String): Organization = apply {
+        val item = equippedItems.find { it.id == itemId }!!
+        (equippedItems as MutableList).removeIf { it.id == itemId }
+        addItem(item)
+    }
+
+    fun addItem(item: Item) : Organization = apply {
+        (items as MutableList).add(item)
+    }
+
+    fun removeItem(itemId: String): Organization = apply {
+        (items as MutableList).removeIf { it.id == itemId }
+    }
+
+
 }
