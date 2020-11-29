@@ -20,6 +20,7 @@ class GameCharacterConverter(
         return GameCharacterDto(
                 id = domain.id,
                 name = domain.name,
+                img = domain.img,
                 fieldNameToValueList = domain.fieldToValueList.map { it.field!!.name to it.value }.toMap(),
                 balance = domain.balance!!.amounts.map { priceConverter.toDto(it) },
                 learnedSpells = domain.learnedSpells.map { spellConverter.toDto(it) },

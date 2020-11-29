@@ -9,6 +9,7 @@ import ru.novemis.rpgapp.dto.game.skill.dto.SpellDto
 data class GameCharacterDto(
         val id: String,
         val name: String,
+        val img: String,
         val fieldNameToValueList: Map<String, String>,
         val balance: List<PriceDto>,
         val learnedSpells: List<SpellDto>,

@@ -21,6 +21,8 @@ class GameCharacter(
 
         var name: String = "",
 
+        var img: String = "",
+
         @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
         @JoinColumn(name = "balance_id")
         var balance: Balance? = null,
