@@ -13,7 +13,7 @@ data class SkillUpgrade(
         var lvlNum: Int = -1,
 
         @Column(columnDefinition = "TEXT")
-        var description: String? = "",
+        var description: String = "",
 
         @OneToMany(cascade = [CascadeType.ALL])
         var prices: List<PriceCombination> = mutableListOf(),

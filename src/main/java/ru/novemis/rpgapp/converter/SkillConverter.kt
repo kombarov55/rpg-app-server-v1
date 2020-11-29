@@ -16,7 +16,7 @@ class SkillConverter(
     fun toDomain(form: SkillForm, gameId: String, skillCategory: SkillCategory): Skill {
         return Skill().apply {
             name = form.name
-            description = form.description
+            description = form.description ?: ""
             img = form.img
             prices = form.prices.map { listOfPrices -> priceCombinationConverter.toDomain(listOfPrices, gameId) }
             upgradable = form.upgradable

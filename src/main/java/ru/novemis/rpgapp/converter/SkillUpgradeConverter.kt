@@ -13,7 +13,7 @@ class SkillUpgradeConverter(
     fun toDomain(form: SkillUpgradeForm, gameId: String): SkillUpgrade {
         return SkillUpgrade(
                 lvlNum = form.lvlNum,
-                description = form.description,
+                description = form.description ?: "",
                 prices = form.prices.map { priceCombinationConverter.toDomain(it, gameId) }
         )
     }

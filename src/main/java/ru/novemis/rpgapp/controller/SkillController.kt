@@ -70,7 +70,7 @@ open class SkillController(
 
             name = form.name
             img = form.img
-            description = form.description
+            description = form.description ?: ""
 
             setPrices(form.prices.map { priceCombinationConverter.toDomain(it, gameId) })
 
