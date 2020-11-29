@@ -1,6 +1,7 @@
 package ru.novemis.rpgapp.controller
 
 import org.springframework.web.bind.annotation.*
+import ru.novemis.rpgapp.converter.PriceCombinationConverter
 import ru.novemis.rpgapp.converter.SkillConverter
 import ru.novemis.rpgapp.converter.SkillUpgradeConverter
 import ru.novemis.rpgapp.domain.game.shop.Destination
@@ -19,7 +20,8 @@ open class SkillController(
         private val skillCategoryRepository: SkillCategoryRepository,
         private val converter: SkillConverter,
         private val skillUpgradeConverter: SkillUpgradeConverter,
-        private val skillUpgradeRepository: SkillUpgradeRepository
+        private val skillUpgradeRepository: SkillUpgradeRepository,
+        private val priceCombinationConverter: PriceCombinationConverter
 ) {
 
     @GetMapping("/game/{game-id}/skill/{id}")
@@ -63,12 +65,15 @@ open class SkillController(
             @PathVariable("id") id: String,
             @RequestBody form: SkillForm
     ): SkillDto {
-        val prev = repository.findById(id).orElseThrow { IllegalArgumentException() }
-        val updated = converter.toDomain(form, prev.skillCategory!!).apply { this.id = id }
+        return repository.findById(id).get().apply {
+            val gameId = skillCategory!!.game!!.id
 
-        return repository
-                .save(updated)
-                .let { converter.toDto(it) }
+            name = form.name
+            img = form.img
+            description = form.description
+            prices = form.prices.map { priceCombinationConverter.toDomain(it, gameId) }
+
+        }.let { repository.save(it) }.let { converter.toDto(it) }
     }
 
     @DeleteMapping("/skill/{id}")
