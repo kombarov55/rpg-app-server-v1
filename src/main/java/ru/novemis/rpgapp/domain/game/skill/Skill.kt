@@ -1,8 +1,7 @@
 package ru.novemis.rpgapp.domain.game.skill
 
-import ru.novemis.rpgapp.domain.game.common.Price
 import ru.novemis.rpgapp.domain.game.common.PriceCombination
-import java.util.UUID
+import java.util.*
 import javax.persistence.*
 
 @Entity

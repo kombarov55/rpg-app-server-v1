@@ -3,6 +3,7 @@ package ru.novemis.rpgapp.dto.game.organization.dto
 import ru.novemis.rpgapp.domain.game.organization.OrganizationType
 import ru.novemis.rpgapp.dto.game.character.dto.GameCharacterShortDto
 import ru.novemis.rpgapp.dto.game.common.dto.PriceDto
+import ru.novemis.rpgapp.dto.game.questionnaire.dto.SkillToLvlDto
 import ru.novemis.rpgapp.dto.game.shop.dto.ItemDto
 import ru.novemis.rpgapp.dto.game.shop.dto.ShopDto
 import ru.novemis.rpgapp.dto.game.shop.dto.WarehouseEntryDto
@@ -18,5 +19,6 @@ open class OrganizationDto(
         val shops: List<ShopDto>,
         val items: List<ItemDto>,
         val incomeTax: Double? = null,
-        val creditOffers: List<CreditOfferDto> = emptyList()
+        val creditOffers: List<CreditOfferDto> = emptyList(),
+        val equippedItems: List<ItemDto>
 )

@@ -5,6 +5,7 @@ import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.character.GameCharacter
 import ru.novemis.rpgapp.domain.game.common.Balance
 import ru.novemis.rpgapp.domain.game.common.PriceCombination
+import ru.novemis.rpgapp.domain.game.questionnaire.SkillToLvl
 import ru.novemis.rpgapp.domain.game.shop.Item
 import ru.novemis.rpgapp.domain.game.shop.Shop
 import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
@@ -23,6 +24,9 @@ class Organization(
         var description: String = "",
 
         val type: OrganizationType = OrganizationType.INSTITUTION,
+
+        @OneToMany(cascade = [CascadeType.ALL])
+        val equippedItems: List<Item> = emptyList(),
 
         @ManyToMany
         @JoinTable(

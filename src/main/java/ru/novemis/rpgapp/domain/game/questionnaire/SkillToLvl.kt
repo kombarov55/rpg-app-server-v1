@@ -1,6 +1,7 @@
 package ru.novemis.rpgapp.domain.game.questionnaire
 
 import ru.novemis.rpgapp.domain.game.character.GameCharacter
+import ru.novemis.rpgapp.domain.game.organization.Organization
 import ru.novemis.rpgapp.domain.game.skill.Skill
 import java.util.*
 import javax.persistence.Entity
