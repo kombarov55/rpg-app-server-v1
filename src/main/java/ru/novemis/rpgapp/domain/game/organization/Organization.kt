@@ -4,11 +4,10 @@ import ru.novemis.rpgapp.controller.OrganizationController
 import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.character.GameCharacter
 import ru.novemis.rpgapp.domain.game.common.Balance
-import ru.novemis.rpgapp.domain.game.common.PriceCombination
-import ru.novemis.rpgapp.domain.game.questionnaire.SkillToLvl
+import ru.novemis.rpgapp.domain.game.shop.Destination
 import ru.novemis.rpgapp.domain.game.shop.Item
 import ru.novemis.rpgapp.domain.game.shop.Shop
-import ru.novemis.rpgapp.domain.game.shop.WarehouseEntry
+import ru.novemis.rpgapp.dto.game.character.dto.SkillStatsDto
 import java.util.*
 import javax.persistence.*
 
@@ -77,6 +76,25 @@ class Organization(
 
     fun removeItem(itemId: String): Organization = apply {
         (items as MutableList).removeIf { it.id == itemId }
+    }
+
+    fun calculateSkillStats(): List<SkillStatsDto> {
+        val skillInfluences = equippedItems.flatMap { it.calculateSkillInfluence() }
+        val skills = game!!.skillCategories.filter { !it.complex && it.destination!!.name == type.name }
+                                           .flatMap { it.skills }
+
+        return skills.map { skill ->
+            val finalAmount = skillInfluences.filter { it.skill!!.id == skill.id }
+                                             .fold(0) { acc, skillInfluence ->
+                                                 skillInfluence.modifier!!.calculate(acc, skillInfluence.amount)
+                                             }
+
+            SkillStatsDto(
+                    skillName = skill.name,
+                    initialAmount = 0,
+                    bonusAmount = finalAmount
+            )
+        }
     }
 
 
