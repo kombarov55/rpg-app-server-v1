@@ -1,5 +1,6 @@
 package ru.novemis.rpgapp.domain.game.skill
 
+import ru.novemis.rpgapp.domain.game.common.Price
 import ru.novemis.rpgapp.domain.game.common.PriceCombination
 import java.util.UUID
 import javax.persistence.*
@@ -28,4 +29,11 @@ data class Skill(
         @ManyToOne
         @JoinColumn(name = "skill_category_id")
         var skillCategory: SkillCategory? = null
-)
+) {
+        fun setPrices(prices: List<PriceCombination>): Skill {
+                val thisPrices = this.prices as MutableList
+                thisPrices.clear()
+                thisPrices.addAll(prices)
+                return this
+        }
+}

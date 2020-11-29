@@ -71,7 +71,8 @@ open class SkillController(
             name = form.name
             img = form.img
             description = form.description
-            prices = form.prices.map { priceCombinationConverter.toDomain(it, gameId) }
+
+            setPrices(form.prices.map { priceCombinationConverter.toDomain(it, gameId) })
 
         }.let { repository.save(it) }.let { converter.toDto(it) }
     }
