@@ -21,7 +21,7 @@ class PetTemplate(
 
         var img: String = "",
 
-        var description: String = "",
+        var description: String? = "",
 
         @OneToMany(cascade = [CascadeType.ALL])
         var prices: List<PriceCombination> = mutableListOf(),

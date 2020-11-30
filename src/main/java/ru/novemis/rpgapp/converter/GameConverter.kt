@@ -21,7 +21,8 @@ class GameConverter(
         private val organizationConverter: OrganizationConverter,
         private val recipeConverter: RecipeConverter,
         private val questionnaireTemplateConverter: QuestionnaireTemplateConverter,
-        private val gameSettingsConverter: GameSettingsConverter
+        private val gameSettingsConverter: GameSettingsConverter,
+        private val petTemplateConverter: PetTemplateConverter
 ) {
 
     fun toDomain(form: GameForm, gameId: String? = null, networkId: String? = null, subnetworkId: String? = null): Game {
@@ -56,7 +57,9 @@ class GameConverter(
                 organizations = domain.organizations.map { organizationConverter.toShortDto(it) },
                 recipes = domain.recipes.map { recipeConverter.toDto(it) },
                 questionnaireTemplates = domain.questionnaireTemplates.map { questionnaireTemplateConverter.toShortDto(it) },
-                settings = gameSettingsConverter.toDto(domain.settings)
+                settings = gameSettingsConverter.toDto(domain.settings),
+                petTemplates = domain.petTemplates.map { petTemplateConverter.toDto(it) }
+
         )
     }
 

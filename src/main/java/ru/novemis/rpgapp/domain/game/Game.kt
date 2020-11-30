@@ -2,12 +2,14 @@ package ru.novemis.rpgapp.domain.game
 
 import ru.novemis.rpgapp.domain.game.crafting.Recipe
 import ru.novemis.rpgapp.domain.game.organization.Organization
+import ru.novemis.rpgapp.domain.game.pet.PetTemplate
 import ru.novemis.rpgapp.domain.game.questionnaire_template.QuestionnaireTemplate
 import ru.novemis.rpgapp.domain.game.shop.Item
 import ru.novemis.rpgapp.domain.game.shop.ItemForSale
 import ru.novemis.rpgapp.domain.game.skill.SkillCategory
 import ru.novemis.rpgapp.domain.network.Network
 import ru.novemis.rpgapp.domain.network.Subnetwork
+import ru.novemis.rpgapp.dto.game.pet.dto.PetTemplateDto
 import java.util.*
 import javax.persistence.*
 
@@ -65,5 +67,8 @@ data class Game(
         var organizations: List<Organization> = emptyList(),
 
         @OneToOne(cascade = [CascadeType.ALL], mappedBy = "game")
-        var settings: GameSettings = GameSettings()
+        var settings: GameSettings = GameSettings(),
+
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "game")
+        var petTemplates: List<PetTemplate> = emptyList()
 )

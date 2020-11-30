@@ -21,8 +21,8 @@ class PetTemplateConverter(
             name = form.name
             img = form.img
             description = form.description
-            upgrades = form.upgrades.map { petUpgradeConverter.toDomain(it, game).apply { this.petTemplate = petTemplate } }.toMutableList()
-            prices = form.prices.map { priceCombinationConverter.toDomain(it, game.id) }
+            upgrades = form.upgrades?.map { petUpgradeConverter.toDomain(it, game).apply { this.petTemplate = petTemplate } }?.toMutableList() ?: mutableListOf()
+            prices = form.prices?.map { priceCombinationConverter.toDomain(it, game.id) } ?: mutableListOf()
         }
     }
 
