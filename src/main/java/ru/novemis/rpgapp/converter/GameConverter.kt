@@ -2,6 +2,7 @@ package ru.novemis.rpgapp.converter
 
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.Game
+import ru.novemis.rpgapp.domain.game.GameSettings
 import ru.novemis.rpgapp.dto.game.dto.GameDto
 import ru.novemis.rpgapp.dto.game.dto.GameShortDto
 import ru.novemis.rpgapp.dto.game.form.GameForm
@@ -25,7 +26,7 @@ class GameConverter(
 
     fun toDomain(form: GameForm, gameId: String? = null, networkId: String? = null, subnetworkId: String? = null): Game {
         return Game().apply {
-            val thatGame = this
+            val game = this
 
             id = gameId ?: UUID.randomUUID().toString()
             title = form.title
@@ -35,7 +36,8 @@ class GameConverter(
             groupLink = appendProtocol(form.groupLink)
             network = networkId?.let { networkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
             subnetwork = subnetworkId?.let { subnetworkRepository.findById(it) }?.orElseThrow { IllegalArgumentException() }
-            currencies = form.currencies.map { currencyForm -> currencyConverter.toDomainOrExisting(thatGame, currencyForm) }
+            currencies = form.currencies.map { currencyForm -> currencyConverter.toDomainOrExisting(game, currencyForm) }
+            settings = GameSettings(game = game)
         }
     }
 
