@@ -1,0 +1,1 @@
+alter table game_settings add column max_owned_pets_count integer default 0;

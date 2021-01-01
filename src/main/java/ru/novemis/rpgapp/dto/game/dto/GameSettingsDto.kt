@@ -5,5 +5,6 @@ data class GameSettingsDto(
         val disclaimerText: String,
         val isCharImgUploadable: Boolean,
         val maxEquippedAmounts: List<MaxEquippedAmountDto>,
-        val inventorySize: Int
+        val inventorySize: Int,
+        val maxOwnedPetsCount: Int
 )

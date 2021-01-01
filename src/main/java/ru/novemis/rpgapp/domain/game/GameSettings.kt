@@ -22,7 +22,9 @@ class GameSettings(
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "gameSettings")
         var maxEquippedAmounts: List<MaxEquippedAmount> = emptyList(),
 
-        var inventorySize: Int = 0
+        var inventorySize: Int = 0,
+
+        var maxOwnedPetsCount: Int = 0
 ) {
     fun applyPatch(patch: GameSettingsController.GameSettingsPatch, maxEquippedAmountRepository: MaxEquippedAmountRepository): GameSettings = apply {
         val settings = this
@@ -33,5 +35,6 @@ class GameSettings(
                 ?.also { settings.maxEquippedAmounts.forEach { maxEquippedAmountRepository.delete(it) } }
                 ?: maxEquippedAmounts
         inventorySize = patch.inventorySize ?: inventorySize
+        maxOwnedPetsCount = patch.maxOwnedPetsCount ?: maxOwnedPetsCount
     }
 }

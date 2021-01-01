@@ -15,7 +15,8 @@ class GameSettingsConverter(
                 disclaimerText = domain.disclaimerText,
                 isCharImgUploadable = domain.isCharImgUploadable,
                 maxEquippedAmounts = domain.maxEquippedAmounts.map { maxEquippedAmountsConverter.toDto(it) },
-                inventorySize = domain.inventorySize
+                inventorySize = domain.inventorySize,
+                maxOwnedPetsCount = domain.maxOwnedPetsCount
         )
     }
 

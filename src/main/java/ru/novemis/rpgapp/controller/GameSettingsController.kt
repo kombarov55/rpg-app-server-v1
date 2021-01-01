@@ -19,6 +19,7 @@ open class GameSettingsController(
             val disclaimerText: String? = null,
             val charImgUploadable: Boolean? = null,
             val inventorySize: Int? = null,
+            val maxOwnedPetsCount: Int? = null,
             val maxEquippedAmounts: List<MaxEquippedAmountDto>? = null
     )
 
