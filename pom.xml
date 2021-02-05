@@ -144,6 +144,8 @@
                             <annotationProcessorArgs>
                                 <annotationProcessorArg>mapstruct.unmappedTargetPolicy=IGNORE</annotationProcessorArg>
                                 <annotationProcessorArg>mapstruct.verbose=true</annotationProcessorArg>
+                                <annotationProcessorArg>mapstruct.defaultComponentModel=spring</annotationProcessorArg>
+                                <annotationProcessorArg>mapstruct.defaultInjectionStrategy=constructor</annotationProcessorArg>
                             </annotationProcessorArgs>
                         </configuration>
                     </execution>

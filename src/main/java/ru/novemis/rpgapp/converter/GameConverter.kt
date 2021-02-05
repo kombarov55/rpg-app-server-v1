@@ -13,16 +13,17 @@ import java.util.*
 
 @Component
 class GameConverter(
-        private val networkRepository: NetworkRepository,
-        private val subnetworkRepository: SubnetworkRepository,
-        private val currencyConverter: CurrencyConverter,
-        private val skillCategoryConverter: SkillCategoryConverter,
-        private val itemForSaleConverter: ItemForSaleConverter,
-        private val organizationConverter: OrganizationConverter,
-        private val recipeConverter: RecipeConverter,
-        private val questionnaireTemplateConverter: QuestionnaireTemplateConverter,
-        private val gameSettingsConverter: GameSettingsConverter,
-        private val petTemplateConverter: PetTemplateConverter
+    private val networkRepository: NetworkRepository,
+    private val subnetworkRepository: SubnetworkRepository,
+    private val currencyConverter: CurrencyConverter,
+    private val skillCategoryConverter: SkillCategoryConverter,
+    private val itemForSaleConverter: ItemForSaleConverter,
+    private val organizationConverter: OrganizationConverter,
+    private val organizationConverterV2: OrganizationConverterV2,
+    private val recipeConverter: RecipeConverter,
+    private val questionnaireTemplateConverter: QuestionnaireTemplateConverter,
+    private val gameSettingsConverter: GameSettingsConverter,
+    private val petTemplateConverter: PetTemplateConverter
 ) {
 
     fun toDomain(form: GameForm, gameId: String? = null, networkId: String? = null, subnetworkId: String? = null): Game {
@@ -54,7 +55,7 @@ class GameConverter(
                 skillCategories = domain.skillCategories.map { skillCategoryConverter.toDto(it) },
                 maxCurrenciesCount = 3,
                 itemsForSale = domain.itemsForSale.map { itemForSaleConverter.toDto(it) },
-                organizations = domain.organizations.map { organizationConverter.toShortDto(it) },
+                organizations = domain.organizations.map { organizationConverterV2.toShortDto(it) },
                 recipes = domain.recipes.map { recipeConverter.toDto(it) },
                 questionnaireTemplates = domain.questionnaireTemplates.map { questionnaireTemplateConverter.toShortDto(it) },
                 settings = gameSettingsConverter.toDto(domain.settings),

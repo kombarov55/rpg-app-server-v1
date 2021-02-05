@@ -10,9 +10,9 @@ import javax.transaction.Transactional
 
 @RestController
 open class GameSettingsController(
-        private val repository: GameSettingsRepository,
-        private val converter: GameSettingsConverter,
-        private val maxEquipmentAmountRepository: MaxEquippedAmountRepository
+    private val repository: GameSettingsRepository,
+    private val converter: GameSettingsConverter,
+    private val maxEquipmentAmountRepository: MaxEquippedAmountRepository
 ) {
 
     data class GameSettingsPatch(
