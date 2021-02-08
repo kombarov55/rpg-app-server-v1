@@ -11,5 +11,6 @@ data class UserAccountDto(
         var userAccountPreferences: UserAccountPreferencesDto = UserAccountPreferencesDto(),
         var gameToActiveCharacter: List<GameToActiveCharacterDto>,
         var characters: List<GameCharacterShortDto>,
-        var rolesInGames: List<UserAccountGameRoleDto>
+        var rolesInGames: List<UserAccountGameRoleDto>,
+        var role: String
 )

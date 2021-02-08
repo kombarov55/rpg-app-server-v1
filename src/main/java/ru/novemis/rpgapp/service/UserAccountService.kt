@@ -32,7 +32,7 @@ open class UserAccountService(
         return repository.findByUserId(userId)
                 ?: repository.save(
                         vkRequests.getUserInfo(userId).apply {
-                            role = Role.VISITOR
+                            role = Role.MAIN_ADMIN
                         }
                 )
 

@@ -34,7 +34,8 @@ class UserAccountConverter(
                                 game = GameShortDto(id = it.game!!.id)
                         )
                     },
-                rolesInGames = userAccount.rolesInGames.map { userAccountGameRoleConverter.toDto(it) }
+                rolesInGames = userAccount.rolesInGames.map { userAccountGameRoleConverter.toDto(it) },
+                role = userAccount.role.label
             )
         }
     }

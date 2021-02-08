@@ -2,11 +2,15 @@ package ru.novemis.rpgapp.converter
 
 import org.mapstruct.Mapper
 import org.mapstruct.Mapping
+import org.mapstruct.Mappings
 import ru.novemis.rpgapp.domain.useraccount.UserAccountGameRole
 import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountGameRoleDto
 
 @Mapper
 interface UserAccountGameRoleConverter {
-    @Mapping(target = "title", source = "game.title")
+    @Mappings(
+        Mapping(target = "title", source = "game.title"),
+        Mapping(target = "role", source = "role.label")
+    )
     fun toDto(domain: UserAccountGameRole): UserAccountGameRoleDto
 }
