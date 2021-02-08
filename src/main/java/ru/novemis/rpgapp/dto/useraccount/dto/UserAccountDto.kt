@@ -10,5 +10,6 @@ data class UserAccountDto(
         var photo50Url: String = "",
         var userAccountPreferences: UserAccountPreferencesDto = UserAccountPreferencesDto(),
         var gameToActiveCharacter: List<GameToActiveCharacterDto>,
-        var characters: List<GameCharacterShortDto>
+        var characters: List<GameCharacterShortDto>,
+        var rolesInGames: List<UserAccountGameRoleDto>
 )

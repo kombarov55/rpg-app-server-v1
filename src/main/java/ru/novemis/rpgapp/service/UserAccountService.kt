@@ -6,7 +6,7 @@ import ru.novemis.rpgapp.domain.game.Game
 import ru.novemis.rpgapp.domain.game.character.GameCharacter
 import ru.novemis.rpgapp.domain.useraccount.GameToActiveCharacter
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
-import ru.novemis.rpgapp.domain.useraccount.UserAccountRole
+import ru.novemis.rpgapp.domain.useraccount.Role
 import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountDto
 import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountShortDto
 import ru.novemis.rpgapp.http.VkRequests
@@ -32,7 +32,7 @@ open class UserAccountService(
         return repository.findByUserId(userId)
                 ?: repository.save(
                         vkRequests.getUserInfo(userId).apply {
-                            role = UserAccountRole.VISITOR
+                            role = Role.VISITOR
                         }
                 )
 

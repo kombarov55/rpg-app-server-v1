@@ -9,6 +9,7 @@ import ru.novemis.rpgapp.converter.UserAccountConverter
 import ru.novemis.rpgapp.dto.view.OfficeViewDto
 import ru.novemis.rpgapp.repository.useraccount.UserAccountRepository
 import ru.novemis.rpgapp.util.JWTUtil
+import javax.transaction.Transactional
 
 @RestController
 @RequestMapping("/officeView")
@@ -19,8 +20,9 @@ class OfficeViewController(
 ) {
 
     @GetMapping
+    @Transactional
     fun getPageDto(@RequestHeader("Authorization") jwtToken: String): OfficeViewDto = OfficeViewDto(
         userAccount = userAccountRepository.findByUserId(jwtUtil.getUserIdFromRawToken(jwtToken))!!
-            .let { userAccountConverter.toShortDto(it) }
+            .let { userAccountConverter.toDto(it) }
     )
 }

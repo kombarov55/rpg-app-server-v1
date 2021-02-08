@@ -19,7 +19,7 @@ data class UserAccount(
         var photo50Url: String = "",
 
         @Enumerated(EnumType.STRING)
-        var role: UserAccountRole = UserAccountRole.VISITOR,
+        var role: Role = Role.VISITOR,
 
         @OneToOne(cascade = [CascadeType.ALL])
         var userAccountPreferences: UserAccountPreferences = UserAccountPreferences(),
@@ -34,5 +34,8 @@ data class UserAccount(
         var gameToActiveCharacter: List<GameToActiveCharacter> = mutableListOf(),
 
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "owner")
-        var characters: List<GameCharacter> = emptyList()
+        var characters: List<GameCharacter> = emptyList(),
+
+        @OneToMany(cascade = [CascadeType.ALL], mappedBy = "userAccount")
+        var rolesInGames: List<UserAccountGameRole> = emptyList()
 )

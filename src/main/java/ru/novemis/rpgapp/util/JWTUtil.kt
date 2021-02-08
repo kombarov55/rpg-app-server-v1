@@ -6,7 +6,7 @@ import io.jsonwebtoken.SignatureAlgorithm
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
-import ru.novemis.rpgapp.domain.useraccount.UserAccountRole
+import ru.novemis.rpgapp.domain.useraccount.Role
 import java.io.Serializable
 import java.util.*
 
@@ -28,10 +28,10 @@ class JWTUtil : Serializable {
         return getAllClaimsFromToken(token).expiration
     }
 
-    fun getRolesFromToken(token: String): List<UserAccountRole> {
+    fun getRolesFromToken(token: String): List<Role> {
         val rolesJoined = getAllClaimsFromToken(token)["roles"] as String
         return rolesJoined.split(", ")
-                .map { UserAccountRole.valueOf(it) }
+                .map { Role.valueOf(it) }
                 .toList()
     }
 

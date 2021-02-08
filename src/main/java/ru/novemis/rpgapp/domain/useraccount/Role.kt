@@ -1,6 +1,6 @@
 package ru.novemis.rpgapp.domain.useraccount
 
-enum class UserAccountRole(val label: String) {
+enum class Role(val label: String) {
     MAIN_ADMIN("Главный администратор"),
     NET_ADMIN("Администратор сети"),
     SUBNET_ADMIN("Администратор подсети"),
