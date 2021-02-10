@@ -3,6 +3,7 @@ package ru.novemis.rpgapp.converter
 import org.springframework.stereotype.Component
 import ru.novemis.rpgapp.domain.game.character.GameCharacter
 import ru.novemis.rpgapp.dto.game.character.dto.GameCharacterDto
+import ru.novemis.rpgapp.dto.game.character.dto.GameCharacterRoleDto
 import ru.novemis.rpgapp.dto.game.character.dto.GameCharacterShortDto
 
 @Component
@@ -43,6 +44,14 @@ class GameCharacterConverter(
                 status = domain.status,
                 statusChangeDate = domain.statusChangeDate.time,
                 balance = domain.balance!!.amounts.map { priceConverter.toDto(it) }
+        )
+    }
+
+    fun toRoleDto(domain: GameCharacter): GameCharacterRoleDto {
+        return GameCharacterRoleDto(
+            id = domain.id,
+            name = domain.name,
+            role = domain.role.label
         )
     }
 }

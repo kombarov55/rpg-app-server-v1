@@ -10,6 +10,7 @@ import ru.novemis.rpgapp.domain.game.questionnaire_template.QuestionnaireTemplat
 import ru.novemis.rpgapp.domain.game.shop.Item
 import ru.novemis.rpgapp.domain.game.shop.ItemTemplate
 import ru.novemis.rpgapp.domain.game.skill.Spell
+import ru.novemis.rpgapp.domain.useraccount.Role
 import ru.novemis.rpgapp.domain.useraccount.UserAccount
 import ru.novemis.rpgapp.dto.game.character.dto.SkillStatsDto
 import java.util.*
@@ -81,7 +82,9 @@ class GameCharacter(
         @OneToMany(cascade = [CascadeType.ALL], mappedBy = "owner")
         val credits: List<Credit> = mutableListOf(),
 
-        var activityPoints: Int = 0
+        var activityPoints: Int = 0,
+
+        var role: Role = Role.MAIN_ADMIN
 ) {
     fun removeItem(itemTemplate: ItemTemplate) {
         items = items.filter { it.itemTemplate!!.id != itemTemplate.id }
