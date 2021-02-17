@@ -6,8 +6,10 @@ spring:
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.H2Dialect
+  jackson:
+    default-property-inclusion: non_null
 
-imgPrefix:  "http://localhost:8081"
+imgPrefix: "http://localhost:8081"
 hidden-props-path: /home/nikolay/Projects/rpg-app-server-v1/src/main/resources/hidden.properties
 
 vk:

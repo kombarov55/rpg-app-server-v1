@@ -13,5 +13,6 @@ data class GameCharacterShortDto(
         val status: GameCharacterStatus? = null,
         val statusChangeDate: Long? = null,
         val balanceId: String? = null,
-        val balance: List<PriceDto>? = null
+        val balance: List<PriceDto>? = null,
+        val role: String? = null
 )
