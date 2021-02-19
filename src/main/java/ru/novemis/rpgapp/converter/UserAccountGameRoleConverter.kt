@@ -10,7 +10,8 @@ import ru.novemis.rpgapp.dto.useraccount.dto.UserAccountGameRoleDto
 interface UserAccountGameRoleConverter {
     @Mappings(
         Mapping(target = "title", source = "game.title"),
-        Mapping(target = "role", source = "role.label")
+        Mapping(target = "role", source = "role.label"),
+        Mapping(target = "gameId", source = "game.id")
     )
     fun toDto(domain: UserAccountGameRole): UserAccountGameRoleDto
 }

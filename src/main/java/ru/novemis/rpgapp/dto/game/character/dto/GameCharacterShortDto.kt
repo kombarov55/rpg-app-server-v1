@@ -9,6 +9,7 @@ data class GameCharacterShortDto(
         val id: String,
         val name: String,
         val game: GameShortDto? = null,
+        val img: String? = null,
         val country: OrganizationShortDto? = null,
         val status: GameCharacterStatus? = null,
         val statusChangeDate: Long? = null,
