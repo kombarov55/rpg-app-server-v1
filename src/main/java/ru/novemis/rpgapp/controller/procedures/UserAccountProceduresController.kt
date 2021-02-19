@@ -1,9 +1,6 @@
 package ru.novemis.rpgapp.controller.procedures
 
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestHeader
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import ru.novemis.rpgapp.domain.game.character.GameCharacterStatus
 import ru.novemis.rpgapp.service.GameCharacterService
 import ru.novemis.rpgapp.service.UserAccountService
@@ -11,6 +8,7 @@ import ru.novemis.rpgapp.util.JWTUtil
 import javax.transaction.Transactional
 
 @RestController
+@RequestMapping("/userAccount")
 open class UserAccountProceduresController(
         private val userAccountService: UserAccountService,
         private val gameCharacterService: GameCharacterService,
@@ -19,7 +17,7 @@ open class UserAccountProceduresController(
 
     data class MakeCharacterActiveForm(val characterId: String = "", val gameId: String = "")
 
-    @PostMapping("/userAccount/makeCharacterActive.do")
+    @PostMapping("/makeCharacterActive.do")
     @Transactional
     open fun makeCharacterActive(
             @RequestBody form: MakeCharacterActiveForm,
@@ -31,7 +29,7 @@ open class UserAccountProceduresController(
 
     data class KillCharacterForm(val characterId: String = "", val gameId: String = "")
 
-    @PostMapping("/userAccount/killCharacter.do")
+    @PostMapping("/killCharacter.do")
     @Transactional
     open fun killCharacter(
             @RequestBody form: KillCharacterForm,
@@ -43,7 +41,7 @@ open class UserAccountProceduresController(
 
     data class ReviveCharacterForm(val characterId: String = "")
 
-    @PostMapping("/userAccount/reviveCharacter.do")
+    @PostMapping("/reviveCharacter.do")
     @Transactional
     open fun reviveCharacter(
             @RequestBody form: ReviveCharacterForm

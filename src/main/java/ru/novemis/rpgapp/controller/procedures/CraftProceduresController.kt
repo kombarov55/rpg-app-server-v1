@@ -3,6 +3,7 @@ package ru.novemis.rpgapp.controller.procedures
 import org.json.JSONObject
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.novemis.rpgapp.repository.game.RecipeRepository
 import ru.novemis.rpgapp.repository.game.character.GameCharacterRepository
@@ -10,6 +11,7 @@ import javax.transaction.Transactional
 import kotlin.random.Random
 
 @RestController
+@RequestMapping("/craft")
 open class CraftProceduresController(
         private val recipeRepository: RecipeRepository,
         private val gameCharacterRepository: GameCharacterRepository
@@ -20,7 +22,7 @@ open class CraftProceduresController(
             val recipeId: String = ""
     )
 
-    @PostMapping("/craft/performCrafting.do")
+    @PostMapping("/performCrafting.do")
     @Transactional
     open fun performCrafting(@RequestBody rq: CraftingRq): JSONObject {
         val recipe = recipeRepository.findById(rq.recipeId).get()

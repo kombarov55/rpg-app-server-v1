@@ -17,5 +17,5 @@ data class UserAccountGameRole (
     @JoinColumn
     val game: Game,
 
-    val role: Role
+    var role: Role
 )

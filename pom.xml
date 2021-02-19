@@ -117,6 +117,9 @@
                         <plugin>jpa</plugin>
                         <plugin>spring</plugin>
                     </compilerPlugins>
+                    <pluginOptions>
+                        <option>jpa:annotation=ru.novemis.rpgapp.util.noarg</option>
+                    </pluginOptions>
                 </configuration>
                 <executions>
                     <execution>
